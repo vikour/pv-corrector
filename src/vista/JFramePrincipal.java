@@ -5,6 +5,7 @@
  */
 package vista;
 
+import controlador.CtrAdminModulos;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -30,11 +31,12 @@ public class JFramePrincipal extends javax.swing.JFrame {
        //Paneles ordenados por niveles de la aplicación de la aplicación
        paneles= new JPanel[MAX_LEVEL];
        paneles[0]= new JPanelModulo();
-       
+       new CtrAdminModulos((ViewAdminModulos) paneles[0]);
        
        jPanelPrincipal.setLayout(new BorderLayout()); //Layout para poner las cosas en su lugar
        jPanelPrincipal.add(paneles[0]);
        // pack(); 
+       
        
        
     }

@@ -22,6 +22,11 @@ public class ListModelModulo extends AbstractListModel {
         this.m = m;
     }
 
+    public void setList(List<Modulo> m) {
+        this.m = m;
+    }
+    
+
     public ListModelModulo() {
         m= new ArrayList<>();
     }
@@ -36,6 +41,10 @@ public class ListModelModulo extends AbstractListModel {
     @Override
     public Object getElementAt(int index) {
         return m.get(index);
+    }
+
+    public void add(Modulo m) {
+        this.m.add(m);
     }
     
 }

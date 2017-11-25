@@ -16,6 +16,7 @@ public class CtrAdminModulos implements ActionListener{
 
     public CtrAdminModulos(ViewAdminModulos vm) {
         this.vm = vm;
+        vm.setControlador(this);
     }
 
    public void consultarModulos()

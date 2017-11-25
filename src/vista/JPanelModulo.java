@@ -132,6 +132,10 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
 
     @Override
     public void mostrar(List<Modulo> modulos) {
+        ListModelModulo model=(ListModelModulo) jList1.getModel();
+        
+        model.setList(modulos);
+        jList1.updateUI();
         
     }
 
@@ -159,26 +163,30 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
 
     @Override
     public void habilitarModificacion(boolean habilitar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jButtonModificar.setEnabled(habilitar);
     }
 
     @Override
     public void habilitarBorrado(boolean habilitar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jButtonBorrar.setEnabled(habilitar);
     }
 
     @Override
     public void habilitarExportacion(boolean habilitar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jButtonExportar.setEnabled(habilitar);
     }
 
     @Override
     public void habilitarVerCampañas(boolean habilitar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jButtonCampanyas.setEnabled(habilitar);
     }
 
     @Override
     public void mostrarModuloNuevo(Modulo m) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ListModelModulo model=(ListModelModulo) jList1.getModel();
+        
+        model.add(m);
+        jList1.updateUI();
     }
+    
 }
