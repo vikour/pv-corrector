@@ -24,7 +24,7 @@ public class Modulo
    public static List<Modulo> listar( )
    {
       List <Modulo> mod=new ArrayList();
-      BD bd=new BD();
+      BD bd=BD.getInstance();
       String str="SELECT * FROM modulos";
       List<String[]> l = bd.select(str);
       for(String [] e: l){
