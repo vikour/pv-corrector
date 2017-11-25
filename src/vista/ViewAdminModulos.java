@@ -9,6 +9,7 @@ import modelo.Modulo;
 
 public interface ViewAdminModulos
 {
+   
    void mostrar( Modulo[] modulos );
    
    void setControlador( CtrAdminModulos controlador );
