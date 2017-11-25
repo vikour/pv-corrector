@@ -9,7 +9,7 @@ public class BD {
 
     // Configuración de la base de datos.
     private static final String BD_FILE_NAME = "datos.db";
-    private static final String BD_DDL_BD = "ddl.sql";
+    private static final String BD_DDL_BD = "src/resources/ddl.sql";
     private static final String DB_URL = "jdbc:sqlite:" + BD_FILE_NAME;
     // Fin configuración.
     
