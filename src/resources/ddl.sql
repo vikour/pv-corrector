@@ -11,9 +11,9 @@ CREATE TABLE modulos (
 
 CREATE TABLE campanyas (
    nombre   VARCHAR(50),
-   campanya  VARCHAR(50),
-   PRIMARY KEY(nombre, campanya),
-   FOREIGN KEY (campanya) REFERENCES modulos(nombre)
+   modulo  VARCHAR(50),
+   PRIMARY KEY(nombre, modulo),
+   FOREIGN KEY (modulo) REFERENCES modulos(nombre)
       ON UPDATE CASCADE
       ON DELETE CASCADE
 );
@@ -27,10 +27,10 @@ CREATE TABLE campanya_tiene_canal (
    campanya   VARCHAR(50),
    canal      VARCHAR(50),
    PRIMARY KEY(modulo,campanya,canal),
-   FOREIGN KEY (modulo) REFERENCES campanyas(nombre)
+   FOREIGN KEY (modulo) REFERENCES campanyas(modulo)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
-   FOREIGN KEY (campanya) REFERENCES campanyas(campanya)
+   FOREIGN KEY (campanya) REFERENCES campanyas(nombre)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
    FOREIGN KEY (canal) REFERENCES canal(nombre)
@@ -60,10 +60,10 @@ CREATE TABLE curvas_medidas (
    modulo     VARCHAR(50)   NOT NULL,
    campanya   VARCHAR(50)   NOT NULL,
    PRIMARY KEY(id),
-   FOREIGN KEY (modulo) REFERENCES campanyas(nombre)
+   FOREIGN KEY (modulo) REFERENCES campanyas(modulo)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
-   FOREIGN KEY (campanya) REFERENCES campanyas(campanya)
+   FOREIGN KEY (campanya) REFERENCES campanyas(nombre)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
    FOREIGN KEY (id) REFERENCES curvas_iv(id)
@@ -86,7 +86,7 @@ CREATE TABLE medidas_curvas (
     magnitud    VARCHAR(20) NOT NULL,
     orden       INTEGER,
     tipo        INTEGER    NOT NULL,
-    PRIMARY KEY(curva_iv,tipo),
+    PRIMARY KEY(curva_iv,orden),
    FOREIGN KEY (curva_iv) REFERENCES curvas_iv(id)
       ON UPDATE CASCADE
       ON DELETE CASCADE
