@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Modulo
 {
-   private Campaña[] campañas;
+   private List<Campaña> campañas;
    
    private String nombre;
    
@@ -76,12 +76,60 @@ public class Modulo
             bd.insert(insert);
         }
    }
-   
+
+    public List<Campaña> getCampañas() {
+        return campañas;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public double getAlpha() {
+        return alpha;
+    }
+
+    public double getBeta() {
+        return beta;
+    }
+
+    public double getGamma() {
+        return gamma;
+    }
+
+    public double getKappa() {
+        return kappa;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setAlpha(double alpha) {
+        this.alpha = alpha;
+    }
+
+    public void setBeta(double beta) {
+        this.beta = beta;
+    }
+
+    public void setGamma(double gamma) {
+        this.gamma = gamma;
+    }
+
+    public void setKappa(double kappa) {
+        this.kappa = kappa;
+    }
    
    @Override
    public String toString(){
        return "Nombre: "+nombre+"\nAlpha: "+alpha+"\nBeta: "+beta+"\nGamma: "+gamma+"\nKappa: "+kappa;
     }
-   
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Modulo) &&
+               (((Modulo) obj).nombre.equals(nombre));
+    }
    
 }

@@ -136,7 +136,6 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         
         model.setList(modulos);
         jList1.updateUI();
-        
     }
 
     @Override
@@ -155,10 +154,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         
         jButtonModificar.addActionListener(controlador);
         jButtonModificar.setActionCommand(ViewAdminModulos.MODIFICAR);
-        
-        
-        
-        
+        controlador.consultarModulos();
     }
 
     @Override

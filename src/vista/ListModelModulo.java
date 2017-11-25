@@ -30,8 +30,6 @@ public class ListModelModulo extends AbstractListModel {
     public ListModelModulo() {
         m= new ArrayList<>();
     }
-    
-    
 
     @Override
     public int getSize() {
@@ -40,7 +38,7 @@ public class ListModelModulo extends AbstractListModel {
 
     @Override
     public Object getElementAt(int index) {
-        return m.get(index);
+        return m.get(index).getNombre();
     }
 
     public void add(Modulo m) {
