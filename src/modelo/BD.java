@@ -16,7 +16,7 @@ public class BD {
     private static BD instance = null;
     private Connection con;
 
-    private BD() {
+    BD() {
         boolean ddl_loaded = false;
         try {
             Class.forName("org.sqlite.JDBC");
