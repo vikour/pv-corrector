@@ -5,13 +5,11 @@
 package vista;
 
 import controlador.CtrAdminModulos;
-import java.util.List;
 import modelo.Modulo;
 
 public interface ViewAdminModulos
 {
-   
-   void mostrar( List<Modulo> modulos );
+   void mostrar( Modulo[] modulos );
    
    void setControlador( CtrAdminModulos controlador );
    
