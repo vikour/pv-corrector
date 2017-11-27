@@ -25,12 +25,12 @@ public class Modulo
    {
       List <Modulo> mod=new ArrayList();
       BD bd=BD.getInstance();
-      String str="SELECT * FROM modulos";
-      List<String[]> l = bd.select(str);
-      for(String [] e: l){
-          
-          mod.add(new Modulo(e[0],Double.parseDouble(e[1]),Double.parseDouble(e[2]),Double.parseDouble(e[3]),Double.parseDouble(e[4])));
+      String str="SELECT nombre FROM modulos";
+      
+      for (String[] tupla : BD.getInstance().select(str)) {
+         mod.add(new Modulo(tupla[0]));
       }
+
       return mod;
    }
    
