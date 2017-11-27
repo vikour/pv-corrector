@@ -11,7 +11,7 @@ public abstract class FormatoFichero {
         this.notificar = notificar;
     }
     
-    public abstract void leer(File file);
+    public abstract Object leer(File file);
     public abstract void escribir(File file);
     
 }

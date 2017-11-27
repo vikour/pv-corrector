@@ -18,7 +18,7 @@ public class FormatoModulo extends FormatoFichero {
     }
 
     @Override
-    public void leer(File file) {
+    public Object leer(File file) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

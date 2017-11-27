@@ -22,6 +22,10 @@ public class Importador {
         this.file = file;
     }
     
+    public List<Object> importar() {
+        return null;
+    }
+    
     private void descomprimir() {
         
     }
