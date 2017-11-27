@@ -74,6 +74,8 @@ public class Modulo
         if(bd.select(select).size()==0){
             String insert="INSERT INTO modulos (nombre, alpha, beta, gamma, kappa) VALUES('"+n+"',"+a+","+b+","+g+","+k+");";
             bd.insert(insert);
+        }else{
+            throw new RuntimeException("El modulo ya está incluido en el sistema");
         }
    }
 
