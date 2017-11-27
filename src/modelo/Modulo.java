@@ -34,11 +34,6 @@ public class Modulo
       return mod;
    }
    
-   public static Modulo importar( String pathfile )
-   {
-      return null;
-   }
-   
    public Modulo(String nombre){
        List<String[]> l=new ArrayList();
        BD bd=BD.getInstance();
@@ -114,28 +109,28 @@ public class Modulo
     public void setAlpha(double alpha) {
         BD bd=BD.getInstance();
         
-        bd.update("UPDATE modulos SET alpha='"+alpha+"' WHERE nombre='"+this.nombre+"'");
+        bd.update("UPDATE modulos SET alpha="+alpha+" WHERE nombre='"+this.nombre+"'");
         this.alpha = alpha;
     }
 
     public void setBeta(double beta) {
         BD bd=BD.getInstance();
         
-        bd.update("UPDATE modulos SET beta='"+beta+"' WHERE nombre='"+this.nombre+"'");
+        bd.update("UPDATE modulos SET beta="+beta+" WHERE nombre='"+this.nombre+"'");
         this.beta = beta;
     }
 
     public void setGamma(double gamma) {
         BD bd=BD.getInstance();
         
-        bd.update("UPDATE modulos SET gamma='"+gamma+"' WHERE nombre='"+this.nombre+"'");
+        bd.update("UPDATE modulos SET gamma="+gamma+" WHERE nombre='"+this.nombre+"'");
         this.gamma = gamma;
     }
 
     public void setKappa(double kappa) {
         BD bd=BD.getInstance();
         
-        bd.update("UPDATE modulos SET kappa='"+kappa+"' WHERE nombre='"+this.nombre+"'");
+        bd.update("UPDATE modulos SET kappa="+kappa+" WHERE nombre='"+this.nombre+"'");
         this.kappa = kappa;
     }
    
