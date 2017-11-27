@@ -17,9 +17,9 @@ import java.util.logging.Logger;
 import java.util.zip.*;
 
 /**
- *
- * @author Vikour
+ * @author Víctor Manuel Ortiz Guardeño.
  */
+
 public class Importador {
     
     private static final String EXTENSION_COMPRIMIDO = ".zip";
@@ -57,7 +57,7 @@ public class Importador {
         } finally {
 
             if (tmp != null) {
-                borrarFicherosTemporales(tmp);
+                borrarRecursivamente(tmp);
             }
 
         }
@@ -98,7 +98,6 @@ public class Importador {
             
         }
         finally {
-            // borrar los residuos si !success
             
             if (zis != null)
                 zis.close();
@@ -138,17 +137,17 @@ public class Importador {
 
     }
 
-    private void borrarFicherosTemporales(File tmp) {
+    private void borrarRecursivamente(File tmp) {
         
-        if (tmp.isFile()) 
-            tmp.delete();
-        else {
+        if (tmp.isDirectory()) {
             
             for (File f : tmp.listFiles())
-                borrarFicherosTemporales(f);
+                borrarRecursivamente(f);
 
-            tmp.delete();
+
         }
+        
+        tmp.delete();
     }
     
 }
