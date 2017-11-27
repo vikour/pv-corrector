@@ -22,22 +22,6 @@ CREATE TABLE canales (
    nombre VARCHAR(50)
 );
 
-CREATE TABLE campanya_tiene_canal (
-   modulo     VARCHAR(50),
-   campanya   VARCHAR(50),
-   canal      VARCHAR(50),
-   PRIMARY KEY(modulo,campanya,canal),
-   FOREIGN KEY (modulo) REFERENCES campanyas(modulo)
-      ON UPDATE CASCADE
-      ON DELETE CASCADE,
-   FOREIGN KEY (campanya) REFERENCES campanyas(nombre)
-      ON UPDATE CASCADE
-      ON DELETE CASCADE,
-   FOREIGN KEY (canal) REFERENCES canal(nombre)
-      ON UPDATE CASCADE
-      ON DELETE CASCADE
-);
-
 CREATE TABLE curvas_iv (
    id      INTEGER   PRIMARY KEY,
    tipo    INTEGER   NOT NULL,
@@ -75,7 +59,11 @@ CREATE TABLE medidas_canal (
     curva_iv   INTEGER PRIMARY KEY,
     valor      NUMERIC   NOT NULL,
     magnitud   VARCHAR(20)  NOT NULL,
+    canal      VARCHAR(50)  NOT NULL,
    FOREIGN KEY (curva_iv) REFERENCES curvas_medidas(id)
+      ON UPDATE CASCADE
+      ON DELETE CASCADE,
+   FOREIGN KEY (canal) REFERENCES canales(nombre)
       ON UPDATE CASCADE
       ON DELETE CASCADE
 );
