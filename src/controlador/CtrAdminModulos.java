@@ -21,7 +21,7 @@ public class CtrAdminModulos implements ActionListener {
 
    public void consultarModulos()
    {
-      
+       vm.mostrar(Modulo.listar());
    }
    
    public void moduloSeleccionado( )
