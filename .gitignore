@@ -5,4 +5,6 @@ dist/
 nbdist/
 .nb-gradle/
 datos.db
+src/Test/
+
 

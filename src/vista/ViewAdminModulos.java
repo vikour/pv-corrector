@@ -5,11 +5,20 @@
 package vista;
 
 import controlador.CtrAdminModulos;
+import java.util.List;
 import modelo.Modulo;
 
 public interface ViewAdminModulos
 {
-   void mostrar( Modulo[] modulos );
+    public static final String IMPORTAR="IMPORTAR";
+    public static final String EXPORTAR="EXPORTAR";
+    public static final String MODIFICAR="MODIFICAR";
+    public static final String BORRAR="BORRAR";
+    public static final String CAMPANYAS="CAMPANYAS";
+    public static final String SELECC_MODULO="SELEC_MODULO";
+    public static final String IDIOMA="IDIOMA";
+    
+   void mostrar( List<Modulo> modulos );
    
    void setControlador( CtrAdminModulos controlador );
    
