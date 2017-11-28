@@ -5,6 +5,7 @@
 package vista;
 
 import controlador.CtrAdminModulos;
+import java.io.File;
 import java.util.List;
 import modelo.Modulo;
 
@@ -31,6 +32,12 @@ public interface ViewAdminModulos
    void habilitarVerCampañas( boolean habilitar );
    
    void mostrarModuloNuevo( Modulo m );
+
+    public File mostrarSelectorFicheros();
+
+    public void alert(String message);
+
+    public boolean preguntar(String string);
    
    
 }

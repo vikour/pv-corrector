@@ -6,8 +6,16 @@
 package vista;
 
 import controlador.CtrAdminModulos;
-import java.awt.Dimension;
+import java.io.File;
+import java.io.FileFilter;
 import java.util.List;
+import javafx.stage.FileChooser;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import modelo.FormatoFichero;
+import modelo.FormatoFicheroFactory;
+import modelo.Importador;
 import modelo.Modulo;
 
 /**
@@ -16,12 +24,21 @@ import modelo.Modulo;
  */
 public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos {
 
+    private controlador.CtrAdminModulos controller;
+    private JFileChooser fc;
     /**
      * Creates new form JPanelModulo
      */
     public JPanelModulo() {
         initComponents();
-        
+        fc = new JFileChooser();
+        fc.setDialogTitle("Selecciona el fichero con el módulo");
+        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_MODULO, null);
+        String ffModulo = "cls";//ff.getExtension();
+        String ffCmp = Importador.EXTENSION_COMPRIMIDO;
+        String filterName = "Módulos (." + ffCmp +", ." + ffModulo + ")";
+        fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp));
+        fc.setMultiSelectionEnabled(false);
     }
 
     /**
@@ -140,6 +157,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
 
     @Override
     public void setControlador(CtrAdminModulos controlador) {
+        this.controller = controlador;
         jButtonBorrar.addActionListener(controlador);
         jButtonBorrar.setActionCommand(ViewAdminModulos.BORRAR);
         
@@ -183,6 +201,29 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         
         model.add(m);
         jList1.updateUI();
+    }
+
+    @Override
+    public File mostrarSelectorFicheros() {
+        int returnVal = fc.showOpenDialog(this);
+        File f = null;
+        
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+            f = fc.getSelectedFile();
+        
+        return f;
+    }
+
+    @Override
+    public void alert(String message) {
+        JOptionPane.showMessageDialog(this, message, "Ups", JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public boolean preguntar(String string) {
+        int returnVal = JOptionPane.showConfirmDialog(this, string, "Sobreescribir módulo", JOptionPane.YES_NO_OPTION);
+        
+        return returnVal == JOptionPane.YES_OPTION;
     }
     
 }

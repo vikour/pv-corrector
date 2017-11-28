@@ -22,7 +22,7 @@ import java.util.zip.*;
 
 public class Importador {
     
-    private static final String EXTENSION_COMPRIMIDO = ".zip";
+    public static final String EXTENSION_COMPRIMIDO = "zip";
     private FormatoFichero fmt;
     private File file;
     private File tmp;
@@ -38,7 +38,7 @@ public class Importador {
         List<File> files = new ArrayList<>();
 
         try {
-            if (!file.isDirectory() && file.getName().matches("[a-zA-Z0-9]+" + EXTENSION_COMPRIMIDO)) {
+            if (!file.isDirectory() && file.getName().contains("."+EXTENSION_COMPRIMIDO)) {
                 files = descomprimir();
             } else if (file.isDirectory()) {
                 files = leerFicheros();
@@ -69,11 +69,11 @@ public class Importador {
         ZipInputStream zis = null;
         List<File> files = new ArrayList<>();
         
-        tmp = File.createTempFile(file.getName().replace(EXTENSION_COMPRIMIDO, ""), 
+        tmp = File.createTempFile(file.getName().replace("."+EXTENSION_COMPRIMIDO, ""), 
                                     Long.toString(System.nanoTime()));
         
         if (tmp.exists())
-            tmp.delete();
+            borrarRecursivamente(tmp);
         
         if (!(tmp.mkdir()))
             throw new IOException("No se pudo descomprimir el fichero " + file.getName());
