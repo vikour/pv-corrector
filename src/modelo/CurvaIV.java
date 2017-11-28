@@ -24,5 +24,46 @@ public abstract class CurvaIV
    
    private double ff;
    
+   private int id;
+   
+    public MedidaIntensidad[] getIntensidades() {
+        return intensidades;
+    }
+
+    public MedidaTension[] getTensiones() {
+        return tensiones;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public Medida getIsc() {
+        return isc;
+    }
+
+    public Medida getVoc() {
+        return voc;
+    }
+
+    public Medida getPmax() {
+        return pmax;
+    }
+
+    public Medida getVmax() {
+        return vmax;
+    }
+
+    public double getFf() {
+        return ff;
+    }
+
+    public int getId() {
+        return id;
+    }
    
 }

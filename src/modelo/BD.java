@@ -178,7 +178,7 @@ public class BD {
             Statement stm = con.createStatement();
             stm.execute(statement);
         } catch (SQLException ex) {
-            System.err.println("Error al ejecutar la sentencia : " + ex.getMessage());
+            System.err.println("Error al ejecutar la sentencia : " + statement + "\nError : " + ex.getMessage());
         }
     }
 

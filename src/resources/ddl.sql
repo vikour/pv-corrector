@@ -44,10 +44,7 @@ CREATE TABLE curvas_medidas (
    modulo     VARCHAR(50)   NOT NULL,
    campanya   VARCHAR(50)   NOT NULL,
    PRIMARY KEY(id),
-   FOREIGN KEY (modulo) REFERENCES campanyas(modulo)
-      ON UPDATE CASCADE
-      ON DELETE CASCADE,
-   FOREIGN KEY (campanya) REFERENCES campanyas(nombre)
+   FOREIGN KEY (campanya,modulo) REFERENCES campanyas(nombre,modulo)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
    FOREIGN KEY (id) REFERENCES curvas_iv(id)
@@ -98,16 +95,17 @@ CREATE TABLE rol_correcciones (
    rol_irr    INTEGER   NOT NULL,
    FOREIGN KEY (curva_iv) REFERENCES curvas_medidas(id)
       ON UPDATE CASCADE
-      ON DELETE CASCADE
+      ON DELETE CASCADE,
    FOREIGN KEY (curva_corr) REFERENCES curvas_corregidas(id)
       ON UPDATE CASCADE
-      ON DELETE CASCADE
+      ON DELETE CASCADE,
    FOREIGN KEY (rol_temp) REFERENCES medidas_canal(curva_iv)
       ON UPDATE CASCADE
-      ON DELETE RESTRICT
+      ON DELETE CASCADE,
    FOREIGN KEY (rol_irr) REFERENCES medidas_canal(curva_iv)
       ON UPDATE CASCADE
-      ON DELETE RESTRICT
+      ON DELETE CASCADE,
+   PRIMARY KEY(curva_iv,curva_corr)
 );
 
 CREATE TABLE metodo_correccion (
