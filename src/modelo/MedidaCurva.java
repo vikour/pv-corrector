@@ -30,10 +30,10 @@ public abstract class MedidaCurva extends Medida implements Comparable {
         magnitud = medida[2];
         this.orden = Integer.valueOf(medida[3]);
         
-        if (NombreValorCurva.valueOf(medida[4]) == NombreValorCurva.INTENSIDAD)
-            tipo = NombreValorCurva.INTENSIDAD;
+        if (Integer.valueOf(medida[4]) == NombreValorCurva.BD(NombreValorCurva.INTENSIDAD))
+            this.tipo = NombreValorCurva.INTENSIDAD;
         else 
-            tipo = NombreValorCurva.TENSION;
+            this.tipo = NombreValorCurva.TENSION;
         
         idCurva = curva.getId();
     }
@@ -69,11 +69,11 @@ public abstract class MedidaCurva extends Medida implements Comparable {
 
     @Override
     public void setValor(double valor) {
-        String update = "UPDATE medidas_curvas SET valor = '" + valor + "' WHERE " +
+        String update = "UPDATE medidas_curvas SET valor = " + valor + " WHERE " +
                         "orden = " + orden + " AND curva_iv = " + idCurva + " AND " +
                         "tipo = " + NombreValorCurva.BD(tipo);
         
-        if (!magnitud.equals(this.magnitud)) {
+        if (valor != this.valor) {
             BD.getInstance().update(update);
             super.setValor(valor);
         }
