@@ -36,7 +36,8 @@ public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificab
    }
    
    public void consultarCampanyas(){
-       vm.getModulosSeleccionados().getCampañas();
+       vm.getModulosSeleccionados();
+       
    }
    
    public void moduloSeleccionado( )

@@ -8,12 +8,21 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import modelo.Modulo;
+import vista.ViewAdminCampanya;
 
 /**
  *
  * @author EzequielRodriguez
  */
 public class CtrAdminCampanyas implements ActionListener {
+    ViewAdminCampanya vc;
+    
+    
+    public CtrAdminCampanyas(ViewAdminCampanya vc) {
+        this.vc = vc;
+        
+       
+    }
 
     public void getCampanyas(){
         
