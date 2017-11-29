@@ -14,7 +14,7 @@ public class MedidaTension extends MedidaCurva
         List<MedidaIntensidad> result = new ArrayList<>();
         String qq = "SELECT orden FROM medidas_curvas " +
                     "WHERE curva_iv = " + curva.getId() + " AND tipo = " +
-                    NombreValorCurva.TENSION;
+                    NombreValorCurva.BD(NombreValorCurva.TENSION);
         
         for (String [] tupla : BD.getInstance().select(qq))
             result.add(new MedidaIntensidad(curva, Integer.valueOf(tupla[0])));
