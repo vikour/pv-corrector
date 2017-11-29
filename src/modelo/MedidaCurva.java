@@ -8,15 +8,16 @@ import java.util.List;
 
 public abstract class MedidaCurva extends Medida implements Comparable {
 
-    private NombreValorCurva tipo;
-    private int orden;
-    private int idCurva;
+    protected NombreValorCurva tipo;
+    protected int orden;
+    protected int idCurva;
     
-    public MedidaCurva(CurvaIV curva, int orden) {
+    public MedidaCurva(CurvaIV curva, int orden, NombreValorCurva tipo) {
         super(0,"");
         String qq = "SELECT * FROM medidas_curvas WHERE " +
                     "curva_iv = " + curva.getId() + " AND " +
-                    "orden = " + orden;
+                    "orden = " + orden + " AND " +
+                    "tipo = " + NombreValorCurva.BD(tipo);
         BD bd = BD.getInstance();
         List<String[]> result = bd.select(qq);
         String [] medida;
@@ -37,7 +38,7 @@ public abstract class MedidaCurva extends Medida implements Comparable {
         idCurva = curva.getId();
     }
     
-    public MedidaCurva(double valor, String magnitud, int orden, CurvaIV curva, NombreValorCurva tipo) {
+    protected MedidaCurva(double valor, String magnitud, int orden, CurvaIV curva, NombreValorCurva tipo) {
         super(valor, magnitud);
         String stm = "INSERT INTO medidas_curvas VALUES (" + curva.getId() + ", " + valor + ", " + 
                      "'" + magnitud + "', " + orden + ", " + NombreValorCurva.BD(tipo) + ")";
@@ -57,7 +58,8 @@ public abstract class MedidaCurva extends Medida implements Comparable {
     @Override
     public void setMagnitud(String magnitud) {
         String update = "UPDATE medidas_curvas SET magnitud = '" + magnitud + "' WHERE " +
-                        "orden = " + orden + " AND curva_iv = " + idCurva;
+                        "orden = " + orden + " AND curva_iv = " + idCurva + " AND " +
+                        "tipo = " + NombreValorCurva.BD(tipo);
         
         if (!magnitud.equals(this.magnitud)) {
             BD.getInstance().update(update);
@@ -68,7 +70,8 @@ public abstract class MedidaCurva extends Medida implements Comparable {
     @Override
     public void setValor(double valor) {
         String update = "UPDATE medidas_curvas SET valor = '" + valor + "' WHERE " +
-                        "orden = " + orden + " AND curva_iv = " + idCurva;
+                        "orden = " + orden + " AND curva_iv = " + idCurva + " AND " +
+                        "tipo = " + NombreValorCurva.BD(tipo);
         
         if (!magnitud.equals(this.magnitud)) {
             BD.getInstance().update(update);
@@ -84,7 +87,8 @@ public abstract class MedidaCurva extends Medida implements Comparable {
     public boolean equals(Object obj) {
         return (obj instanceof MedidaCurva) &&
                (((MedidaCurva) obj).orden == orden) &&
-               (((MedidaCurva) obj).idCurva == idCurva);
+               (((MedidaCurva) obj).idCurva == idCurva) &&
+               (((MedidaCurva) obj).tipo.equals(tipo));
     }
 
     @Override

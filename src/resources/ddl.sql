@@ -71,7 +71,7 @@ CREATE TABLE medidas_curvas (
     magnitud    VARCHAR(20) NOT NULL,
     orden       INTEGER,
     tipo        INTEGER    NOT NULL,
-    PRIMARY KEY(curva_iv,orden),
+    PRIMARY KEY(curva_iv,orden, tipo),
    FOREIGN KEY (curva_iv) REFERENCES curvas_iv(id)
       ON UPDATE CASCADE
       ON DELETE CASCADE
