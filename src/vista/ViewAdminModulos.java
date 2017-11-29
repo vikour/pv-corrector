@@ -7,6 +7,7 @@ package vista;
 import controlador.CtrAdminModulos;
 import java.io.File;
 import java.util.List;
+import javax.swing.event.ListSelectionListener;
 import modelo.Modulo;
 
 public interface ViewAdminModulos
@@ -22,6 +23,8 @@ public interface ViewAdminModulos
    void mostrar( List<Modulo> modulos );
    
    void setControlador( CtrAdminModulos controlador );
+   
+   
    
    void habilitarModificacion( boolean habilitar );
    

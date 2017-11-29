@@ -12,6 +12,7 @@ import java.util.List;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
@@ -25,6 +26,7 @@ import modelo.Modulo;
 public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos {
 
     private controlador.CtrAdminModulos controller;
+    private ListModelModulo lista;
     private JFileChooser fc;
     /**
      * Creates new form JPanelModulo
@@ -158,6 +160,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
     @Override
     public void setControlador(CtrAdminModulos controlador) {
         this.controller = controlador;
+        
         jButtonBorrar.addActionListener(controlador);
         jButtonBorrar.setActionCommand(ViewAdminModulos.BORRAR);
         
@@ -172,8 +175,13 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         
         jButtonModificar.addActionListener(controlador);
         jButtonModificar.setActionCommand(ViewAdminModulos.MODIFICAR);
+        
+        jList1.addListSelectionListener(controller);
+        
         controlador.consultarModulos();
     }
+    
+   
 
     @Override
     public void habilitarModificacion(boolean habilitar) {
@@ -214,7 +222,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         return f;
     }
 
-    @Override
+   // @Override
     public void alert(String message) {
         JOptionPane.showMessageDialog(this, message, "Ups", JOptionPane.WARNING_MESSAGE);
     }
@@ -225,5 +233,15 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         
         return returnVal == JOptionPane.YES_OPTION;
     }
+    
+   /* public void setControladorLista(ListModelModulo l1){
+        this.lista=l1;
+        
+        jList1.addListSelectionListener(lista);
+        
+    }*/
+
+   
+   
     
 }

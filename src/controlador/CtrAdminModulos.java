@@ -10,20 +10,25 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import javafx.stage.FileChooser;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
 import modelo.IFormatoFicheroNotificable;
 import modelo.Importador;
 import modelo.Modulo;
+import vista.ListModelModulo;
 import vista.ViewAdminModulos;
 
 
-public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificable {
+public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificable,ListSelectionListener {
   private ViewAdminModulos vm;
 
     public CtrAdminModulos(ViewAdminModulos vm) {
         this.vm = vm;
         vm.setControlador(this);
+       
+       // vm.controladorLista((ListSelectionListener) this);
     }
 
    public void consultarModulos()
@@ -33,7 +38,12 @@ public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificab
    
    public void moduloSeleccionado( )
    {
+       
       
+      vm.habilitarBorrado(true);
+      vm.habilitarExportacion(true);
+      vm.habilitarModificacion(true);
+      vm.habilitarVerCampañas(true);
    }
    
    public void importar()   {
@@ -61,7 +71,9 @@ public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificab
             case ViewAdminModulos.IMPORTAR:
                 importar();
                 break;
-            
+            case ViewAdminModulos.SELECC_MODULO:
+                moduloSeleccionado();
+                break;
         }
         
     }
@@ -75,6 +87,15 @@ public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificab
     public boolean confirmSobrescribirFormatoFichero(Object[] key) {
         return vm.preguntar("El modulo " + key [0] + " ya está en el sistema. ¿Quieres sobreescribirlo?");
     }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+       if (!e.getValueIsAdjusting()){
+           moduloSeleccionado();
+       }
+    }
+
+   
    
    
 }
