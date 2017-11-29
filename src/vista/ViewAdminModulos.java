@@ -7,7 +7,7 @@ package vista;
 import controlador.CtrAdminModulos;
 import java.io.File;
 import java.util.List;
-import javax.swing.event.ListSelectionListener;
+
 import modelo.Modulo;
 
 public interface ViewAdminModulos
@@ -36,11 +36,11 @@ public interface ViewAdminModulos
    
    Modulo getModulosSeleccionados();
 
-    public File mostrarSelectorFicheros();
+   public File mostrarSelectorFicheros();
 
-    public void alert(String message);
+   public void alert(String message);
 
-    public boolean preguntar(String string);
+   public boolean preguntar(String string);
    
    
 }
