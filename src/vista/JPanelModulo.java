@@ -39,6 +39,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         String filterName = "Módulos (." + ffCmp +", ." + ffModulo + ")";
         fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp));
         fc.setMultiSelectionEnabled(false);
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
     }
 
     /**
