@@ -6,8 +6,8 @@ package modelo;
 
 public class Medida
 {
-   private double valor;
-   private String magnitud;
+   protected double valor;
+   protected String magnitud;
 
     public Medida(double valor, String magnitud) {
         this.valor = valor;
