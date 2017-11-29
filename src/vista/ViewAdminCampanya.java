@@ -24,7 +24,7 @@ public interface ViewAdminCampanya {
     public static final String SELECC_CAMPA="SELEC_CAMPA";
     public static final String IDIOMA="IDIOMA"; //no se si estaría bien aqui tambien
     
-    void mostrar( List<Campaña> modulos );
+    void mostrarCampanyas( List<Campaña> campanyas );
    
    void setControlador( CtrAdminCampanyas controlador );
    

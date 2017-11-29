@@ -20,7 +20,7 @@ import vista.ViewAdminCampanya;
  * @author EzequielRodriguez
  */
 public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
-
+    
     private ViewAdminCampanya vc;
 
     public CtrAdminCampanyas(ViewAdminCampanya v) {
@@ -42,12 +42,12 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     
     
 
-    @Override
+    /*@Override
     public void valueChanged(ListSelectionEvent e) {
         if(!e.getValueIsAdjusting()){
             campañaSeleccionada();
         }
-    }
+    }*/
 
     private void campañaSeleccionada() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -55,6 +55,11 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

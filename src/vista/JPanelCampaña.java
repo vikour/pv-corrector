@@ -132,10 +132,7 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void mostrar(List<Campaña> modulos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     @Override
     public void setControlador(CtrAdminCampanyas controlador) {
@@ -188,6 +185,11 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
 
     @Override
     public boolean preguntar(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mostrarCampanyas(List<Campaña> campanyas) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
