@@ -81,5 +81,17 @@ public class Campaña
         
         return canales;
     }
-   
+
+    @Override
+    public String toString() {
+        return "nombre : " + nombre + ", modulo : " + modulo.getNombre();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Campaña) &&
+               (((Campaña) obj).modulo.equals(modulo)) &&
+               (((Campaña) obj).nombre.equals(nombre));
+    }
+    
 }
