@@ -127,7 +127,7 @@ public class Modulo
             this.tecnologia=tecnologia;
             bd.insert(insert);
         }else{
-            throw new RuntimeException("El modulo ya está incluido en el sistema");
+            throw new DuplicatedObjectException();
         }
    }
   
@@ -204,7 +204,7 @@ public class Modulo
     public void setTecnologia(String tecnologia) {
         BD bd=BD.getInstance();
         
-        bd.update("UPDATE modulos SET tecnologia="+tecnologia+" WHERE nombre='"+this.nombre+"';");
+        bd.update("UPDATE modulos SET tecnologia='"+tecnologia+"' WHERE nombre='"+this.nombre+"';");
         this.tecnologia = tecnologia;
     }
 
