@@ -234,13 +234,11 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         return returnVal == JOptionPane.YES_OPTION;
     }
     
-   /* public void setControladorLista(ListModelModulo l1){
-        this.lista=l1;
-        
-        jList1.addListSelectionListener(lista);
-        
-    }*/
-
+    @Override
+    public Modulo getModulosSeleccionados(){
+        Modulo nuevo = new Modulo(jList1.getSelectedValue());
+        return nuevo;
+    }
    
    
     

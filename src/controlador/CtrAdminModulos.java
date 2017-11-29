@@ -17,7 +17,6 @@ import modelo.FormatoFicheroFactory;
 import modelo.IFormatoFicheroNotificable;
 import modelo.Importador;
 import modelo.Modulo;
-import vista.ListModelModulo;
 import vista.ViewAdminModulos;
 
 
@@ -28,12 +27,16 @@ public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificab
         this.vm = vm;
         vm.setControlador(this);
        
-       // vm.controladorLista((ListSelectionListener) this);
+       
     }
 
    public void consultarModulos()
    {
        vm.mostrar(Modulo.listar());
+   }
+   
+   public void consultarCampanyas(){
+       vm.getModulosSeleccionados().getCampañas();
    }
    
    public void moduloSeleccionado( )

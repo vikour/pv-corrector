@@ -24,8 +24,6 @@ public interface ViewAdminModulos
    
    void setControlador( CtrAdminModulos controlador );
    
-   
-   
    void habilitarModificacion( boolean habilitar );
    
    void habilitarBorrado( boolean habilitar );
@@ -35,6 +33,8 @@ public interface ViewAdminModulos
    void habilitarVerCampañas( boolean habilitar );
    
    void mostrarModuloNuevo( Modulo m );
+   
+   Modulo getModulosSeleccionados();
 
     public File mostrarSelectorFicheros();
 
