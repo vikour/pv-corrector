@@ -5,6 +5,7 @@
  */
 package vista;
 
+import controlador.CtrAdminCampanyas;
 import java.io.File;
 import java.util.List;
 import modelo.Campaña;
@@ -18,14 +19,14 @@ public interface ViewAdminCampanya {
     public static final String EXPORTAR="EXPORTAR";
     
     public static final String BORRAR="BORRAR";
-    public static final String CAMPANYAS="MEDIDAS";
+    public static final String MEDIDAS="MEDIDAS";
     public static final String MODULO="MODULO";
     public static final String SELECC_CAMPA="SELEC_CAMPA";
     public static final String IDIOMA="IDIOMA"; //no se si estaría bien aqui tambien
     
     void mostrar( List<Campaña> modulos );
    
-   //void setControlador( CtrAdminCampanyas controlador );
+   void setControlador( CtrAdminCampanyas controlador );
    
    
    void habilitarBorrado( boolean habilitar );
