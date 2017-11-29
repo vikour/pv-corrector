@@ -71,22 +71,13 @@ public class FormatoModulo extends FormatoFichero {
             mod.setMt1(Double.parseDouble(sc.next()));
             sc.next();
             if(sc.hasNext()){
-                System.out.println("Esto es lo que queda en el sc: ");
+                System.out.println("Error al importar, el formato no es correcto.");
                 while(sc.hasNext()){
                     System.out.println(sc.next());
                 }
             }else{
-                System.out.println("Todo bien");
+                System.out.println("Importacion Exitosa.");
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             return mod;
         } catch (FileNotFoundException ex) {

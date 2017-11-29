@@ -116,13 +116,15 @@ public class Modulo
    }
     
    public Modulo(String nombre, String tecnologia){
-       BD bd=BD.getInstance();
+        BD bd=BD.getInstance();
       
         String select="SELECT * FROM modulos WHERE nombre='"+nombre+"' ;";
         
         
-        if(bd.select(select).size()==0){
+        if(bd.select(select).isEmpty()){
             String insert="INSERT INTO modulos (nombre, tecnologia) VALUES('"+nombre+"','"+tecnologia+"');";
+            this.nombre=nombre;
+            this.tecnologia=tecnologia;
             bd.insert(insert);
         }else{
             throw new RuntimeException("El modulo ya está incluido en el sistema");
@@ -154,6 +156,7 @@ public class Modulo
 
     public void setGamma(double gamma) {
         BD bd=BD.getInstance();
+        
         
         bd.update("UPDATE modulos SET gamma="+gamma+" WHERE nombre='"+this.nombre+"';");
         this.gamma = gamma;
