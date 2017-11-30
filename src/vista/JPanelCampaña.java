@@ -6,6 +6,8 @@
 package vista;
 
 import controlador.CtrAdminCampanyas;
+import java.io.File;
+import java.util.ArrayList;
 
 import java.util.List;
 import modelo.Campaña;
@@ -15,13 +17,16 @@ import modelo.Campaña;
  * @author Sergio
  */
 public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampanya {
-    private CtrAdminCampanyas ctr;
+    
+    private JFramePrincipal prin;
     
     /**
      * Creates new form JPanelCampaña
      */
-    public JPanelCampaña() {
+    public JPanelCampaña(JFramePrincipal p) {
         initComponents();
+        prin=p;
+        
     }
 
     /**
@@ -54,18 +59,17 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         jImportarC.setText("Importar");
 
         jExportarC.setText("Exportar");
+        jExportarC.setEnabled(false);
 
         jBorrarC.setText("Borrar");
+        jBorrarC.setEnabled(false);
 
         jMedidas.setText("Medidas");
+        jMedidas.setEnabled(false);
 
         jModulo.setText("Módulos");
 
-        jListC.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jListC.setModel(new ListModelCampanya());
         jScrollPane1.setViewportView(jListC);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -135,24 +139,24 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
 
     @Override
     public void setControlador(CtrAdminCampanyas controlador) {
-        ctr=controlador;
         
-        jBorrarC.addActionListener(ctr);
+        
+        jBorrarC.addActionListener(controlador);
         jBorrarC.setActionCommand(ViewAdminCampanya.BORRAR);
         
-        jExportarC.addActionListener(ctr);
+        jExportarC.addActionListener(controlador);
         jExportarC.setActionCommand(ViewAdminCampanya.EXPORTAR);
         
-        jImportarC.addActionListener(ctr);
+        jImportarC.addActionListener(controlador);
         jImportarC.setActionCommand(ViewAdminCampanya.IMPORTAR);
         
-        jMedidas.addActionListener(ctr);
+        jMedidas.addActionListener(controlador);
         jMedidas.setActionCommand(ViewAdminCampanya.MEDIDAS);
         
-        jModulo.addActionListener(ctr);
+        jModulo.addActionListener(controlador);
         jModulo.setActionCommand(ViewAdminCampanya.MODULO);
         
-        jListC.addListSelectionListener(ctr);
+        jListC.addListSelectionListener(controlador);
         
        // ctr.consultarCampanyas();
     }
@@ -187,8 +191,30 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         jListC.updateUI();
     }
 
+   
+
     @Override
-    public void muestrate() {
+    public void mostrarModuloNuevo(Campaña m) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public File mostrarSelectorFicheros() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void alert(String message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean preguntar(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void vistaAnterior() {
+       prin.anteriorPanel();
     }
 }

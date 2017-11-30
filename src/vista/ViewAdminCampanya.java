@@ -35,15 +35,17 @@ public interface ViewAdminCampanya {
    
    void habilitarVerMedidas( boolean habilitar );
    
-   //void mostrarModuloNuevo( Campaña m );
+   void mostrarModuloNuevo( Campaña m );
 
-   //public File mostrarSelectorFicheros();
+   File mostrarSelectorFicheros();
 
-   //public void alert(String message);
+   void alert(String message);
 
-   //public boolean preguntar(String string);
+   boolean preguntar(String string);
+
+    public void vistaAnterior();
    
-   void muestrate();
+   
    
    
 }

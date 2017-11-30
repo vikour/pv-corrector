@@ -46,6 +46,9 @@ public class ListModelModulo extends AbstractListModel {
     public void add(Modulo m) {
         this.m.add(m);
     }
-
+    
+    public Modulo getModuloAt(int index){
+        return m.get(index);
+    }
     
 }

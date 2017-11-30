@@ -5,6 +5,7 @@
  */
 package vista;
 
+import controlador.CtrAdminCampanyas;
 import controlador.CtrAdminModulos;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,8 +31,11 @@ public class JFramePrincipal extends javax.swing.JFrame {
        nivel=0;
        //Paneles ordenados por niveles de la aplicación de la aplicación
        paneles= new JPanel[MAX_LEVEL];
-       paneles[0]= new JPanelModulo();
-       new CtrAdminModulos((ViewAdminModulos) paneles[0]);
+       paneles[0]= new JPanelModulo(this);
+       paneles[1]= new JPanelCampaña(this);
+       CtrAdminModulos ctrAdminModulos = new CtrAdminModulos((ViewAdminModulos) paneles[0]);
+       CtrAdminCampanyas ctrAdminCampanyas = new CtrAdminCampanyas ((ViewAdminCampanya) paneles[1]);
+       ctrAdminModulos.setCtrSiguiente(ctrAdminCampanyas);
        
        jPanelPrincipal.setLayout(new BorderLayout()); //Layout para poner las cosas en su lugar
        jPanelPrincipal.add(paneles[0]);
@@ -119,14 +123,25 @@ public class JFramePrincipal extends javax.swing.JFrame {
             }
         });
     }
-
-    private void mostrarNivel(int i) {
-        Container pane= getContentPane();
+    public void siguientePanel(){
+        int ant=nivel;
+        nivel++;
+        mostrarNivel(nivel,ant);
         
-       // pane.removeAll();
-        pane.add(paneles[i]);
-        pack();//Ajustar
-        paneles[i].updateUI();
+        
+    }
+
+    private void mostrarNivel(int sig,int ant) {
+        jPanelPrincipal.remove(paneles[ant]);
+        jPanelPrincipal.add(paneles[sig]);
+
+        jPanelPrincipal.updateUI();   
+    }
+    public void anteriorPanel(){
+        int ant=nivel;
+        nivel--;
+        mostrarNivel(nivel,ant);
+        
         
     }
 

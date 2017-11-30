@@ -25,14 +25,16 @@ import modelo.Modulo;
  */
 public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos {
 
-    private controlador.CtrAdminModulos controller;
-    private ListModelModulo lista;
+    
+    
     private JFileChooser fc;
+    private JFramePrincipal prin;
     /**
      * Creates new form JPanelModulo
      */
-    public JPanelModulo() {
+    public JPanelModulo(JFramePrincipal vent) {
         initComponents();
+        prin=vent;
         fc = new JFileChooser();
         fc.setDialogTitle("Selecciona el fichero con el módulo");
         FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_MODULO, null);
@@ -41,6 +43,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         String filterName = "Módulos (." + ffCmp +", ." + ffModulo + ")";
         fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp));
         fc.setMultiSelectionEnabled(false);
+        
     }
 
     /**
@@ -159,7 +162,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
 
     @Override
     public void setControlador(CtrAdminModulos controlador) {
-        this.controller = controlador;
+        
         
         jButtonBorrar.addActionListener(controlador);
         jButtonBorrar.setActionCommand(ViewAdminModulos.BORRAR);
@@ -176,7 +179,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         jButtonModificar.addActionListener(controlador);
         jButtonModificar.setActionCommand(ViewAdminModulos.MODIFICAR);
         
-        jList1.addListSelectionListener(controller);
+        jList1.addListSelectionListener(controlador);
         
         controlador.consultarModulos();
     }
@@ -236,8 +239,17 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
     
     @Override
     public Modulo getModulosSeleccionados(){
-        /*Modulo nuevo = new Modulo(jList1.getSelectedValue());*/
-        return null;
+        ListModelModulo model= (ListModelModulo) jList1.getModel();
+        
+        
+        return model.getModuloAt(jList1.getSelectedIndex());
+        
+    }
+
+    @Override
+    public void siguienteVista() {
+        
+        prin.siguientePanel();
     }
    
    

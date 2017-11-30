@@ -22,19 +22,26 @@ import vista.ViewAdminCampanya;
 public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     
     private ViewAdminCampanya vc;
+    private CtrAdminModulos ctrant;
 
     public CtrAdminCampanyas(ViewAdminCampanya v) {
         vc=v;
         vc.setControlador(this);
     }
     
-    public void mostrarConModulos(Modulo ms){
+    public void setModulos(Modulo ms){
        List<Campaña> mc=ms.getCampañas();
        
        vc.mostrarCampanyas(mc);
-       vc.muestrate();
+      
         
     }
+
+    public void setCtrAnterior(CtrAdminModulos ctrant) {
+        this.ctrant = ctrant;
+    }
+    
+    
     
     private void campañaSeleccionada() {
       vc.habilitarBorrado(true);
@@ -48,7 +55,14 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
             case ViewAdminCampanya.SELECC_CAMPA:
                 campañaSeleccionada();
                 break;
+            case ViewAdminCampanya.MODULO:
+                vistaAnterior();
+                break;
         }
+    }
+    
+    public void vistaAnterior(){
+        vc.vistaAnterior();
     }
 
     @Override

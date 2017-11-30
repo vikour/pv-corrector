@@ -75,6 +75,9 @@ public class Modulo
    }
 
     public List<Campaña> getCampañas() {
+        if(campañas==null){
+            campañas=Campaña.listar(this);
+        }
         return campañas;
     }
 

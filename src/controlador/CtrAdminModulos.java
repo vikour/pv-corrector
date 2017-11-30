@@ -24,11 +24,12 @@ import vista.ViewAdminModulos;
 
 public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificable,ListSelectionListener {
   private ViewAdminModulos vm;
-  //private ViewAdminCampanya vc;
+  private CtrAdminCampanyas ctrs;
 
     public CtrAdminModulos(ViewAdminModulos vm) {
         this.vm = vm;
         vm.setControlador(this);
+        ctrs=null;
        
        
     }
@@ -39,14 +40,18 @@ public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificab
    }
    
    public void consultarCampanyas(){
-      /*Modulo m= vm.getModulosSeleccionados();
+      Modulo m= vm.getModulosSeleccionados();
+      ctrs.setModulos(m);
+      vm.siguienteVista();
       
-      CtrAdminCampanyas ctrc= new CtrAdminCampanyas(vc);
-      ctrc.mostrarConModulos(m);*/
       
-     
-       
-   }
+    }
+
+    public void setCtrSiguiente(CtrAdminCampanyas ctrs) {
+        this.ctrs = ctrs;
+    }
+   
+   
    
    public void moduloSeleccionado( )
    {
@@ -85,6 +90,10 @@ public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificab
                 break;
             case ViewAdminModulos.SELECC_MODULO:
                 moduloSeleccionado();
+                break;
+            
+            case ViewAdminModulos.CAMPANYAS:
+                consultarCampanyas();
                 break;
         }
         

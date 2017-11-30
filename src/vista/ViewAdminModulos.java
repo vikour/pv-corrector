@@ -41,6 +41,8 @@ public interface ViewAdminModulos
    public void alert(String message);
 
    public boolean preguntar(String string);
+
+    public void siguienteVista();
    
    
 }

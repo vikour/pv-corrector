@@ -5,6 +5,8 @@
  */
 package vista;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import modelo.Campaña;
@@ -16,6 +18,12 @@ import modelo.Campaña;
 public class ListModelCampanya extends AbstractListModel{
 
     private List<Campaña> model;
+
+    public ListModelCampanya() {
+        model= new ArrayList<>();
+    }
+    
+    
 
     public ListModelCampanya(List<Campaña> model) {
         this.model = model;

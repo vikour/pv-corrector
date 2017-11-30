@@ -4,10 +4,13 @@
 
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Campaña
 {
+
+    
    private Modulo modulo;
    private String nombre;
    private List<CurvaMedida> curvas;
@@ -35,6 +38,19 @@ public class Campaña
        curvas = null; // Lazy links.
        canales = null;
    }
+   
+   static List<Campaña> listar(Modulo m) {
+       BD bd = BD.getInstance();
+       List<Campaña> result = new ArrayList<>();
+       String consulta = "Select nombre, modulo FROM campanyas where modulo = '" + m.getNombre() + "'";
+
+       for (String[] tupla : BD.getInstance().select(consulta)) {
+           result.add(new Campaña(m, tupla[0], false));
+       }
+       return result;
+
+        
+    }
 
     public Modulo getModulo() {
         return modulo;
