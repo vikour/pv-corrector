@@ -53,10 +53,11 @@ CREATE TABLE curvas_medidas (
 );
 
 CREATE TABLE medidas_canal (
-    curva_iv   INTEGER PRIMARY KEY,
+    curva_iv   INTEGER NOT NULL,
     valor      NUMERIC   NOT NULL,
     magnitud   VARCHAR(20)  NOT NULL,
     canal      VARCHAR(50)  NOT NULL,
+    PRIMARY KEY (curva_iv, canal),
    FOREIGN KEY (curva_iv) REFERENCES curvas_medidas(id)
       ON UPDATE CASCADE
       ON DELETE CASCADE,

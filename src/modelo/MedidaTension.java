@@ -10,14 +10,14 @@ import java.util.List;
 public class MedidaTension extends MedidaCurva
 {
     
-    public static List<MedidaIntensidad> listar(CurvaIV curva) {
-        List<MedidaIntensidad> result = new ArrayList<>();
+    public static List<MedidaTension> listar(CurvaIV curva) {
+        List<MedidaTension> result = new ArrayList<>();
         String qq = "SELECT orden FROM medidas_curvas " +
                     "WHERE curva_iv = " + curva.getId() + " AND tipo = " +
                     NombreValorCurva.BD(NombreValorCurva.TENSION);
         
         for (String [] tupla : BD.getInstance().select(qq))
-            result.add(new MedidaIntensidad(curva, Integer.valueOf(tupla[0])));
+            result.add(new MedidaTension(curva, Integer.valueOf(tupla[0])));
         
         return result;
     }
