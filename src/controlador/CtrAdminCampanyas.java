@@ -7,7 +7,7 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+
 import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -17,8 +17,8 @@ import vista.ViewAdminCampanya;
 
 /**
  *
- * @author EzequielRodriguez
- */
+ * @author EzequielRodriguez*/
+ 
 public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     
     private ViewAdminCampanya vc;
@@ -28,39 +28,34 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
         vc.setControlador(this);
     }
     
-    
-    
-    
-    public void getCampanyas(){
-        
-    }
-    
     public void mostrarConModulos(Modulo ms){
-        
+       List<Campaña> mc=ms.getCampañas();
+       
+       vc.mostrarCampanyas(mc);
+       vc.muestrate();
         
     }
     
-    
-
-    /*@Override
-    public void valueChanged(ListSelectionEvent e) {
-        if(!e.getValueIsAdjusting()){
-            campañaSeleccionada();
-        }
-    }*/
-
     private void campañaSeleccionada() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      vc.habilitarBorrado(true);
+       vc.habilitarExportacion(true);
+       vc.habilitarVerMedidas(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch(e.getActionCommand()){
+            case ViewAdminCampanya.SELECC_CAMPA:
+                campañaSeleccionada();
+                break;
+        }
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(!e.getValueIsAdjusting()){
+            campañaSeleccionada();
+        }
     }
 
     

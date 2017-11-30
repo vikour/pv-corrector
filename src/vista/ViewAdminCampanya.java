@@ -24,7 +24,7 @@ public interface ViewAdminCampanya {
     public static final String SELECC_CAMPA="SELEC_CAMPA";
     public static final String IDIOMA="IDIOMA"; //no se si estaría bien aqui tambien
     
-    void mostrarCampanyas( List<Campaña> campanyas );
+   void mostrarCampanyas( List<Campaña> campanyas );
    
    void setControlador( CtrAdminCampanyas controlador );
    
@@ -37,9 +37,13 @@ public interface ViewAdminCampanya {
    
    //void mostrarModuloNuevo( Campaña m );
 
-   public File mostrarSelectorFicheros();
+   //public File mostrarSelectorFicheros();
 
-   public void alert(String message);
+   //public void alert(String message);
 
-   public boolean preguntar(String string);
+   //public boolean preguntar(String string);
+   
+   void muestrate();
+   
+   
 }

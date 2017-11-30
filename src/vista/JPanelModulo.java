@@ -71,7 +71,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         jButtonExportar.setText("Exportar");
         jButtonExportar.setEnabled(false);
 
-        jButtonModificar.setText("Modiificar");
+        jButtonModificar.setText("Modificar");
         jButtonModificar.setEnabled(false);
 
         jButtonBorrar.setText("Borrar");
@@ -236,8 +236,8 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
     
     @Override
     public Modulo getModulosSeleccionados(){
-        Modulo nuevo = new Modulo(jList1.getSelectedValue());
-        return nuevo;
+        /*Modulo nuevo = new Modulo(jList1.getSelectedValue());*/
+        return null;
     }
    
    

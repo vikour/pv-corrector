@@ -12,16 +12,19 @@ import java.util.List;
 import javafx.stage.FileChooser;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import modelo.Campaña;
 import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
 import modelo.IFormatoFicheroNotificable;
 import modelo.Importador;
 import modelo.Modulo;
+import vista.ViewAdminCampanya;
 import vista.ViewAdminModulos;
 
 
 public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificable,ListSelectionListener {
   private ViewAdminModulos vm;
+  //private ViewAdminCampanya vc;
 
     public CtrAdminModulos(ViewAdminModulos vm) {
         this.vm = vm;
@@ -36,7 +39,12 @@ public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificab
    }
    
    public void consultarCampanyas(){
-       vm.getModulosSeleccionados();
+      /*Modulo m= vm.getModulosSeleccionados();
+      
+      CtrAdminCampanyas ctrc= new CtrAdminCampanyas(vc);
+      ctrc.mostrarConModulos(m);*/
+      
+     
        
    }
    
