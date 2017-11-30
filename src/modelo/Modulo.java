@@ -110,8 +110,9 @@ public class Modulo
            minPmax=Double.parseDouble(aux[34]);
            minVoc=Double.parseDouble(aux[35]);
            minFF=Double.parseDouble(aux[36]);
-          
        }
+       else 
+           throw new Error("No existe el modulo con nomre " + nombre);
          
    }
     

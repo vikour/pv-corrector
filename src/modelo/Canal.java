@@ -35,7 +35,7 @@ public class Canal {
             this.nombre=l.get(0)[0];
         }else{
             //esto luego se controla en la importacion de campaña
-            throw new RuntimeException("El canal ya se encuentra en el sistema");
+            throw new Error("El canal ya se encuentra en el sistema");
         } 
     }
 

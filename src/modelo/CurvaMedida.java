@@ -26,22 +26,23 @@ public class CurvaMedida extends CurvaIV {
         List<String[]> l=bd.select(select);
         
         if(l.isEmpty()){
-           throw new RuntimeException("No existe la campaña"); 
+           throw new Error("No existe la campaña"); 
         }
         campaña=c;
     }
 
-    public CurvaMedida(int id, Campaña c, String fecha, String hora, Medida isc, Medida voc, Medida pmax, Medida vmax, double ff ) {
+    public CurvaMedida(Campaña c, String fecha, String hora, Medida isc, Medida voc, Medida pmax, Medida vmax, double ff ) {
         super(fecha, hora, isc, voc, pmax, vmax, ff);
         this.campaña = null;
         this.medidasCanal = null;
         this.correcciones = null;
-        String select= "SELECT campanya FROM curvas_medidas WHERE id="+id+" ;";
+        
+        String select= "SELECT campanya FROM curvas_medidas WHERE id="+getId()+" ;";
         BD bd= BD.getInstance();
         List<String[]> l=bd.select(select);
         
         if(l.isEmpty()){
-           throw new RuntimeException("No existe la campaña"); 
+           throw new Error("No existe la campaña"); 
         }
         campaña=c;
     }

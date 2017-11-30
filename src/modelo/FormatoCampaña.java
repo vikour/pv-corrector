@@ -122,6 +122,7 @@ public class FormatoCampaña extends FormatoFichero{
 
     private void leerInfoBasicaCurva(BufferedReader br, Campaña campaña) throws IOException {         
         String line;
+        String fecha, hora;
 
         // Por hacer, leer fechas.
         line = readNotEmptyLine(br);
@@ -131,27 +132,29 @@ public class FormatoCampaña extends FormatoFichero{
         
         for (int i = 0 ; i < 6 ; i++)
             line = readNotEmptyLine(br);
-        
+
     }
 
     private Campaña leerInfoBasica(BufferedReader br) throws IOException {
         String line;
         Modulo modulo = null;
         Campaña Campaña = null;
+        String value;
 
         line = readNotEmptyLine(br);
-
+        value = extractValue(line);
         try { // Modulo.
-            modulo = new Modulo(extractValue(line));
+            modulo = new Modulo(value);
         } catch (Error ex) {
-            modulo = new Modulo(extractValue(line),"");
+            modulo = new Modulo(value,"");
         }
 
+        line = readNotEmptyLine(br);
+        value = extractValue(line);
         try { // CampaÃ±a.
-            line = readNotEmptyLine(br);
-            Campaña = new Campaña(modulo, extractValue(line), false);
+            Campaña = new Campaña(modulo, value, false);
         } catch (Error err) {
-            Campaña = new Campaña(modulo, extractValue(line), true);
+            Campaña = new Campaña(modulo, value, true);
         } // Si existe la campaÃ±a no hacemos nada.    
 
         return Campaña;

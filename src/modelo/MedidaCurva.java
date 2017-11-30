@@ -51,7 +51,7 @@ public abstract class MedidaCurva extends Medida implements Comparable {
             tipo = tipo;
         }
         catch (Error err) {
-            throw new RuntimeException("Medida duplicada");
+            throw new Error("Medida duplicada");
         }
     }
 
