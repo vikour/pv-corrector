@@ -83,7 +83,7 @@ public class FormatoCampaña extends FormatoFichero{
         
         line = readNotEmptyLine(br);
         
-        while (!line.contains("NÃºmero de puntos curva IV")) {
+        while (!line.contains("Número de puntos curva IV")) {
             parts = line.split(":");
             nombreCanal = parts[parts.length-2];
             parts = parts[parts.length-1].split("\t");
