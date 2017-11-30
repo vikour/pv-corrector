@@ -1,37 +1,91 @@
 /**
  * @(#) CurvaIV.java
  */
-
 package modelo;
 
-public abstract class CurvaIV
-{
-   private MedidaIntensidad[] intensidades;
-   
-   private MedidaTension[] tensiones;
-   
-   private String fecha;
-   
-   private String hora;
-   
-   private Medida isc;
-   
-   private Medida voc;
-   
-   private Medida pmax;
-   
-   private Medida vmax;
-   
-   private double ff;
-   
-   private int id;
-   
-    public MedidaIntensidad[] getIntensidades() {
+import java.util.List;
+
+public abstract class CurvaIV {
+
+    private List<MedidaIntensidad> intensidades;
+
+    private List<MedidaTension> tensiones;
+
+    private String fecha;
+
+    private String hora;
+
+    private Medida isc;
+
+    private Medida voc;
+
+    private Medida pmax;
+
+    private Medida vmax;
+
+    private double ff;
+
+    private int id;
+
+    public CurvaIV(int id) {
+        String select = "SELECT fecha, hora, isc_v ,isc_m, voc_v, voc_m, pmax_v, pmax_m, vmax_v ,vmax_m, ff_v FROM curvas_iv WHERE id=" + id + " ;";
+        BD bd = BD.getInstance();
+        List<String[]> l = bd.select(select);
+
+        if (l.isEmpty()) {
+            throw new Error("La curva no existe en la base de datos");
+        }
+        String[] aux = l.get(0);
+
+        this.id = id;
+        this.fecha = aux[0];
+        this.hora = aux[1];
+        this.isc = new Medida(Double.parseDouble(aux[2]), aux[3]);
+        this.voc = new Medida(Double.parseDouble(aux[4]), aux[5]);
+        this.pmax = new Medida(Double.parseDouble(aux[6]), aux[7]);
+        this.vmax = new Medida(Double.parseDouble(aux[8]), aux[9]);
+        this.ff = Double.parseDouble(aux[10]);
+
+    }
+
+    public CurvaIV( String fecha, String hora, Medida isc, Medida voc, Medida pmax, Medida vmax, double ff) {
+        this.intensidades = null;
+        this.tensiones = null;
+        String select = "SELECT * FROM curvas_iv WHERE id=" + id + " ;";
+        BD bd = BD.getInstance();
+        List<String[]> l = bd.select(select);
+
+        if (!l.isEmpty()) {
+            throw new Error("La curva ya existe en la base de datos");
+        }
+        
+        
+        String ins="INSERT INTO curvas_iv (fecha,hora,isc_v,isc_m,voc_v,voc_m,pmax_v,pmax_m,vmax_v,vmax_m,ff_v) VALUES ("+fecha+", "+hora+", "+isc.getValor()+", "+isc.getMagnitud()+", "+voc.getValor()+", "+voc.getMagnitud()+", "+pmax.getValor()+", "+pmax.getMagnitud()+", "+vmax.getValor()+", "+vmax.getMagnitud()+", "+ff+");";
+        bd.insert(ins);
+        
+        this.fecha = fecha;
+        this.hora = hora;
+        this.isc = isc;
+        this.voc = voc;
+        this.pmax = pmax;
+        this.vmax = vmax;
+        this.ff = ff;
+        
+    }
+
+    
+    
+    
+    public List<MedidaIntensidad> getIntensidades() {
+        List<MedidaIntensidad> l = MedidaIntensidad.listar(this);
+        intensidades = l;
         return intensidades;
     }
 
-    public MedidaTension[] getTensiones() {
-        return tensiones;
+    public List<MedidaTension> getTensiones() {
+        List<MedidaTension> l=MedidaTension.listar(this);
+        tensiones=l;
+        return l;
     }
 
     public String getFecha() {
@@ -65,9 +119,78 @@ public abstract class CurvaIV
     public int getId() {
         return id;
     }
-    
-    public void setId(int id) {
-        this.id = id;
+
+    public void setFecha(String fecha) {
+        String up="UPDATE curvas_iv SET fecha="+fecha+" WHERE id="+this.id+" ; ";
+        BD bd=BD.getInstance();
+        bd.update(up);
+        this.fecha = fecha;
     }
-   
+
+    public void setHora(String hora) {
+        String up="UPDATE curvas_iv SET hora="+hora+" WHERE id="+this.id+" ; ";
+        BD bd=BD.getInstance();
+        bd.update(up);
+        this.hora = hora;
+    }
+
+    public void setIsc(Medida isc) {
+        double a= isc.getValor();
+        String b=isc.getMagnitud();
+        String up="UPDATE curvas_iv SET isc_v="+a+", isc_m='"+b+"' WHERE id="+this.id+" ; ";
+        BD bd=BD.getInstance();
+        bd.update(up);
+        this.isc = isc;
+    }
+
+    public void setVoc(Medida voc) {
+        double a= voc.getValor();
+        String b=voc.getMagnitud();
+        String up="UPDATE curvas_iv SET voc_v="+a+", voc_m='"+b+"' WHERE id="+this.id+" ; ";
+        BD bd=BD.getInstance();
+        bd.update(up);
+        this.voc = voc;
+    }
+
+    public void setPmax(Medida pmax) {
+        double a= pmax.getValor();
+        String b=pmax.getMagnitud();
+        String up="UPDATE curvas_iv SET pmax_v="+a+", pmax_m='"+b+"' WHERE id="+this.id+" ; ";
+        BD bd=BD.getInstance();
+        bd.update(up);
+        this.pmax = pmax;
+    }
+
+    public void setVmax(Medida vmax) {
+        double a= vmax.getValor();
+        String b=vmax.getMagnitud();
+        String up="UPDATE curvas_iv SET vmax_v="+a+", vmax_m='"+b+"' WHERE id="+this.id+" ; ";
+        BD bd=BD.getInstance();
+        bd.update(up);
+        this.vmax = vmax;
+    }
+
+    public void setFf(double ff) {
+        String up="UPDATE curvas_iv SET ff_v="+ff+" WHERE id="+this.id+" ; ";
+        BD bd=BD.getInstance();
+        bd.update(up);
+        this.ff = ff;
+    }
+    
+    @Override
+    public String toString(){
+        return"ID: "+id+"\nFecha: "+fecha+"\nHora: "+hora+"\nISC: "+isc+"\nVOC: "+voc+"\nPMAX: "+pmax+"\nVMAX: "+vmax+"\nFF: "+ff;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof CurvaIV){
+            CurvaIV aux=(CurvaIV)o;
+            if(aux.id==this.id){
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }
