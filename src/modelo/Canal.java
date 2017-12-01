@@ -29,7 +29,7 @@ public class Canal {
         List<String[]> l =bd.select("SELECT * FROM canales WHERE nombre='"+nombre+"'");
         
         if(l.isEmpty() && store){
-            bd.insert("INSERT INTO canales VALUES '"+nombre+"'");
+            bd.insert("INSERT INTO canales VALUES ('"+nombre+"')");
             this.nombre=nombre;
         }else if(!store && !l.isEmpty()){
             this.nombre=l.get(0)[0];

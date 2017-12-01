@@ -24,25 +24,26 @@ public class FormatoCampaña extends FormatoFichero{
         BufferedReader br = null;
         BD bd = BD.getInstance();
         Campaña campaña = null;
+        CurvaMedida curva = null;
         
         
         try {
-            bd.execute("BEGIN TRANSACTION");
+            //bd.execute("BEGIN TRANSACTION");
             br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "ISO-8859-15"));
             
             campaña = leerInfoBasica(br);
-            leerInfoBasicaCurva(br, campaña);
-            leerCanales(br);
-            leerMedidasCurva(br);
+            curva = leerInfoBasicaCurva(br, campaña);
+            leerCanales(br, curva);
+            leerMedidasCurva(br, curva);
         
-            bd.execute("COMMIT");
+            //bd.execute("COMMIT");
         } 
         catch (PatternSyntaxException | NumberFormatException ex) {
-            bd.execute("ROLLBACK");
+            //bd.execute("ROLLBACK");
             notificar.alertFormatoFichero("Formato del fichero incorrecto");
         }
         catch (IOException ex) {
-            bd.execute("ROLLBACK");
+            //bd.execute("ROLLBACK");
             ex.printStackTrace();
         }
         
@@ -54,7 +55,7 @@ public class FormatoCampaña extends FormatoFichero{
         
         do {
             aux = br.readLine();
-        } while (aux.isEmpty());
+        } while (aux !=null && aux.isEmpty());
         
         return aux;
     }
@@ -74,12 +75,15 @@ public class FormatoCampaña extends FormatoFichero{
         return "xls";
     }
 
-    private void leerCanales(BufferedReader br) throws IOException {
+    private void leerCanales(BufferedReader br, CurvaMedida curva) throws IOException {
         String line;
         String parts[];
         
         String magnitud, nombreCanal, valorStr;
         double valor;
+        
+        Canal canal;
+        MedidaSensor medida;
         
         line = readNotEmptyLine(br);
         
@@ -92,7 +96,16 @@ public class FormatoCampaña extends FormatoFichero{
             if (!valorStr.isEmpty()) {
                 valor = Double.valueOf(valorStr);
                 magnitud = parts[parts.length-1];
-                // Insertar canal.
+                
+                try {
+                    canal = new Canal(nombreCanal, false);
+                }
+                catch (Error err) {
+                    canal = new Canal(nombreCanal, true);
+                }
+                
+                medida = new MedidaSensor(valor, magnitud, canal, curva);
+
             }
             
             line = readNotEmptyLine(br);            
@@ -100,7 +113,7 @@ public class FormatoCampaña extends FormatoFichero{
  
     }
 
-    private void leerMedidasCurva(BufferedReader br) throws IOException {
+    private void leerMedidasCurva(BufferedReader br, CurvaMedida curva) throws IOException {
         String line;
         int numero;
         String intensidadStr;
@@ -115,24 +128,44 @@ public class FormatoCampaña extends FormatoFichero{
             numero = Integer.valueOf(parts[0]);
             tensionStr = parts[1].replace(",", ".");
             intensidadStr = parts[2].replace(",", ".");
+            new MedidaIntensidad(Double.parseDouble(intensidadStr), "A", numero, curva);
+            new MedidaTension(Double.parseDouble(tensionStr), "V", numero, curva);
             line = readNotEmptyLine(br);
         }
         
     }
 
-    private void leerInfoBasicaCurva(BufferedReader br, Campaña campaña) throws IOException {         
-        String line;
+    private CurvaMedida leerInfoBasicaCurva(BufferedReader br, Campaña campaña) throws IOException {         
+        String line, parts[];
         String fecha, hora;
+        CurvaMedida curva = null;
+        String value, magnitud;
+        Medida [] medidas = new Medida[6];
 
         // Por hacer, leer fechas.
         line = readNotEmptyLine(br);
+        fecha = extractValue(line);
         line = readNotEmptyLine(br);
-        // fin leer fechas.
-        line = readNotEmptyLine(br); // Ignoramos correcciÃ³n.
+        hora = extractValue(line);
         
-        for (int i = 0 ; i < 6 ; i++)
+        // fin leer fechas.
+        line = readNotEmptyLine(br); // Ignoramos corrección.
+        line = readNotEmptyLine(br);
+        
+        for (int i = 0 ; i < 6 ; i++) {
+            
+            parts = line.split("\t");
+            value = parts[1].replace(",", ".");
+            magnitud = parts[2];
+            medidas[i] = new Medida(Double.valueOf(value), magnitud);
             line = readNotEmptyLine(br);
+        }
+        
+        curva = new CurvaMedida(campaña, fecha, hora, medidas[0], 
+                                medidas[1], medidas[2], medidas[3],
+                                medidas[4], medidas[5].getValor());
 
+        return curva;
     }
 
     private Campaña leerInfoBasica(BufferedReader br) throws IOException {

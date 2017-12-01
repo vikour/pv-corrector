@@ -37,6 +37,7 @@ public class MedidaSensor extends Medida
         }catch(Error err){
             throw new Error("Medida duplicada");
         }
+        
     }
     
     public MedidaSensor(CurvaIV c, Canal can){

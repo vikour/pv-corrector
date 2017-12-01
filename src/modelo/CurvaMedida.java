@@ -9,53 +9,47 @@ import java.util.List;
 
 public class CurvaMedida extends CurvaIV {
 
-    static List<CurvaMedida> listar(Campaña aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    static List<CurvaMedida> listar(Campaña campaña) {
+        List<CurvaMedida> result = new ArrayList<>();
+        String qq = "SELECT id FROM curvas_medidas WHERE campanya = '" + campaña.getNombre() + "' " +
+                    "AND modulo = '" + campaña.getModulo().getNombre() + "'";
+        
+        for (String [] tupla : BD.getInstance().select(qq))
+            result.add(new CurvaMedida(Integer.parseInt(tupla[0])));
+        
+        return result;
     }
 
     private Campaña campaña;
-
     private List<MedidaSensor> medidasCanal;
-
     private CurvaCorregida correcciones;
 
-    public CurvaMedida(int id, Campaña c) {
+    public CurvaMedida(int id) {
         super(id);
-        String select= "SELECT campanya FROM curvas_medidas WHERE id="+id+" ;";
-        BD bd= BD.getInstance();
-        List<String[]> l=bd.select(select);
+        String qq = "SELECT modulo,campanya FROM curvas_medidas WHERE id = " + id;
+        String tupla [] = BD.getInstance().select(qq).get(0);
         
-        if(l.isEmpty()){
-           throw new Error("No existe la campaña"); 
-        }
-        campaña=c;
+        campaña = new Campaña(new Modulo(tupla[0]), tupla[1], false);
+        medidasCanal = null;
+        correcciones = null;
     }
 
-    public CurvaMedida(Campaña c, String fecha, String hora, Medida isc, Medida voc, Medida pmax, Medida vmax, double ff ) {
-        super(fecha, hora, isc, voc, pmax, vmax, ff);
-        this.campaña = null;
+    public CurvaMedida(Campaña c, String fecha, String hora, Medida isc, Medida voc, Medida pmax, Medida imax, Medida vmax, double ff ) {
+        super(CurvaIV.MEDIDA, fecha, hora, isc, voc, pmax, imax, vmax, ff);
+        String stm = "INSERT INTO curvas_medidas VALUES ("+getId()+", '" + c.getModulo().getNombre() + "', '" + c.getNombre() + "')";
+        
+        this.campaña = c;
         this.medidasCanal = null;
         this.correcciones = null;
         
-        String select= "SELECT campanya FROM curvas_medidas WHERE id="+getId()+" ;";
-        BD bd= BD.getInstance();
-        List<String[]> l=bd.select(select);
-        
-        if(l.isEmpty()){
-           throw new Error("No existe la campaña"); 
-        }
-        campaña=c;
+        BD.getInstance().insert(stm);
     }
-    
-    
-    
     
     public Campaña getCampaña() {
         return campaña;
     }
 
     public List<MedidaSensor> getMedidasCanal() {
-        
         String sel="SELECT canal FROM medidas_canal WHERE curva_iv="+this.getId()+" ;";
         BD bd=BD.getInstance();
         List<String[]> l=bd.select(sel);

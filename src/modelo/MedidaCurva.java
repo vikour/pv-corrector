@@ -48,7 +48,7 @@ public abstract class MedidaCurva extends Medida implements Comparable {
             bd.insert(stm);
             this.orden = orden;
             idCurva = curva.getId();
-            tipo = tipo;
+            this.tipo = tipo;
         }
         catch (Error err) {
             throw new Error("Medida duplicada");
