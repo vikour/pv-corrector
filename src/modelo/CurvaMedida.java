@@ -104,8 +104,5 @@ public class CurvaMedida extends CurvaIV {
     public String toString(){
         return "ID: "+this.getId()+"\nCampaña: "+campaña.getNombre();
     }
-    
-    
-    
 
 }

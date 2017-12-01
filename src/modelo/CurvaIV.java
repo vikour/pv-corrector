@@ -202,4 +202,9 @@ public abstract class CurvaIV {
         return false;
     }
     
+    public static void borrar(String fecha, String hora) {
+        String rmv = "DELETE FROM curvas_iv WHERE fecha = '" +fecha+"' AND hora = '" + hora + "'";
+        BD.getInstance().delete(rmv);
+    }
+    
 }

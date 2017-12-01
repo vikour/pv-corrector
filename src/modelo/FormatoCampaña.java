@@ -15,6 +15,8 @@ import java.util.regex.PatternSyntaxException;
 
 public class FormatoCampaña extends FormatoFichero{
 
+    private boolean sobreescribir;
+    
     public FormatoCampaña(IFormatoFicheroNotificable notificar) {
         super(notificar);
     }
@@ -26,24 +28,29 @@ public class FormatoCampaña extends FormatoFichero{
         Campaña campaña = null;
         CurvaMedida curva = null;
         
+        sobreescribir = true;
         
         try {
-            //bd.execute("BEGIN TRANSACTION");
+            bd.execute("BEGIN TRANSACTION");
             br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "ISO-8859-15"));
             
             campaña = leerInfoBasica(br);
             curva = leerInfoBasicaCurva(br, campaña);
-            leerCanales(br, curva);
-            leerMedidasCurva(br, curva);
-        
-            //bd.execute("COMMIT");
+            
+            if (sobreescribir) {
+                leerCanales(br, curva);
+                leerMedidasCurva(br, curva);
+                bd.execute("COMMIT");
+            }
+            else
+                bd.execute("ROLLBACK");
         } 
         catch (PatternSyntaxException | NumberFormatException ex) {
-            //bd.execute("ROLLBACK");
+            bd.execute("ROLLBACK");
             notificar.alertFormatoFichero("Formato del fichero incorrecto");
         }
         catch (IOException ex) {
-            //bd.execute("ROLLBACK");
+            bd.execute("ROLLBACK");
             ex.printStackTrace();
         }
         
@@ -87,25 +94,35 @@ public class FormatoCampaña extends FormatoFichero{
         
         line = readNotEmptyLine(br);
         
-        while (!line.contains("Número de puntos curva IV")) {
+        while (!line.contains("mero de puntos curva IV")) {
             parts = line.split(":");
-            nombreCanal = parts[parts.length-2];
-            parts = parts[parts.length-1].split("\t");
-            valorStr = parts[parts.length-2].replace(",", ".");
             
-            if (!valorStr.isEmpty()) {
-                valor = Double.valueOf(valorStr);
-                magnitud = parts[parts.length-1];
+            if (parts.length >= 2) {
+                nombreCanal = parts[parts.length-2];
+                parts = parts[parts.length-1].split("\t");
+                valorStr = parts[parts.length-2].replace(",", ".");
                 
-                try {
-                    canal = new Canal(nombreCanal, false);
+                if (!valorStr.isEmpty()) {
+                    valor = Double.valueOf(valorStr);
+                    magnitud = parts[parts.length-1];
+                    
+                    try {
+                        canal = new Canal(nombreCanal, false);
+                    }
+                    catch (Error err) {
+                        canal = new Canal(nombreCanal, true);
+                    }
+                    
+                    try {
+                        medida = new MedidaSensor(valor, magnitud, canal, curva);
+                    }
+                    catch (Error err) {
+                        medida = new MedidaSensor(curva, canal);
+                        medida.setValor(valor);
+                        medida.setMagnitud(magnitud);
+                    } // Si existe no importa.
+                    
                 }
-                catch (Error err) {
-                    canal = new Canal(nombreCanal, true);
-                }
-                
-                medida = new MedidaSensor(valor, magnitud, canal, curva);
-
             }
             
             line = readNotEmptyLine(br);            
@@ -128,8 +145,21 @@ public class FormatoCampaña extends FormatoFichero{
             numero = Integer.valueOf(parts[0]);
             tensionStr = parts[1].replace(",", ".");
             intensidadStr = parts[2].replace(",", ".");
-            new MedidaIntensidad(Double.parseDouble(intensidadStr), "A", numero, curva);
-            new MedidaTension(Double.parseDouble(tensionStr), "V", numero, curva);
+            try {
+                new MedidaIntensidad(Double.parseDouble(intensidadStr), "A", numero, curva);
+            }
+            catch (Error err) { // si existe, se actualiza.
+                MedidaIntensidad mi = new MedidaIntensidad(curva, numero);
+                mi.setValor(Double.parseDouble(intensidadStr));
+            }
+            
+            try {
+                new MedidaTension(Double.parseDouble(tensionStr), "V", numero, curva);
+            }
+            catch (Error err) { // si existe, se actualiza
+                MedidaTension mt = new MedidaTension(curva, numero);
+                mt.setValor(Double.parseDouble(tensionStr));
+            }
             line = readNotEmptyLine(br);
         }
         
@@ -161,9 +191,22 @@ public class FormatoCampaña extends FormatoFichero{
             line = readNotEmptyLine(br);
         }
         
-        curva = new CurvaMedida(campaña, fecha, hora, medidas[0], 
-                                medidas[1], medidas[2], medidas[3],
-                                medidas[4], medidas[5].getValor());
+        try {
+            curva = new CurvaMedida(campaña, fecha, hora, medidas[0],
+                    medidas[1], medidas[2], medidas[3],
+                    medidas[4], medidas[5].getValor());
+        }
+        catch (Error ex) {
+            sobreescribir = notificar.confirmSobrescribirFormatoFichero(new Object[] {fecha,hora});
+            
+            if (sobreescribir) {
+                CurvaIV.borrar(fecha, hora);
+                curva = new CurvaMedida(campaña, fecha, hora, medidas[0],
+                    medidas[1], medidas[2], medidas[3],
+                    medidas[4], medidas[5].getValor());
+            }
+            
+        }
 
         return curva;
     }
