@@ -36,6 +36,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
        CtrAdminModulos ctrAdminModulos = new CtrAdminModulos((ViewAdminModulos) paneles[0]);
        CtrAdminCampanyas ctrAdminCampanyas = new CtrAdminCampanyas ((ViewAdminCampanya) paneles[1]);
        ctrAdminModulos.setCtrSiguiente(ctrAdminCampanyas);
+       ctrAdminCampanyas.setCtrAnterior(ctrAdminModulos);
        
        jPanelPrincipal.setLayout(new BorderLayout()); //Layout para poner las cosas en su lugar
        jPanelPrincipal.add(paneles[0]);
@@ -134,8 +135,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
     private void mostrarNivel(int sig,int ant) {
         jPanelPrincipal.remove(paneles[ant]);
         jPanelPrincipal.add(paneles[sig]);
-
-        jPanelPrincipal.updateUI();   
+        jPanelPrincipal.updateUI();
     }
     public void anteriorPanel(){
         int ant=nivel;

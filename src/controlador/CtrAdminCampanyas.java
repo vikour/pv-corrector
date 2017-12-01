@@ -76,6 +76,7 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener, 
     
     public void vistaAnterior(){
         vc.vistaAnterior();
+        ctrant.consultarModulos();
     }
 
     @Override
@@ -95,6 +96,7 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener, 
            importador = new Importador(ff, f);
            importador.importar();
            consultarCampañas();
+           vc.informar("Se ha completado la importación con éxito.");
        }
        catch (IOException ex) {
            vc.alert(ex.getMessage());

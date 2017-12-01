@@ -232,4 +232,9 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
     public void vistaAnterior() {
        prin.anteriorPanel();
     }
+
+    @Override
+    public void informar(String msg) {
+        JOptionPane.showMessageDialog(this, msg, "", JOptionPane.INFORMATION_MESSAGE);
+    }
 }

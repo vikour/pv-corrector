@@ -40,7 +40,7 @@ public class FormatoCampaña extends FormatoFichero{
             if (sobreescribir) {
                 leerCanales(br, curva);
                 leerMedidasCurva(br, curva);
-                System.out.println("Campaña importada con éxito");
+                System.out.println(file.getName() + " : Campaña importada con éxito");
                 bd.execute("COMMIT");
             }
             else
@@ -143,23 +143,26 @@ public class FormatoCampaña extends FormatoFichero{
         
         while (line != null) {
             parts = line.split("\t");
-            numero = Integer.valueOf(parts[0]);
-            tensionStr = parts[1].replace(",", ".");
-            intensidadStr = parts[2].replace(",", ".");
-            try {
-                new MedidaIntensidad(Double.parseDouble(intensidadStr), "A", numero, curva);
-            }
-            catch (Error err) { // si existe, se actualiza.
-                MedidaIntensidad mi = new MedidaIntensidad(curva, numero);
-                mi.setValor(Double.parseDouble(intensidadStr));
-            }
             
-            try {
-                new MedidaTension(Double.parseDouble(tensionStr), "V", numero, curva);
-            }
-            catch (Error err) { // si existe, se actualiza
-                MedidaTension mt = new MedidaTension(curva, numero);
-                mt.setValor(Double.parseDouble(tensionStr));
+            if (parts.length == 4) {
+                numero = Integer.valueOf(parts[0]);
+                tensionStr = parts[1].replace(",", ".");
+                intensidadStr = parts[2].replace(",", ".");
+                try {
+                    new MedidaIntensidad(Double.parseDouble(intensidadStr), "A", numero, curva);
+                }
+                catch (Error err) { // si existe, se actualiza.
+                    MedidaIntensidad mi = new MedidaIntensidad(curva, numero);
+                    mi.setValor(Double.parseDouble(intensidadStr));
+                }
+                
+                try {
+                    new MedidaTension(Double.parseDouble(tensionStr), "V", numero, curva);
+                }
+                catch (Error err) { // si existe, se actualiza
+                    MedidaTension mt = new MedidaTension(curva, numero);
+                    mt.setValor(Double.parseDouble(tensionStr));
+                }
             }
             line = readNotEmptyLine(br);
         }
