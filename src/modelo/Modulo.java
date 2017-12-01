@@ -128,7 +128,7 @@ public class Modulo
             this.tecnologia=tecnologia;
             bd.insert(insert);
         }else{
-            throw new DuplicatedObjectException();
+            throw new Error();
         }
    }
   
@@ -399,6 +399,9 @@ public class Modulo
     }
 
     public List<Campaña> getCampañas() {
+        if(campañas==null){
+            campañas=Campaña.listar(this);
+        }
         return campañas;
     }
 

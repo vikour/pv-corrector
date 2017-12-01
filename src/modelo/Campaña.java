@@ -3,12 +3,19 @@
  */
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Campaña {
 
-    static List<Campaña> listar(Modulo aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    static List<Campaña> listar(Modulo modulo) {
+        List<Campaña> result = new ArrayList<>();
+        String qq = "SELECT nombre FROM campanyas WHERE modulo = '" + modulo.getNombre() + "'";
+        
+        for (String [] tupla : BD.getInstance().select(qq))
+            result.add(new Campaña(modulo, tupla[0], false));
+        
+        return result;
     }
     
     private Modulo modulo;

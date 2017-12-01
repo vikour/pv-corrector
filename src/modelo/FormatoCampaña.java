@@ -40,12 +40,13 @@ public class FormatoCampaña extends FormatoFichero{
             if (sobreescribir) {
                 leerCanales(br, curva);
                 leerMedidasCurva(br, curva);
+                System.out.println("Campaña importada con éxito");
                 bd.execute("COMMIT");
             }
             else
                 bd.execute("ROLLBACK");
         } 
-        catch (PatternSyntaxException | NumberFormatException ex) {
+        catch (PatternSyntaxException | NumberFormatException | Error ex) {
             bd.execute("ROLLBACK");
             notificar.alertFormatoFichero("Formato del fichero incorrecto");
         }

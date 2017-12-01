@@ -8,6 +8,8 @@ package vista;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import modelo.Modulo;
 
 /**
@@ -43,6 +45,10 @@ public class ListModelModulo extends AbstractListModel {
 
     public void add(Modulo m) {
         this.m.add(m);
+    }
+    
+    public Modulo getModuloAt(int index){
+        return m.get(index);
     }
     
 }

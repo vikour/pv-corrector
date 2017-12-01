@@ -12,6 +12,7 @@ import java.util.List;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
@@ -24,20 +25,22 @@ import modelo.Modulo;
  */
 public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos {
 
-    private controlador.CtrAdminModulos controller;
+    
+    
     private JFileChooser fc;
+    private JFramePrincipal prin;
     /**
      * Creates new form JPanelModulo
      */
-    public JPanelModulo() {
+    public JPanelModulo(JFramePrincipal vent) {
         initComponents();
+        prin=vent;
         fc = new JFileChooser();
         fc.setDialogTitle("Selecciona el fichero con el módulo");
-        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_MODULO, null);
-        String ffModulo = "cls";//ff.getExtension();
         String ffCmp = Importador.EXTENSION_COMPRIMIDO;
-        String filterName = "Módulos (." + ffCmp +", ." + ffModulo + ")";
-        fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp));
+        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_MODULO, null);
+        String filterName = "Módulos (." + ffCmp +", " + ff.getExtension() + ")";
+        fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp, ff.getExtension()));
         fc.setMultiSelectionEnabled(false);
         fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
     }
@@ -70,7 +73,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         jButtonExportar.setText("Exportar");
         jButtonExportar.setEnabled(false);
 
-        jButtonModificar.setText("Modiificar");
+        jButtonModificar.setText("Modificar");
         jButtonModificar.setEnabled(false);
 
         jButtonBorrar.setText("Borrar");
@@ -158,7 +161,8 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
 
     @Override
     public void setControlador(CtrAdminModulos controlador) {
-        this.controller = controlador;
+        
+        
         jButtonBorrar.addActionListener(controlador);
         jButtonBorrar.setActionCommand(ViewAdminModulos.BORRAR);
         
@@ -173,8 +177,13 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         
         jButtonModificar.addActionListener(controlador);
         jButtonModificar.setActionCommand(ViewAdminModulos.MODIFICAR);
+        
+        jList1.addListSelectionListener(controlador);
+        
         controlador.consultarModulos();
     }
+    
+   
 
     @Override
     public void habilitarModificacion(boolean habilitar) {
@@ -215,7 +224,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         return f;
     }
 
-    @Override
+   // @Override
     public void alert(String message) {
         JOptionPane.showMessageDialog(this, message, "Ups", JOptionPane.WARNING_MESSAGE);
     }
@@ -226,5 +235,22 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         
         return returnVal == JOptionPane.YES_OPTION;
     }
+    
+    @Override
+    public Modulo getModulosSeleccionados(){
+        ListModelModulo model= (ListModelModulo) jList1.getModel();
+        
+        
+        return model.getModuloAt(jList1.getSelectedIndex());
+        
+    }
+
+    @Override
+    public void siguienteVista() {
+        
+        prin.siguientePanel();
+    }
+   
+   
     
 }

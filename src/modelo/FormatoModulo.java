@@ -97,7 +97,7 @@ public class FormatoModulo extends FormatoFichero {
             Logger.getLogger(FormatoModulo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NumberFormatException | NullPointerException | NoSuchElementException ex){
             notificar.alertFormatoFichero("El formato del fichero no es correcto");
-        } catch (DuplicatedObjectException ex){
+        } catch (Error ex){
             Object [] k={nombre};
             if(notificar.confirmSobrescribirFormatoFichero(k)){
                Modulo m= new Modulo(nombre);
@@ -158,7 +158,7 @@ public class FormatoModulo extends FormatoFichero {
 
     @Override
     public String getExtension() {
-        return "cls"; 
+        return "dat"; 
     }
     
 }
