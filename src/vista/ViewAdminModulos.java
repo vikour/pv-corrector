@@ -42,7 +42,7 @@ public interface ViewAdminModulos
 
    public boolean preguntar(String string);
 
-    public void siguienteVista();
+   public void siguienteVista();
    
    
 }

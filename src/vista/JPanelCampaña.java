@@ -230,4 +230,11 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
     public void vistaAnterior() {
        prin.anteriorPanel();
     }
+
+    @Override
+    public Campaña getCampañaSeleccionada() {
+        ListModelCampanya model= (ListModelCampanya) jListC.getModel();
+        return model.getCampaña(jListC.getSelectedIndex());
+    }
+
 }
