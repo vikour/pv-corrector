@@ -43,7 +43,11 @@ public interface ViewAdminCampanya {
 
    boolean preguntar(String string);
 
-    public void vistaAnterior();
+   void vistaAnterior();
+   
+   Campaña getCampañaSeleccionada();
+   
+   
    
    
    

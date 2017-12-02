@@ -43,4 +43,8 @@ public class ListModelCampanya extends AbstractListModel{
         model=c;
     }
     
+    public Campaña getCampaña(int index){
+        return model.get(index);
+    }
+    
 }

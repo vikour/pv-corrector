@@ -71,11 +71,10 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
             campañaSeleccionada();
         }
     }
+    
+    public void verMedidas(){
+        
+        
+    }
 
-    
-
-    
-    
-   
-    
 }
