@@ -237,4 +237,9 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         return model.getCampaña(jListC.getSelectedIndex());
     }
 
+    @Override
+    public void siguienteVista() {
+        prin.siguientePanel();
+    }
+
 }

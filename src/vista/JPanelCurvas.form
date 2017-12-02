@@ -31,7 +31,6 @@
                           <Component id="Grafica" max="32767" attributes="0"/>
                           <Component id="Borrar" max="32767" attributes="0"/>
                           <Component id="Exportar" max="32767" attributes="0"/>
-                          <Component id="Curvas" max="32767" attributes="0"/>
                           <Component id="Campañas" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -60,12 +59,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="Curvas" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="Exportar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="Borrar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="Grafica" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="Campañas" min="-2" max="-2" attributes="0"/>
@@ -81,11 +78,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="Curvas">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Curvas"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="Exportar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Exportar"/>

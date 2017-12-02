@@ -23,6 +23,7 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     
     private ViewAdminCampanya vc;
     private CtrAdminModulos ctrant;
+    private CtrAdminMedidas ctrs;
 
     public CtrAdminCampanyas(ViewAdminCampanya v) {
         vc=v;
@@ -39,6 +40,10 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
 
     public void setCtrAnterior(CtrAdminModulos ctrant) {
         this.ctrant = ctrant;
+    }
+    
+    public  void setCtrSiguiente(CtrAdminMedidas ctrs){
+        this.ctrs=ctrs;
     }
     
     
@@ -73,7 +78,9 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     }
     
     public void verMedidas(){
-        
+        Campaña c= vc.getCampañaSeleccionada();
+        ctrs.setMedidas(c);
+        vc.siguienteVista();
         
     }
 

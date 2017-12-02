@@ -46,6 +46,8 @@ public interface ViewAdminCampanya {
    void vistaAnterior();
    
    Campaña getCampañaSeleccionada();
+
+    public void siguienteVista();
    
    
    

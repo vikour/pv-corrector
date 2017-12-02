@@ -5,6 +5,9 @@
  */
 package vista;
 
+import controlador.CtrAdminMedidas;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
  * @author EzequielRodriguez
@@ -16,7 +19,7 @@ public class JPanelCurvas extends javax.swing.JPanel {
      * Creates new form JPanelCurvas
      */
     public JPanelCurvas(JFramePrincipal p) {
-        
+        jTable1.setRowSelectionAllowed(true);
         initComponents();
         prin=p;
         
@@ -31,7 +34,6 @@ public class JPanelCurvas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Curvas = new javax.swing.JButton();
         Exportar = new javax.swing.JButton();
         Borrar = new javax.swing.JButton();
         Grafica = new javax.swing.JButton();
@@ -41,8 +43,6 @@ public class JPanelCurvas extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-
-        Curvas.setText("Curvas");
 
         Exportar.setText("Exportar");
 
@@ -95,7 +95,6 @@ public class JPanelCurvas extends javax.swing.JPanel {
                             .addComponent(Grafica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Borrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Exportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Curvas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Campañas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -116,12 +115,10 @@ public class JPanelCurvas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Curvas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Exportar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Borrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Grafica)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Campañas)
@@ -140,7 +137,6 @@ public class JPanelCurvas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Borrar;
     private javax.swing.JButton Campañas;
-    private javax.swing.JButton Curvas;
     private javax.swing.JButton Exportar;
     private javax.swing.JButton Grafica;
     private javax.swing.JLabel Idioma;
@@ -149,28 +145,26 @@ public class JPanelCurvas extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-    /*public void setControlador(CtrAdminCampanyas controlador) {
+    public void setControlador(CtrAdminMedidas controlador) {
         
         
         Borrar.addActionListener(controlador);
-        Borrar.setActionCommand(ViewAdminCampanya.BORRAR);
+        Borrar.setActionCommand(ViewAdminMedidas.BORRAR);
         
-        jExportarC.addActionListener(controlador);
-        jExportarC.setActionCommand(ViewAdminCampanya.EXPORTAR);
+        Exportar.addActionListener(controlador);
+        Exportar.setActionCommand(ViewAdminMedidas.EXPORTAR);
         
-        jImportarC.addActionListener(controlador);
-        jImportarC.setActionCommand(ViewAdminCampanya.IMPORTAR);
         
-        jMedidas.addActionListener(controlador);
-        jMedidas.setActionCommand(ViewAdminCampanya.MEDIDAS);
         
-        jModulo.addActionListener(controlador);
-        jModulo.setActionCommand(ViewAdminCampanya.MODULO);
+        Campañas.addActionListener(controlador);
+        Campañas.setActionCommand(ViewAdminMedidas.CAMPAÑA);
         
-        jListC.addListSelectionListener(controlador);
+       
+        
+        jTable1.getSelectionModel().addListSelectionListener(controlador);
         
        // ctr.consultarCampanyas();
     }
 
-*/
+
 }

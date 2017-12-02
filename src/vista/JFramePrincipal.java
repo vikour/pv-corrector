@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.CtrAdminCampanyas;
+import controlador.CtrAdminMedidas;
 import controlador.CtrAdminModulos;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,9 +34,12 @@ public class JFramePrincipal extends javax.swing.JFrame {
        paneles= new JPanel[MAX_LEVEL];
        paneles[0]= new JPanelModulo(this);
        paneles[1]= new JPanelCampaña(this);
-       CtrAdminModulos ctrAdminModulos = new CtrAdminModulos((ViewAdminModulos) paneles[0]);
-       CtrAdminCampanyas ctrAdminCampanyas = new CtrAdminCampanyas ((ViewAdminCampanya) paneles[1]);
-       ctrAdminModulos.setCtrSiguiente(ctrAdminCampanyas);
+       paneles[2]= new JPanelCurvas(this);
+       CtrAdminModulos ctrm = new CtrAdminModulos((ViewAdminModulos) paneles[0]);
+       CtrAdminCampanyas ctrc = new CtrAdminCampanyas ((ViewAdminCampanya) paneles[1]);
+       CtrAdminMedidas ctrme= new CtrAdminMedidas((ViewAdminMedidas) paneles[2]);
+       ctrm.setCtrSiguiente(ctrc);
+       ctrc.setCtrSiguiente(ctrme);
        
        jPanelPrincipal.setLayout(new BorderLayout()); //Layout para poner las cosas en su lugar
        jPanelPrincipal.add(paneles[0]);

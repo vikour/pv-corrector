@@ -5,7 +5,10 @@
  */
 package vista;
 
-import modelo.CurvaIV;
+import controlador.CtrAdminMedidas;
+import java.util.List;
+
+import modelo.CurvaMedida;
 
 /**
  *
@@ -19,9 +22,9 @@ public interface ViewAdminMedidas {
     
    
     
-    void setControlador();
+    void setControlador(CtrAdminMedidas ctr);
     
-    void mostrarCurvas(CurvaIV curva);
+    void mostrarCurvas(List<CurvaMedida> curva);
     
     void vistaAnterior();
     
