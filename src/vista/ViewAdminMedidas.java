@@ -19,8 +19,13 @@ public interface ViewAdminMedidas {
     public static final String BORRAR="BORRAR";
     public static final String CAMPAÑA="CAMPAÑA";
     public static final String GRAFICA="GRAFICA";
+    public static final String SELECC_MEDIDA="SELECC_MEDIDA";
     
-   
+    void habilitarBorrar(boolean habilitar);
+    
+    void habilitarGrafica(boolean habilitar);
+    
+    void habilitarExportar(boolean habilitar);
     
     void setControlador(CtrAdminMedidas ctr);
     

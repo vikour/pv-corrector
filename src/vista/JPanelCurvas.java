@@ -36,6 +36,7 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBox2 = new javax.swing.JComboBox<>();
         Exportar = new javax.swing.JButton();
         Borrar = new javax.swing.JButton();
         Grafica = new javax.swing.JButton();
@@ -46,11 +47,16 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         Exportar.setText("Exportar");
+        Exportar.setEnabled(false);
 
         Borrar.setText("Borrar");
+        Borrar.setEnabled(false);
 
         Grafica.setText("Grafica");
+        Grafica.setEnabled(false);
 
         Campañas.setText("Campañas");
         Campañas.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +138,7 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
     private javax.swing.JButton Grafica;
     private javax.swing.JLabel Idioma;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
@@ -165,7 +172,22 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
 
     @Override
     public void vistaAnterior() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        prin.anteriorPanel();
+    }
+
+    @Override
+    public void habilitarBorrar(boolean habilitar) {
+        Borrar.setEnabled(habilitar);
+    }
+
+    @Override
+    public void habilitarGrafica(boolean habilitar) {
+        Grafica.setEnabled(habilitar);
+    }
+
+    @Override
+    public void habilitarExportar(boolean habilitar) {
+        Exportar.setEnabled(habilitar);
     }
 
 

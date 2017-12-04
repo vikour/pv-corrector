@@ -39,7 +39,15 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch(e.getActionCommand()){
+            case ViewAdminMedidas.CAMPAÑA:
+                vistaAnterior();
+                break;
+            
+            case ViewAdminMedidas.SELECC_MEDIDA:
+                medidaSeleccionada();
+                break;
+        }
     }
 
     public void setMedidas(Campaña c) {
@@ -60,7 +68,9 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     }
     
     public void medidaSeleccionada(){
-        
+        vm.habilitarBorrar(true);
+        vm.habilitarExportar(true);
+        vm.habilitarGrafica(true);
     }
     
    
