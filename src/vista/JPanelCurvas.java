@@ -19,7 +19,7 @@ public class JPanelCurvas extends javax.swing.JPanel {
      * Creates new form JPanelCurvas
      */
     public JPanelCurvas(JFramePrincipal p) {
-        jTable1.setRowSelectionAllowed(true);
+        //jTable1.setRowSelectionAllowed(true);
         initComponents();
         prin=p;
         

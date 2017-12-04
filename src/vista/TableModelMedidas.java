@@ -16,21 +16,31 @@ import modelo.CurvaMedida;
  */
 public class TableModelMedidas extends AbstractTableModel{
     
-   
+    private List<CurvaMedida> modelo;
+    
+    private List<String> columName;
+
+    @Override
+    public String getColumnName(int column) {
+        return columName.get(column); //To change body of generated methods, choose Tools | Templates.
+    }
     
     @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return modelo.size();
     }
 
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return columName.size();
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
     
+    public CurvaMedida getMedida(int selectedRow){
+        return modelo.get(selectedRow);
+    }
 }

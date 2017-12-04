@@ -63,6 +63,10 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
             case ViewAdminCampanya.MODULO:
                 vistaAnterior();
                 break;
+            case ViewAdminCampanya.MEDIDAS:
+                verMedidas();
+                break;
+                       
         }
     }
     
