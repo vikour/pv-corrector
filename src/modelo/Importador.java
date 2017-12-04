@@ -69,8 +69,7 @@ public class Importador {
         ZipInputStream zis = null;
         List<File> files = new ArrayList<>();
         
-        tmp = File.createTempFile(file.getName().replace("."+EXTENSION_COMPRIMIDO, ""), 
-                                    Long.toString(System.nanoTime()));
+        tmp = File.createTempFile("tmp", "12345");
         
         if (tmp.exists())
             borrarRecursivamente(tmp);

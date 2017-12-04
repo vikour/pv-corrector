@@ -40,6 +40,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
        CtrAdminMedidas ctrme= new CtrAdminMedidas((ViewAdminMedidas) paneles[2]);
        ctrm.setCtrSiguiente(ctrc);
        ctrc.setCtrSiguiente(ctrme);
+       ctrc.setCtrAnterior(ctrm);
        
        jPanelPrincipal.setLayout(new BorderLayout()); //Layout para poner las cosas en su lugar
        jPanelPrincipal.add(paneles[0]);
@@ -138,8 +139,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
     private void mostrarNivel(int sig,int ant) {
         jPanelPrincipal.remove(paneles[ant]);
         jPanelPrincipal.add(paneles[sig]);
-
-        jPanelPrincipal.updateUI();   
+        jPanelPrincipal.updateUI();
     }
     public void anteriorPanel(){
         int ant=nivel;

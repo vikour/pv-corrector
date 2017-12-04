@@ -37,13 +37,12 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         prin=vent;
         fc = new JFileChooser();
         fc.setDialogTitle("Selecciona el fichero con el módulo");
-        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_MODULO, null);
-        String ffModulo = "cls";//ff.getExtension();
         String ffCmp = Importador.EXTENSION_COMPRIMIDO;
-        String filterName = "Módulos (." + ffCmp +", ." + ffModulo + ")";
-        fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp));
+        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_MODULO, null);
+        String filterName = "Módulos (." + ffCmp +", " + ff.getExtension() + ")";
+        fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp, ff.getExtension()));
         fc.setMultiSelectionEnabled(false);
-        
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
     }
 
     /**

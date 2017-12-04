@@ -6,10 +6,15 @@ package modelo;
 
 public enum NombreValorCurva
 {
-   ;
-   private int intensidad;
+   INTENSIDAD,TENSION;
    
-   private int tension;
-   
+   public static int BD(NombreValorCurva tipo) {
+       int value = 0;
+       
+       if (tipo == TENSION)
+           value = 1;
+
+       return value;
+   }
    
 }

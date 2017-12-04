@@ -10,7 +10,13 @@ import java.io.File;
 import java.util.ArrayList;
 
 import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.Campaña;
+import modelo.FormatoFichero;
+import modelo.FormatoFicheroFactory;
+import modelo.Importador;
 
 /**
  *
@@ -19,6 +25,7 @@ import modelo.Campaña;
 public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampanya {
     
     private JFramePrincipal prin;
+    private JFileChooser fc;
     
     /**
      * Creates new form JPanelCampaña
@@ -26,6 +33,14 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
     public JPanelCampaña(JFramePrincipal p) {
         initComponents();
         prin=p;
+        String ffCmp = Importador.EXTENSION_COMPRIMIDO;
+        fc = new JFileChooser();
+        fc.setDialogTitle("Selecciona el fichero con el módulo");
+        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_CAMPAÑA, null);
+        String filterName = "Módulos (." + ffCmp +", " + ff.getExtension() + ")";
+        fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp, ff.getExtension()));
+        fc.setMultiSelectionEnabled(false);
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         
     }
 
@@ -189,12 +204,6 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
        jMedidas.setEnabled(habilitar);
     }
 
-    
-
-   
-
-    
-
     @Override
     public void mostrarCampanyas(List<Campaña> campanyas) {
         ListModelCampanya modelo=(ListModelCampanya) jListC.getModel();
@@ -204,8 +213,6 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         jListC.updateUI();
     }
 
-   
-
     @Override
     public void mostrarModuloNuevo(Campaña m) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -213,17 +220,25 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
 
     @Override
     public File mostrarSelectorFicheros() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int returnVal = fc.showOpenDialog(this);
+        File f = null;
+        
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+            f = fc.getSelectedFile();
+        
+        return f;
     }
 
     @Override
     public void alert(String message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JOptionPane.showMessageDialog(this, message, "Ups", JOptionPane.WARNING_MESSAGE);
     }
 
     @Override
     public boolean preguntar(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int returnVal = JOptionPane.showConfirmDialog(this, string, "Sobreescribir módulo", JOptionPane.YES_NO_OPTION);
+        
+        return returnVal == JOptionPane.YES_OPTION;
     }
 
     @Override
@@ -232,6 +247,9 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
     }
 
     @Override
+    public void informar(String msg) {
+        JOptionPane.showMessageDialog(this, msg, "", JOptionPane.INFORMATION_MESSAGE);
+    }
     public Campaña getCampañaSeleccionada() {
         ListModelCampanya model= (ListModelCampanya) jListC.getModel();
         return model.getCampaña(jListC.getSelectedIndex());

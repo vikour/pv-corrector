@@ -51,6 +51,7 @@ public interface ViewAdminCampanya {
    
    
    
+    public void informar(String msg);
    
    
    
