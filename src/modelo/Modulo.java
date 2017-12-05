@@ -49,6 +49,11 @@ public class Modulo
    private double minFF;
    
    
+   public static void Borrar(String nombre){
+       BD bd=BD.getInstance();
+       bd.delete("DELETE FROM modulos WHERE nombre='"+nombre+"'");
+   }
+   
    public static List<Modulo> listar( )
    {
       List <Modulo> mod=new ArrayList();
@@ -128,7 +133,7 @@ public class Modulo
             this.tecnologia=tecnologia;
             bd.insert(insert);
         }else{
-            throw new Error();
+            throw new Error("El modulo ya esta en la base de datos");
         }
    }
   
