@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista;
+package vista.medidas;
 
 import controlador.CtrAdminMedidas;
 import java.util.List;
 import javax.swing.event.ListSelectionListener;
 import modelo.CurvaMedida;
+import vista.JFramePrincipal;
+import vista.ViewAdminMedidas;
 
 /**
  *

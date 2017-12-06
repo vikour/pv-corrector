@@ -5,6 +5,9 @@
  */
 package vista;
 
+import vista.medidas.JPanelCurvas;
+import vista.campanya.JPanelCampaña;
+import vista.modulo.JPanelModulo;
 import controlador.CtrAdminCampanyas;
 import controlador.CtrAdminMedidas;
 import controlador.CtrAdminModulos;

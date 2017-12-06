@@ -14,12 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.zip.*;
+import javax.swing.SwingWorker;
 
 /**
  * @author Víctor Manuel Ortiz Guardeño.
  */
 
-public class Importador implements IFormatoFicheroNotificable {
+public class Importador extends SwingWorker<Void, Void> implements IFormatoFicheroNotificable {
     
     public static final String EXTENSION_COMPRIMIDO = "zip";
     
@@ -53,7 +54,7 @@ public class Importador implements IFormatoFicheroNotificable {
         List<File> files = new ArrayList<>();
 
         ignorar_todo = sobreescribir_todo = terminar= false;
-
+        setProgress(0);
         
         try {
             if (!file.isDirectory() && file.getName().contains("."+EXTENSION_COMPRIMIDO)) {
@@ -64,15 +65,18 @@ public class Importador implements IFormatoFicheroNotificable {
                 files.add(file);
             }
             
-            for (File f : files) {
-                fileProccess = f;
-                Object o = fmt.leer(f);
-
-                if (o != null) {
+            for (int i = 0 ; i < files.size() ; i++) {
+                fileProccess = files.get(i);
+                Object o = fmt.leer(fileProccess);
+                
+                if (o != null)
                     list.add(o);
-                }
-
+                
+                setProgress((int) ((100 * i) / ((double) files.size())));
             }
+            
+            setProgress(100);
+            
         } finally {
 
             if (tmp != null) {
@@ -85,7 +89,7 @@ public class Importador implements IFormatoFicheroNotificable {
 
         return list;
     }
-    
+
     private List<File> descomprimir() throws FileNotFoundException, IOException {
         ZipInputStream zis = null;
         List<File> files = new ArrayList<>();
@@ -199,6 +203,13 @@ public class Importador implements IFormatoFicheroNotificable {
         }
         
         return result;
+    }
+
+    @Override
+    protected Void doInBackground() throws Exception {
+        importar();
+        
+        return null;
     }
     
 }
