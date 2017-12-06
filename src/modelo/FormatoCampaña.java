@@ -16,10 +16,6 @@ import java.util.regex.PatternSyntaxException;
 public class FormatoCampaña extends FormatoFichero{
 
     private boolean sobreescribir;
-    
-    public FormatoCampaña(IFormatoFicheroNotificable notificar) {
-        super(notificar);
-    }
 
     @Override
     public Object leer(File file) {
@@ -46,13 +42,16 @@ public class FormatoCampaña extends FormatoFichero{
             else
                 bd.execute("ROLLBACK");
         } 
-        catch (PatternSyntaxException | NumberFormatException | Error ex) {
-            bd.execute("ROLLBACK");
-            notificar.alertFormatoFichero("Formato del fichero incorrecto");
-        }
         catch (IOException ex) {
             bd.execute("ROLLBACK");
             ex.printStackTrace();
+        }
+        catch (Exception ex) {
+            bd.execute("ROLLBACK");
+            notificar.alertFormatoFichero("Formato del fichero incorrecto");
+        }
+        finally {
+            sobreescribir = false;
         }
         
         return campaña;

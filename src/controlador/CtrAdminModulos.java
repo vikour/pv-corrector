@@ -65,7 +65,7 @@ public class CtrAdminModulos implements ActionListener, IFormatoFicheroNotificab
    
    public void importar()   {
        FormatoFicheroFactory fffact = new FormatoFicheroFactory();
-       FormatoFichero ff = fffact.create(FormatoFicheroFactory.FORMATO_MODULO, this);
+       FormatoFichero ff = fffact.create(FormatoFicheroFactory.FORMATO_MODULO);
        Importador importador = null;
        File f = vm.mostrarSelectorFicheros();
        

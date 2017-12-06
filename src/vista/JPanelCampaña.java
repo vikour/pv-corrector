@@ -36,7 +36,7 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         String ffCmp = Importador.EXTENSION_COMPRIMIDO;
         fc = new JFileChooser();
         fc.setDialogTitle("Selecciona el fichero con el módulo");
-        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_CAMPAÑA, null);
+        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_CAMPAÑA);
         String filterName = "Módulos (." + ffCmp +", " + ff.getExtension() + ")";
         fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp, ff.getExtension()));
         fc.setMultiSelectionEnabled(false);

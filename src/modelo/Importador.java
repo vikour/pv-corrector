@@ -12,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.*;
 
@@ -20,23 +19,42 @@ import java.util.zip.*;
  * @author Víctor Manuel Ortiz Guardeño.
  */
 
-public class Importador {
+public class Importador implements IFormatoFicheroNotificable {
     
     public static final String EXTENSION_COMPRIMIDO = "zip";
+    
+    private ImportadorNotificable importadorNotificable;
     private FormatoFichero fmt;
     private File file;
     private File tmp;
+    private File fileProccess; //Fichero que se esta procesando actualmente.
+    private boolean sobreescribir_todo;
+    private boolean ignorar_todo;
+    private boolean terminar;
 
     public Importador(FormatoFichero fmt, File file) {
+        this(fmt, file, null);
+    }
+    
+    public Importador(FormatoFichero fmt, File file, ImportadorNotificable importadorNotificable) {
         this.fmt = fmt;
         this.file = file;
         this.tmp = null;
+        fmt.setFormatoNotificable(this);
+        this.importadorNotificable = importadorNotificable;
+    }
+
+    public void setImportadorNotificable(ImportadorNotificable importadorNotificable) {
+        this.importadorNotificable = importadorNotificable;
     }
     
     public List<Object> importar() throws FileNotFoundException, IOException {
         List<Object> list = new ArrayList<>();
         List<File> files = new ArrayList<>();
 
+        ignorar_todo = sobreescribir_todo = terminar= false;
+
+        
         try {
             if (!file.isDirectory() && file.getName().contains("."+EXTENSION_COMPRIMIDO)) {
                 files = descomprimir();
@@ -45,8 +63,9 @@ public class Importador {
             } else {
                 files.add(file);
             }
-
+            
             for (File f : files) {
+                fileProccess = f;
                 Object o = fmt.leer(f);
 
                 if (o != null) {
@@ -59,6 +78,8 @@ public class Importador {
             if (tmp != null) {
                 borrarRecursivamente(tmp);
             }
+
+            ignorar_todo = sobreescribir_todo = terminar= false;
 
         }
 
@@ -110,7 +131,9 @@ public class Importador {
         List<File> files = new ArrayList<>();
         
         for (File f : file.listFiles())
-            files.add(f);
+            
+            if (!f.isDirectory())
+                files.add(f);
         
         return files;
     }
@@ -147,6 +170,35 @@ public class Importador {
         }
         
         tmp.delete();
+    }
+
+    @Override
+    public void alertFormatoFichero(String mensaje) {
+        int value = ImportadorNotificable.OK;
+        
+        if (!ignorar_todo) {
+            value = importadorNotificable.notificarErorFormato(fileProccess);
+            ignorar_todo = value == ImportadorNotificable.IGNORAR_TODO;
+        }
+        
+        
+            
+    }
+
+    @Override
+    public boolean confirmSobrescribirFormatoFichero(Object[] key) {
+        boolean result = false;
+        int value = ImportadorNotificable.OK;
+        
+        if (sobreescribir_todo)
+            result = true;
+        else {
+            value = importadorNotificable.notificarSobreescribir(fileProccess, key);
+            sobreescribir_todo = value == ImportadorNotificable.SOBREESCRIBIR_TODO;
+            result = value == importadorNotificable.SOBREESCRIBIR || sobreescribir_todo;
+        }
+        
+        return result;
     }
     
 }

@@ -105,7 +105,7 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener, 
 
     private void importar() {
        FormatoFicheroFactory fffact = new FormatoFicheroFactory();
-       FormatoFichero ff = fffact.create(FormatoFicheroFactory.FORMATO_CAMPAÑA, this);
+       FormatoFichero ff = fffact.create(FormatoFicheroFactory.FORMATO_CAMPAÑA);
        Importador importador = null;
        File f = vc.mostrarSelectorFicheros();
        

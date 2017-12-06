@@ -31,11 +31,6 @@ public class FormatoModulo extends FormatoFichero {
     private String nombre;
     private String tecnologia;
     private boolean sobreescribir;
-   // private List<Double> list=new ArrayList<>();
-    public FormatoModulo(IFormatoFicheroNotificable notificar) {
-        super(notificar);
-        this.notificar=notificar;
-    }
 
     @Override
     public Object leer(File file) {

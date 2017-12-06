@@ -6,9 +6,9 @@ import java.io.File;
 public abstract class FormatoFichero {
     
     protected IFormatoFicheroNotificable notificar;
-
-    public FormatoFichero(IFormatoFicheroNotificable notificar) {
-        this.notificar = notificar;
+    
+    public void setFormatoNotificable(IFormatoFicheroNotificable ctr) {
+        notificar = ctr;
     }
     
     public abstract Object leer(File file);

@@ -11,16 +11,16 @@ public class FormatoFicheroFactory {
     public static final String FORMATO_MODULO = "FORMATO1";
     public static final String FORMATO_CAMPAÑA = "FORMATO2";
     
-    public FormatoFichero create(String formato, IFormatoFicheroNotificable notificable) {
+    public FormatoFichero create(String formato) {
         FormatoFichero ff = null;
         
         switch (formato) {
             case FORMATO_CAMPAÑA:
-                ff = new FormatoCampaña(notificable);
+                ff = new FormatoCampaña();
                 break;
                 
             case FORMATO_MODULO:
-                ff = new FormatoModulo(notificable);
+                ff = new FormatoModulo();
                 break;
                 
         }
