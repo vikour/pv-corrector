@@ -29,7 +29,6 @@ public class Importador extends SwingWorker<Void, Void> implements IFormatoFiche
     private File fileProccess; //Fichero que se esta procesando actualmente.
     private boolean sobreescribir_todo;
     private boolean ignorar_todo;
-    private boolean terminar;
 
     public Importador(FormatoFichero fmt, File file) {
         this(fmt, file, null);
@@ -39,7 +38,7 @@ public class Importador extends SwingWorker<Void, Void> implements IFormatoFiche
         this.fmt = fmt;
         this.file = file;
         this.tmp = null;
-        fmt.setFormatoNotificable(this);
+        fmt.setFormatoNotificable(this);        
         this.importadorNotificable = importadorNotificable;
     }
 
@@ -51,7 +50,7 @@ public class Importador extends SwingWorker<Void, Void> implements IFormatoFiche
         List<Object> list = new ArrayList<>();
         List<File> files = new ArrayList<>();
 
-        ignorar_todo = sobreescribir_todo = terminar= false;
+        ignorar_todo = sobreescribir_todo = false;
         setProgress(0);
         
         try {
@@ -81,7 +80,7 @@ public class Importador extends SwingWorker<Void, Void> implements IFormatoFiche
                 borrarRecursivamente(tmp);
             }
 
-            ignorar_todo = sobreescribir_todo = terminar= false;
+            ignorar_todo = sobreescribir_todo;
 
         }
 

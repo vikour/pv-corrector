@@ -11,6 +11,7 @@ import javax.swing.table.AbstractTableModel;
 import modelo.Canal;
 import modelo.CurvaIV;
 import modelo.CurvaMedida;
+import modelo.Medida;
 import modelo.MedidaSensor;
 
 /**
@@ -100,12 +101,14 @@ public class TableModelMedidas extends AbstractTableModel{
                 break;
                 
             case FF:
-                value = curvas.get(rowIndex).getFf();
+                value = curvas.get(rowIndex).getFf() + "   %";
                 break;
             
             default:
                 CurvaMedida curvaIV = curvas.get(rowIndex);
-                value = curvaIV.getMedidaCanal(canales.get(columnIndex -FF -1)).getValor();
+                MedidaSensor medida = curvaIV.getMedidaCanal(canales.get(columnIndex -FF -1));
+                value = "" + medida.getValor() + "   " +medida.getMagnitud();
+                value = medida.toString();
                
         }
         

@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import vista.campanya.JPanelCampaña;
 import vista.medidas.JPanelCurvas;
 import vista.modulo.JPanelModulo;
@@ -33,6 +35,14 @@ public class JFramePrincipal extends javax.swing.JFrame {
     public JFramePrincipal() {
         initComponents();
         nivel=0;
+        
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            SwingUtilities.updateComponentTreeUI(this);
+        }
+        catch(Exception ex) {
+            System.err.println("Error al cambiar de tema.");
+        }
        
         titulos= new String[] {"MÓDULOS", "CAMPAÑAS","MEDIDAS"};
         

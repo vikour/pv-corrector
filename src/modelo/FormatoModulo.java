@@ -26,7 +26,6 @@ import java.util.logging.Logger;
  * @author Vikour
  */
 public class FormatoModulo extends FormatoFichero {
-    private IFormatoFicheroNotificable notificar;
     
     private String nombre;
     private String tecnologia;
