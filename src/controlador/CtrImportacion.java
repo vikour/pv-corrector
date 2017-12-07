@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controlador;
 
 import vista.ViewImportacion;
@@ -55,6 +51,7 @@ public class CtrImportacion implements ActionListener, ImportadorNotificable, Pr
             value = option;
             option = -1; // Release for productor.
             view.limpiar();
+            view.notificar("Importación en marcha\nEspere un segundo...");
             notifyAll();
         }
         catch (InterruptedException ex) {
@@ -67,8 +64,9 @@ public class CtrImportacion implements ActionListener, ImportadorNotificable, Pr
     public void iniciar(String format, File file) { // Called by view.
         FormatoFicheroFactory ficheroFactory = new FormatoFicheroFactory();
         FormatoFichero ff = ficheroFactory.create(format);
+        view.notificar("Importación en marcha\nEspere un segundo...");
         imp = new Importador(ff, file, this);
-        imp.addPropertyChangeListener(this);        
+        imp.addPropertyChangeListener(this);
         option = -1;
         imp.execute(); // New thread!!
     }

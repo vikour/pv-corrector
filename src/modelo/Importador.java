@@ -10,15 +10,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.zip.*;
 import javax.swing.SwingWorker;
 
-/**
- * @author Víctor Manuel Ortiz Guardeño.
- */
 
 public class Importador extends SwingWorker<Void, Void> implements IFormatoFicheroNotificable {
     
@@ -72,7 +70,7 @@ public class Importador extends SwingWorker<Void, Void> implements IFormatoFiche
                 if (o != null)
                     list.add(o);
                 
-                setProgress((int) ((100 * i) / ((double) files.size())));
+                setProgress((int) ((100 * (i + 1)) / ((double) files.size())));
             }
             
             setProgress(100);
@@ -104,10 +102,10 @@ public class Importador extends SwingWorker<Void, Void> implements IFormatoFiche
         
         
         try {
-            zis = new ZipInputStream(new FileInputStream(file));
-            ZipEntry entry = null;
+            zis = new ZipInputStream(new FileInputStream(file), Charset.forName("CP437"));
+            ZipEntry entry = zis.getNextEntry();
             
-            while ((entry  = zis.getNextEntry()) != null) {
+            while (entry != null) {
                 File f = new File(tmp.getAbsolutePath() + File.separator + entry.getName());
 
                 if (entry.isDirectory())
@@ -117,9 +115,13 @@ public class Importador extends SwingWorker<Void, Void> implements IFormatoFiche
                     files.add(f);
                     descomprimirFichero(zis, f);
                 }
-
+                
+                entry = zis.getNextEntry();
             }
             
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         finally {
             

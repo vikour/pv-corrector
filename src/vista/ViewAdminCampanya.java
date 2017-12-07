@@ -28,7 +28,6 @@ public interface ViewAdminCampanya {
    
    void setControlador( CtrAdminCampanyas controlador );
    
-   
    void habilitarBorrado( boolean habilitar );
    
    void habilitarExportacion( boolean habilitar );
@@ -39,20 +38,11 @@ public interface ViewAdminCampanya {
 
    File mostrarSelectorFicheros();
 
-   void alert(String message);
-
-   boolean preguntar(String string);
-
    void vistaAnterior();
    
    Campaña getCampañaSeleccionada();
 
     public void siguienteVista();
    
-   
-   
-    public void informar(String msg);
-   
-   
-   
+    public void mostrarVistaImportacion(String format, File f);
 }

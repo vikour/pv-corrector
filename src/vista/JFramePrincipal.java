@@ -14,8 +14,13 @@ import controlador.CtrAdminModulos;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -33,6 +38,14 @@ public class JFramePrincipal extends javax.swing.JFrame {
     public JFramePrincipal() {
        initComponents();
        nivel=0;
+       
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            SwingUtilities.updateComponentTreeUI(this);
+        }
+        catch(Exception ex) {
+            System.err.println("Error al cambiar de tema.");
+        }
        //Paneles ordenados por niveles de la aplicación de la aplicación
        paneles= new JPanel[MAX_LEVEL];
        paneles[0]= new JPanelModulo(this);

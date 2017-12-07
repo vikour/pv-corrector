@@ -6,23 +6,10 @@
 package vista;
 
 import controlador.CtrImportacion;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.Color;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import modelo.FormatoFichero;
-import modelo.FormatoFicheroFactory;
-import modelo.Importador;
-import modelo.ImportadorNotificable;
+import javax.swing.BorderFactory;
 
-/**
- *
- * @author vikou
- */
 public class JDialogProcessImport extends javax.swing.JDialog implements ViewImportacion {
 
     private CtrImportacion ctr;
@@ -31,6 +18,10 @@ public class JDialogProcessImport extends javax.swing.JDialog implements ViewImp
         super(parent, modal);
         initComponents();
         limpiar();
+        jTextArea1.setBackground(getBackground());
+        jTextArea1.setDisabledTextColor(Color.BLACK);
+        this.setLocationRelativeTo(parent);
+        this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
     }
 
     public void limpiar() {
@@ -85,22 +76,23 @@ public class JDialogProcessImport extends javax.swing.JDialog implements ViewImp
     private void initComponents() {
 
         jProgressBar1 = new javax.swing.JProgressBar();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationByPlatform(true);
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(300, 175));
 
-        jScrollPane1.setBorder(null);
-
+        jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jTextArea1.setBorder(null);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextArea1.setEnabled(false);
 
         jButton1.setText("jButton1");
 
@@ -113,14 +105,14 @@ public class JDialogProcessImport extends javax.swing.JDialog implements ViewImp
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton1))
+                    .addComponent(jTextArea1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,8 +120,8 @@ public class JDialogProcessImport extends javax.swing.JDialog implements ViewImp
                 .addContainerGap()
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
@@ -144,7 +136,6 @@ public class JDialogProcessImport extends javax.swing.JDialog implements ViewImp
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 

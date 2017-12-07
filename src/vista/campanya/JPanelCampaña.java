@@ -6,6 +6,7 @@
 package vista.campanya;
 
 import controlador.CtrAdminCampanyas;
+import controlador.CtrImportacion;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ import modelo.Campaña;
 import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
 import modelo.Importador;
+import vista.JDialogProcessImport;
 import vista.JFramePrincipal;
 import vista.ViewAdminCampanya;
 
@@ -138,9 +140,10 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jModulo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(64, Short.MAX_VALUE))
+                        .addComponent(jModulo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 23, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -229,26 +232,10 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
     }
 
     @Override
-    public void alert(String message) {
-        JOptionPane.showMessageDialog(this, message, "Ups", JOptionPane.WARNING_MESSAGE);
-    }
-
-    @Override
-    public boolean preguntar(String string) {
-        int returnVal = JOptionPane.showConfirmDialog(this, string, "Sobreescribir módulo", JOptionPane.YES_NO_OPTION);
-        
-        return returnVal == JOptionPane.YES_OPTION;
-    }
-
-    @Override
     public void vistaAnterior() {
        prin.anteriorPanel();
     }
 
-    @Override
-    public void informar(String msg) {
-        JOptionPane.showMessageDialog(this, msg, "", JOptionPane.INFORMATION_MESSAGE);
-    }
     public Campaña getCampañaSeleccionada() {
         ListModelCampanya model= (ListModelCampanya) jListC.getModel();
         return model.getCampaña(jListC.getSelectedIndex());
@@ -257,6 +244,13 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
     @Override
     public void siguienteVista() {
         prin.siguientePanel();
+    }
+
+    @Override
+    public void mostrarVistaImportacion(String format, File f) {
+        JDialogProcessImport dImport = new JDialogProcessImport(prin, true);
+        CtrImportacion ctrImportacion = new CtrImportacion(dImport);
+        dImport.setVisible(true, format, f);
     }
 
 }

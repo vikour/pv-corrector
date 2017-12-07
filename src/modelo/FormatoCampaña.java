@@ -23,6 +23,7 @@ public class FormatoCampaña extends FormatoFichero{
         BD bd = BD.getInstance();
         Campaña campaña = null;
         CurvaMedida curva = null;
+        boolean rollback = false;
         
         sobreescribir = true;
         
@@ -40,17 +41,21 @@ public class FormatoCampaña extends FormatoFichero{
                 bd.execute("COMMIT");
             }
             else
-                bd.execute("ROLLBACK");
+                rollback = true;
         } 
         catch (IOException ex) {
-            bd.execute("ROLLBACK");
+            rollback = true;
             ex.printStackTrace();
         }
         catch (Exception ex) {
-            bd.execute("ROLLBACK");
+            rollback = true;
             notificar.alertFormatoFichero("Formato del fichero incorrecto");
         }
         finally {
+            
+            if (rollback || curva == null || campaña == null)
+                bd.execute("ROLLBACK");
+            
             sobreescribir = false;
         }
         
@@ -221,7 +226,12 @@ public class FormatoCampaña extends FormatoFichero{
         String value;
 
         line = readNotEmptyLine(br);
+        
+        if (!line.contains("Módulo"))
+            throw new RuntimeException("Error de formato");
+        
         value = extractValue(line);
+        
         try { // Modulo.
             modulo = new Modulo(value);
         } catch (Error ex) {
@@ -230,6 +240,7 @@ public class FormatoCampaña extends FormatoFichero{
 
         line = readNotEmptyLine(br);
         value = extractValue(line);
+        
         try { // CampaÃ±a.
             Campaña = new Campaña(modulo, value, false);
         } catch (Error err) {

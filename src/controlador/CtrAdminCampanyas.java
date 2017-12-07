@@ -25,7 +25,7 @@ import vista.ViewAdminCampanya;
  *
  * @author EzequielRodriguez*/
  
-public class CtrAdminCampanyas implements ActionListener,ListSelectionListener, IFormatoFicheroNotificable {
+public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     
     private ViewAdminCampanya vc;
     private CtrAdminModulos ctrant;
@@ -104,37 +104,12 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener, 
     }
 
     private void importar() {
-       FormatoFicheroFactory fffact = new FormatoFicheroFactory();
-       FormatoFichero ff = fffact.create(FormatoFicheroFactory.FORMATO_CAMPAÑA);
-       Importador importador = null;
        File f = vc.mostrarSelectorFicheros();
        
-       if (f != null) try {
-           importador = new Importador(ff, f);
-           importador.importar();
+       if (f != null) {
+           vc.mostrarVistaImportacion(FormatoFicheroFactory.FORMATO_CAMPAÑA, f);
            consultarCampañas();
-           vc.informar("Se ha completado la importación con éxito.");
        }
-       catch (IOException ex) {
-           vc.alert(ex.getMessage());
-       }
-       
     }
 
-    @Override
-    public void alertFormatoFichero(String mensaje) {
-        vc.alert(mensaje);
-    }
-
-    @Override
-    public boolean confirmSobrescribirFormatoFichero(Object[] key) {
-        return vc.preguntar("La campaña " + key [0] + " " + key[1] + " ya está en el sistema. ¿Quieres sobreescribirlo?");
-    }
-
-    
-
-    
-    
-   
-    
 }

@@ -6,6 +6,7 @@
 package vista.modulo;
 
 import controlador.CtrAdminModulos;
+import controlador.CtrImportacion;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.List;
@@ -18,6 +19,7 @@ import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
 import modelo.Importador;
 import modelo.Modulo;
+import vista.JDialogProcessImport;
 import vista.JFramePrincipal;
 import vista.ViewAdminModulos;
 
@@ -125,7 +127,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonImportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonImportar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonExportar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -135,7 +137,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
                         .addGap(11, 11, 11)
                         .addComponent(jButtonCampanyas))
                     .addComponent(jScrollPaneListaModulos))
-                .addGap(64, 64, 64))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -226,18 +228,6 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         return f;
     }
 
-   // @Override
-    public void alert(String message) {
-        JOptionPane.showMessageDialog(this, message, "Ups", JOptionPane.WARNING_MESSAGE);
-    }
-
-    @Override
-    public boolean preguntar(String string) {
-        int returnVal = JOptionPane.showConfirmDialog(this, string, "Sobreescribir módulo", JOptionPane.YES_NO_OPTION);
-        
-        return returnVal == JOptionPane.YES_OPTION;
-    }
-    
     @Override
     public Modulo getModulosSeleccionados(){
         ListModelModulo model= (ListModelModulo) jList1.getModel();
@@ -251,6 +241,13 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
     public void siguienteVista() {
         
         prin.siguientePanel();
+    }
+
+    @Override
+    public void mostrarVistaImportacion(String format, File f) {
+        JDialogProcessImport dImport = new JDialogProcessImport(prin, true);
+        CtrImportacion ctrImportacion = new CtrImportacion(dImport);
+        dImport.setVisible(true, format, f);
     }
    
    

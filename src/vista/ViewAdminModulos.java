@@ -38,11 +38,8 @@ public interface ViewAdminModulos
 
    public File mostrarSelectorFicheros();
 
-   public void alert(String message);
-
-   public boolean preguntar(String string);
-
-   public void siguienteVista();
+   public void mostrarVistaImportacion(String format, File f);
    
+   public void siguienteVista();
    
 }
