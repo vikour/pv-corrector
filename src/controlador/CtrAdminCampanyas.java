@@ -98,9 +98,8 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     
     public void verMedidas(){
         Campaña c= vc.getCampañaSeleccionada();
-        ctrs.setMedidas(c);
         vc.siguienteVista();
-        
+        ctrs.setMedidas(c);        
     }
 
     private void importar() {

@@ -37,7 +37,6 @@ public class FormatoCampaña extends FormatoFichero{
             if (sobreescribir) {
                 leerCanales(br, curva);
                 leerMedidasCurva(br, curva);
-                System.out.println(file.getName() + " : Campaña importada con éxito");
                 bd.execute("COMMIT");
             }
             else
