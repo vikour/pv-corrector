@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import modelo.Canal;
+import modelo.CurvaIV;
 import modelo.CurvaMedida;
 import modelo.MedidaSensor;
 
@@ -19,7 +20,7 @@ import modelo.MedidaSensor;
 public class TableModelMedidas extends AbstractTableModel{
     
     private List<CurvaMedida> curvas;
-    //private List<Canal> canales;
+    private List<Canal> canales;
     
     private static final String [] COLUMN_NAMES =
             new String []{"Fecha", "Hora", "ISC", "VOC", "PMAX", "IMAX", "VMAX", "FF"};
@@ -34,7 +35,7 @@ public class TableModelMedidas extends AbstractTableModel{
 
     public TableModelMedidas() {
         curvas = new ArrayList<>();
-        //canales = new ArrayList<>();
+        canales = new ArrayList<>();
     }
 
     public TableModelMedidas(List<CurvaMedida> curvas) {
@@ -43,15 +44,15 @@ public class TableModelMedidas extends AbstractTableModel{
     
     @Override
     public String getColumnName(int column) {
-        /*String name = "";
+        String name = "";
         
         if (column >= COLUMN_NAMES.length)
             name = canales.get(column - COLUMN_NAMES.length).getNombre();
         else
             name = COLUMN_NAMES[column];
             
-        return name;*/
-        return COLUMN_NAMES[column];
+        return name;
+        //return COLUMN_NAMES[column];
     }
     
     @Override
@@ -61,7 +62,7 @@ public class TableModelMedidas extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return COLUMN_NAMES.length;// + canales.size();
+        return COLUMN_NAMES.length + canales.size();
     }
 
     @Override
@@ -102,6 +103,10 @@ public class TableModelMedidas extends AbstractTableModel{
                 value = curvas.get(rowIndex).getFf();
                 break;
             
+            default:
+                CurvaMedida curvaIV = curvas.get(rowIndex);
+                value = curvaIV.getMedidaCanal(canales.get(columnIndex -FF -1)).getValor();
+               
         }
         
         return value;
@@ -109,7 +114,7 @@ public class TableModelMedidas extends AbstractTableModel{
     
     public void setCurvas(List<CurvaMedida> curvas) {
         this.curvas = curvas;
-        //canales = curvas.get(0).getCanales();
+        canales = curvas.get(0).getCanales();
     }
     
     public CurvaMedida getMedida(int selectedRow){

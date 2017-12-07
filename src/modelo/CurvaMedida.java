@@ -48,6 +48,25 @@ public class CurvaMedida extends CurvaIV {
     public Campaña getCampaña() {
         return campaña;
     }
+    
+    public MedidaSensor getMedidaCanal(Canal canal) {
+        boolean founded = false;
+        int i = 0;
+        MedidaSensor result = null;
+        
+        if (medidasCanal == null)
+            getMedidasCanal();
+        
+        while (!founded && i < medidasCanal.size()) {
+            
+            if (canal.equals(medidasCanal.get(i).getCanal()))
+                result = medidasCanal.get(i);
+            
+            i++;
+        }
+        
+        return result;
+    }
 
     public List<MedidaSensor> getMedidasCanal() {
         String sel="SELECT canal FROM medidas_canal WHERE curva_iv="+this.getId()+" ;";
@@ -89,7 +108,7 @@ public class CurvaMedida extends CurvaIV {
     public List<Canal> getCanales() {
         List<Canal> result = new ArrayList<>();
         BD bd = BD.getInstance();
-        String qq = "SELECT DISTINCT canal FROM medidas_canal WHERE curva_iv = " + getId();
+        String qq = "SELECT canal FROM medidas_canal WHERE curva_iv = " + getId();
         
         for (String [] tupla : bd.select(qq))
             result.add(new Canal(tupla[0], false));

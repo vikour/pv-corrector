@@ -20,6 +20,7 @@ import modelo.FormatoFicheroFactory;
 import modelo.Importador;
 import modelo.Modulo;
 import vista.JDialogProcessImport;
+
 import vista.JFramePrincipal;
 import vista.ViewAdminModulos;
 
@@ -58,7 +59,6 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jButtonImportar = new javax.swing.JButton();
         jButtonExportar = new javax.swing.JButton();
         jButtonModificar = new javax.swing.JButton();
@@ -66,11 +66,6 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         jButtonCampanyas = new javax.swing.JButton();
         jScrollPaneListaModulos = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jComboBoxIdioma = new javax.swing.JComboBox<>();
-        jLabelIdioma = new javax.swing.JLabel();
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("MÓDULOS");
 
         jButtonImportar.setText("Importar");
 
@@ -89,56 +84,42 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         jList1.setModel(new ListModelModulo());
         jScrollPaneListaModulos.setViewportView(jList1);
 
-        jComboBoxIdioma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabelIdioma.setText("Idioma:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonCampanyas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonImportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonExportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneListaModulos, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabelIdioma)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCampanyas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPaneListaModulos, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonBorrar, jButtonCampanyas, jButtonExportar, jButtonImportar, jButtonModificar});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPaneListaModulos)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelIdioma))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonImportar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonExportar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonBorrar)
-                        .addGap(11, 11, 11)
-                        .addComponent(jButtonCampanyas))
-                    .addComponent(jScrollPaneListaModulos))
-                .addContainerGap())
+                .addComponent(jButtonImportar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExportar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonBorrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonCampanyas)
+                .addGap(0, 22, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonBorrar, jButtonCampanyas, jButtonExportar, jButtonImportar, jButtonModificar});
+
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -148,9 +129,6 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
     private javax.swing.JButton jButtonExportar;
     private javax.swing.JButton jButtonImportar;
     private javax.swing.JButton jButtonModificar;
-    private javax.swing.JComboBox<String> jComboBoxIdioma;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabelIdioma;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPaneListaModulos;
     // End of variables declaration//GEN-END:variables
