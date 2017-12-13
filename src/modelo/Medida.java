@@ -32,7 +32,7 @@ public class Medida
 
     @Override
     public String toString() {
-        return "" + valor + "   " + magnitud;
+        return "" + valor + " " + magnitud;
     }
 
     @Override

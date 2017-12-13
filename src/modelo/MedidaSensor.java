@@ -94,11 +94,6 @@ public class MedidaSensor extends Medida
     }
     
     @Override
-    public String toString(){
-        return"Canal: "+canal+"\nIDCanal: "+idc+"\nValor: "+this.getValor()+"\nMagnitud: "+this.getMagnitud();
-    }
-    
-    @Override
     public boolean equals(Object o){
         if(o instanceof MedidaSensor){
             MedidaSensor aux=(MedidaSensor)o;
@@ -110,11 +105,6 @@ public class MedidaSensor extends Medida
         
         return false;
     }
-    
-    
-    
-    
-    
    
    
 }
