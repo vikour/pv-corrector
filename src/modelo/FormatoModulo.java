@@ -52,6 +52,7 @@ public class FormatoModulo extends FormatoFichero {
             
 
         } catch (FileNotFoundException ex) {
+            notificar.alertFormatoFichero("El formato del fichero no es correcto");
             Logger.getLogger(FormatoModulo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NumberFormatException | NullPointerException | NoSuchElementException ex){
             bd.execute("ROLLBACK");
