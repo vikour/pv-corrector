@@ -117,12 +117,6 @@ CREATE TABLE curvas_corregidas (
    metodo  VARCHAR(50),
    FOREIGN KEY (id) REFERENCES curvas_iv(id)
       ON UPDATE CASCADE
-      ON DELETE CASCADE,
-   FOREIGN KEY (metodo) REFERENCES metodo_correccion(nombre)
-      ON UPDATE CASCADE
       ON DELETE CASCADE
 );
 
-CREATE TABLE metodo_correccion (
-    nombre  VARCHAR(50) PRIMARY KEY
-);

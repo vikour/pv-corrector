@@ -49,6 +49,10 @@ public class CurvaMedida extends CurvaIV {
         return campaña;
     }
     
+    public Modulo getModulo() {
+       return campaña.getModulo();
+    }
+    
     public MedidaSensor getMedidaCanal(Canal canal) {
         boolean founded = false;
         int i = 0;

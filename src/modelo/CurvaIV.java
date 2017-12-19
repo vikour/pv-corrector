@@ -69,20 +69,21 @@ public abstract class CurvaIV {
         this.vmax = vmax;
         this.ff = ff;
     }
-
-    
-    
     
     public List<MedidaIntensidad> getIntensidades() {
-        List<MedidaIntensidad> l = MedidaIntensidad.listar(this);
-        intensidades = l;
+       
+       if (intensidades == null)
+          intensidades = MedidaIntensidad.listar(this);
+
         return intensidades;
     }
-
+    
     public List<MedidaTension> getTensiones() {
-        List<MedidaTension> l=MedidaTension.listar(this);
-        tensiones=l;
-        return l;
+       
+       if (tensiones == null)
+          tensiones = MedidaTension.listar(this);
+
+        return tensiones;
     }
 
     public String getFecha() {
