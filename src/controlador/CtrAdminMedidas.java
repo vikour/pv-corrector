@@ -22,7 +22,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     
     private ViewAdminMedidas vm;
     private CtrAdminCampanyas ctra;
-
+    private CtrAdminCurvaMedida ctrcm;
    
     public CtrAdminMedidas(ViewAdminMedidas vm) {
         this.vm = vm;
@@ -34,6 +34,10 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
 
     public void setCtrAnterior(CtrAdminCampanyas ctra) {
         this.ctra = ctra;
+    }
+    
+    public void setCtrSiguiente(CtrAdminCurvaMedida c){
+        ctrcm=c;
     }
     
 
@@ -73,7 +77,11 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
         vm.habilitarGrafica(true);
     }
     
-   
+    public void verGrafica(CurvaMedida c){
+        ctrcm.showCurva(c);
+        
+        
+    }
     
     
     
