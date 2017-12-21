@@ -182,7 +182,7 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
     }
 
     @Override
-    public void mostrarCampanyas(List<Campaña> campanyas) {
+    public void mostrarCampanyas(Campaña [] campanyas) {
         ListModelCampanya modelo=(ListModelCampanya) jListC.getModel();
         
         modelo.setList(campanyas);

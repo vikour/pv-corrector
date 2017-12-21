@@ -221,9 +221,10 @@ public class FormatoCampaña extends FormatoFichero{
     private Campaña leerInfoBasica(BufferedReader br) throws IOException {
         String line;
         Modulo modulo = null;
-        Campaña Campaña = null;
+        Campaña campaña = null;
         String value;
         AlmacenModulos modulos = AlmacenModulos.getInstance();
+        AlmacenCampañas campañas = AlmacenCampañas.getInstance();
 
         line = readNotEmptyLine(br);
         
@@ -236,13 +237,23 @@ public class FormatoCampaña extends FormatoFichero{
         line = readNotEmptyLine(br);
         value = extractValue(line);
         
+        /*
         try { // CampaÃ±a.
-            Campaña = new Campaña(modulo, value, false);
+            //campaña = new Campaña(modulo, value, false);
         } catch (Error err) {
-            Campaña = new Campaña(modulo, value, true);
+            //campaña = new Campaña(modulo, value, true);
         } // Si existe la campaÃ±a no hacemos nada.    
+        */
+        
+        try {
+            campaña = campañas.nueva(modulo, value);
+        }
+        catch (Error err) {
+            campaña = campañas.buscar(modulo, value);
+        }
 
-        return Campaña;
+        
+        return campaña;
     }
 
 }

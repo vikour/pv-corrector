@@ -8,8 +8,6 @@ import java.util.List;
 
 public class Canal {
 
-    
-    
     public static List<Canal> listar(Campaña c) {
         BD bd= BD.getInstance();
         List<Canal> l=new ArrayList<>();
@@ -64,9 +62,12 @@ public class Canal {
         String sel="SELECT c.modulo, c-campaña  FROM medidas_canal m, curvas_medidas c WHERE m.curva_iv=c.id and m.canal='"+this.nombre+"'";
         List<String[] > aux= bd.select(sel);
         List<Campaña> l=new ArrayList<>();
+        AlmacenCampañas campañas = AlmacenCampañas.getInstance();
         
         for(int i=0; i<aux.size();i++){
-            l.add(new Campaña(new Modulo(aux.get(i)[0]), aux.get(i)[1], false ) );
+            //l.add(new Campaña(new Modulo(aux.get(i)[0]), aux.get(i)[1], false ) );
+            l.add(campañas.buscar(aux.get(i)[0], aux.get(i)[1]));
+
         }
         campaña=l;
         return campaña;

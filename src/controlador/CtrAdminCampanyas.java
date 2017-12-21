@@ -43,7 +43,7 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     }
     
     private void consultarCampañas() {
-       List<Campaña> mc=ms.getCampañas();
+       Campaña[] mc=ms.getCampañas();
        
        vc.mostrarCampanyas(mc);
     }

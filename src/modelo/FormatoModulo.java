@@ -93,13 +93,7 @@ public class FormatoModulo extends FormatoFichero {
         }
         catch (Error ex) {
             sobreescribir=notificar.confirmSobrescribirFormatoFichero(new Object[] {nombre});
-            
-            if (sobreescribir) {
-                // Esto esta mal.
-                modulos.eliminar(nombre);
-                mod = modulos.nuevo(nombre);
-            }
-            
+            mod = modulos.buscar(nombre);
         } 
         
         mod.setTecnologia(tecnologia);
