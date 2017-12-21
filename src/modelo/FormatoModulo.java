@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,20 +81,29 @@ public class FormatoModulo extends FormatoFichero {
     
     
     private Modulo construirMod(BufferedReader br) throws IOException{
+        AlmacenModulos modulos = AlmacenModulos.getInstance();
+        
         nombre=readNotEmptyLine(br);
         tecnologia=readNotEmptyLine(br);
         Modulo mod=null;
-        try{    
-            //creo el modulo con el nombre y la tecnologia
-            mod=new Modulo(nombre,tecnologia);
-        }catch(Error e){
-            sobreescribir=notificar.confirmSobrescribirFormatoFichero(new Object[] {nombre,tecnologia});
-            if(sobreescribir){
-                Modulo.Borrar(nombre);
-               mod=new Modulo(nombre,tecnologia);
-            }
-           
+        
+        
+        try {
+            mod = modulos.nuevo(nombre);
         }
+        catch (Error ex) {
+            sobreescribir=notificar.confirmSobrescribirFormatoFichero(new Object[] {nombre});
+            
+            if (sobreescribir) {
+                // Esto esta mal.
+                modulos.eliminar(nombre);
+                mod = modulos.nuevo(nombre);
+            }
+            
+        } 
+        
+        mod.setTecnologia(tecnologia);
+        
         return mod;
     }
     

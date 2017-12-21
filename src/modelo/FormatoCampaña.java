@@ -223,6 +223,7 @@ public class FormatoCampaña extends FormatoFichero{
         Modulo modulo = null;
         Campaña Campaña = null;
         String value;
+        AlmacenModulos modulos = AlmacenModulos.getInstance();
 
         line = readNotEmptyLine(br);
         
@@ -230,12 +231,7 @@ public class FormatoCampaña extends FormatoFichero{
             throw new RuntimeException("Error de formato");
         
         value = extractValue(line);
-        
-        try { // Modulo.
-            modulo = new Modulo(value);
-        } catch (Error ex) {
-            modulo = new Modulo(value,"");
-        }
+        modulos.nuevo(value);
 
         line = readNotEmptyLine(br);
         value = extractValue(line);
