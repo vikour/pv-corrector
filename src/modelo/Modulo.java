@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Modulo
 {
-   private List<Campaña> campañas;
    private String nombre;
    private double alpha;
    private double beta;
@@ -55,7 +54,7 @@ public class Modulo
    }
    
    /**
-    * @deprecated Usar el método {@link #buscarTodos() }
+    * @deprecated Usar el método {@link AlmacenModulos##buscarTodos() }
     * 
     * @return 
     */
@@ -76,7 +75,7 @@ public class Modulo
       for (String[] tupla : BD.getInstance().select(str)) {
          mod.add(buscar(tupla[0]));
       }
-
+      
       return mod;
    }
    
@@ -197,10 +196,6 @@ public class Modulo
         
         bd.update("UPDATE modulos SET kappa="+kappa+" WHERE nombre='"+this.nombre+"';");
         this.kappa = kappa;
-    }
-
-    public void setCampañas(List<Campaña> campañas) {
-        this.campañas = Campaña.listar(this);
     }
     
     public void setMinIsc(double minIsc) {
@@ -427,11 +422,8 @@ public class Modulo
         this.np = np;
     }
 
-    public List<Campaña> getCampañas() {
-        if(campañas==null){
-            campañas=Campaña.listar(this);
-        }
-        return campañas;
+    public Campaña [] getCampañas() {
+        return AlmacenCampañas.getInstance().buscar(this);
     }
 
     public String getNombre() {
@@ -596,4 +588,9 @@ public class Modulo
                 && (((Modulo) obj).nombre.equals(nombre));
     }
 
+    @Override
+    public int hashCode() {
+        return nombre.hashCode();
+    }
+    
 }

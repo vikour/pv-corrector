@@ -10,6 +10,7 @@ import modelo.Campaña;
 
 public class Canal {
 
+
     
     /**
     * 
@@ -18,6 +19,7 @@ public class Canal {
     * @return null
     */
     
+
     public static List<Canal> listar(Campaña c) {
         return null;
     }
@@ -57,6 +59,7 @@ public class Canal {
         }
         return c;
     }
+
     
     /**
     * 
@@ -64,6 +67,7 @@ public class Canal {
     */
     public String getNombre() {
         return nombre;
+
     }
     
     /**

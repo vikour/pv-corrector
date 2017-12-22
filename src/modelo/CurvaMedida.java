@@ -29,7 +29,9 @@ public class CurvaMedida extends CurvaIV {
         String qq = "SELECT modulo,campanya FROM curvas_medidas WHERE id = " + id;
         String tupla [] = BD.getInstance().select(qq).get(0);
         
-        campaña = new Campaña(AlmacenModulos.getInstance().buscar(tupla[0]), tupla[1], false);
+
+        //campaña = new Campaña(new Modulo(tupla[0]), tupla[1], false);
+        campaña = AlmacenCampañas.getInstance().nueva(tupla[0], tupla[1]);
         medidasCanal = null;
         correcciones = null;
     }

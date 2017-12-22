@@ -97,6 +97,7 @@ public class AlmacenModulos {
         
         Modulo.Borrar(nombre);
         modulos.remove(modulos.indexOf(m));
+        AlmacenCampañas.getInstance().moduloBorrado(m);
     }
     
     /**
@@ -106,13 +107,28 @@ public class AlmacenModulos {
      */
     
     public Modulo [] buscarTodos() {
+        List<Modulo> aux;
         
         if (!todosCargados) {
-            modulos = Modulo.buscarTodos();
+            
+            if (!modulos.isEmpty())
+                mezclarModulosBDCache();
+            else
+                modulos = Modulo.buscarTodos();
+            
             todosCargados = true;
         }
         
         return modulos.toArray(new Modulo[modulos.size()]);
+    }
+
+    private void mezclarModulosBDCache() {
+        
+        for (Modulo m : Modulo.buscarTodos())
+            
+            if (!modulos.contains(m))
+                modulos.add(m);
+        
     }
 
     private Modulo buscarModuloCacheado(String nombre) {
@@ -128,7 +144,7 @@ public class AlmacenModulos {
             
         }
         
-        return null;
+        return result;
     }
     
 }
