@@ -41,7 +41,7 @@ public class AlmacenModulos {
      * @return Referencia al módulo.
      */
     
-    public Modulo nuevo(String nombre) throws Error {
+    public Modulo nuevo(String nombre) throws Error{
         Modulo result;
         
         result = new Modulo(nombre); // throws error ya existe.

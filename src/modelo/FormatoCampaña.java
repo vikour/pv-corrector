@@ -94,13 +94,14 @@ public class FormatoCampaña extends FormatoFichero{
         double valor;
         
         Canal canal;
-        MedidaSensor medida;
+        MedidaCanal medida;
         
         line = readNotEmptyLine(br);
         
         while (!line.contains("mero de puntos curva IV")) {
             parts = line.split(":");
-            
+            AlmacenCanales ac=AlmacenCanales.getInstance();
+            AlmacenMedidasCanal amc= new AlmacenMedidasCanal(curva);
             if (parts.length >= 2) {
                 nombreCanal = parts[parts.length-2];
                 parts = parts[parts.length-1].split("\t");
@@ -111,17 +112,21 @@ public class FormatoCampaña extends FormatoFichero{
                     magnitud = parts[parts.length-1];
                     
                     try {
-                        canal = new Canal(nombreCanal, false);
+                        //canal = new Canal(nombreCanal, false);
+                        canal=ac.buscar(nombreCanal);
                     }
                     catch (Error err) {
-                        canal = new Canal(nombreCanal, true);
+                        //canal = new Canal(nombreCanal, true);
+                        canal = ac.nuevo(nombreCanal);
                     }
                     
                     try {
-                        medida = new MedidaSensor(valor, magnitud, canal, curva);
+                        //medida = new MedidaSensor(valor, magnitud, canal, curva);
+                        medida=amc.nuevo(canal, valor, magnitud);
                     }
                     catch (Error err) {
-                        medida = new MedidaSensor(curva, canal);
+                        //medida = new MedidaSensor(curva, canal);
+                        medida=amc.buscar(canal);
                         medida.setValor(valor);
                         medida.setMagnitud(magnitud);
                     } // Si existe no importa.

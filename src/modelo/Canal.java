@@ -5,86 +5,77 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import modelo.BD;
+import modelo.Campaña;
 
 public class Canal {
 
     
+    /**
+    * 
+    * @deprecated Usar el método {@link AlmacenMedidasCanal##buscarCanales()}
+    * @param c Campaña de la que queremos extraer los canales
+    * @return null
+    */
     
     public static List<Canal> listar(Campaña c) {
-        BD bd= BD.getInstance();
-        List<Canal> l=new ArrayList<>();
-        String select="SELECT c.nombre FROM canales c, medidas_canal m, curvas_medidas cur , campanyas cam WHERE c.nombre=m.canal and m.curva_iv=cur.id and cur.campanya=cam.nombre and cam.nombre='"+c.getNombre()+"' ;";
-        List<String[]> aux=bd.select(select);
-        for(int i=0; i<aux.size();i++){
-            l.add(new Canal(aux.get(i)[0],false));
-        }
-        return l;
+        return null;
     }
+    
+    
     private String nombre;
 
-    private List<MedidaSensor> medidas;
-
-    private List<Campaña> campaña;
     
-    public Canal(String nombre, boolean store){
+    /**
+    * @param nombre Nombre del canal que queremos crear
+    * @return 
+    */
+    
+    Canal(String nombre) throws Error{
         BD bd=BD.getInstance();
-        List<String[]> l =bd.select("SELECT * FROM canales WHERE nombre='"+nombre+"'");
         
-        if(l.isEmpty() && store){
-            bd.insert("INSERT INTO canales VALUES ('"+nombre+"')");
-            this.nombre=nombre;
-        }else if(!store && !l.isEmpty()){
-            this.nombre=l.get(0)[0];
-        }else{
-            //esto luego se controla en la importacion de campaña
-            throw new Error("El canal ya se encuentra en el sistema");
-        } 
+        bd.insert("INSERT INTO canales VALUES ('"+nombre+"')");
+        this.nombre=nombre;
+       
     }
+    
+    Canal() { }
 
+    
+
+    /**
+    * @param nombre El nombre del canal a buscar
+    * @return Devuelve un canal nuevo con el nombre que  
+    */
+    Canal buscar(String nombre){
+        BD bd=BD.getInstance();
+        Canal c =null;
+        List<String[]>l= bd.select("SELECT * FROM canales WHERE nombre='"+nombre+"'");
+        if(!l.isEmpty()){
+            c=new Canal();
+            setNombre( l.get(0)[0]);
+        }
+        return c;
+    }
+    
+    /**
+    * 
+    * @return Devuelve el nombre del canal. 
+    */
     public String getNombre() {
         return nombre;
     }
-
-    public List<MedidaSensor> getMedidas(CurvaIV c) {
-        BD bd=BD.getInstance();
-        String sel="SELECT valor, magnitud FROM medidas_canal WHERE canal='"+this.nombre+"' curva_iv="+c.getId()+";";
-        List<String[] > aux= bd.select(sel);
-        List<MedidaSensor> l=new ArrayList<>();
-        
-        for(int i=0; i<aux.size();i++){
-            l.add(new MedidaSensor(Double.parseDouble(aux.get(i)[0]), aux.get(i)[1],this,c) );
-        }
-        medidas=l;
-        return medidas;
-        
-    }
-
-    public List<Campaña> getCampaña() {
-        BD bd=BD.getInstance();
-        String sel="SELECT c.modulo, c-campaña  FROM medidas_canal m, curvas_medidas c WHERE m.curva_iv=c.id and m.canal='"+this.nombre+"'";
-        List<String[] > aux= bd.select(sel);
-        List<Campaña> l=new ArrayList<>();
-        
-        for(int i=0; i<aux.size();i++){
-            l.add(new Campaña(new Modulo(aux.get(i)[0]), aux.get(i)[1], false ) );
-        }
-        campaña=l;
-        return campaña;
-    }
-
+    
+    /**
+    * @param nombre El nuevo nombre del canal
+    * @return 
+    */
     public void setNombre(String nombre) {
         BD bd=BD.getInstance();
-        bd.update("UPDATE canal SET nombre='"+nombre+"' WHERE nombre='"+this.nombre+"' ;");
+        bd.update("UPDATE canales SET nombre='"+nombre+"' WHERE nombre='"+this.nombre+"' ;");
         this.nombre = nombre;
     }
 
-    public void setMedidas(List<MedidaSensor> medidas) {     
-        this.medidas = medidas;
-    }
-
-    public void setCampaña(List<Campaña> campaña) {
-        this.campaña = campaña;
-    }
 
     @Override
     public boolean equals(Object o){

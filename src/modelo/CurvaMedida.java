@@ -21,7 +21,7 @@ public class CurvaMedida extends CurvaIV {
     }
 
     private Campaña campaña;
-    private List<MedidaSensor> medidasCanal;
+    private List<MedidaCanal> medidasCanal;
     private CurvaCorregida correcciones;
 
     public CurvaMedida(int id) {
@@ -29,7 +29,7 @@ public class CurvaMedida extends CurvaIV {
         String qq = "SELECT modulo,campanya FROM curvas_medidas WHERE id = " + id;
         String tupla [] = BD.getInstance().select(qq).get(0);
         
-        campaña = new Campaña(new Modulo(tupla[0]), tupla[1], false);
+        campaña = new Campaña(AlmacenModulos.getInstance().buscar(tupla[0]), tupla[1], false);
         medidasCanal = null;
         correcciones = null;
     }
@@ -49,10 +49,10 @@ public class CurvaMedida extends CurvaIV {
         return campaña;
     }
     
-    public MedidaSensor getMedidaCanal(Canal canal) {
+    public MedidaCanal getMedidaCanal(Canal canal) {
         boolean founded = false;
         int i = 0;
-        MedidaSensor result = null;
+        MedidaCanal result = null;
         
         if (medidasCanal == null)
             getMedidasCanal();
@@ -68,13 +68,17 @@ public class CurvaMedida extends CurvaIV {
         return result;
     }
 
-    public List<MedidaSensor> getMedidasCanal() {
-        String sel="SELECT canal FROM medidas_canal WHERE curva_iv="+this.getId()+" ;";
+    public List<MedidaCanal> getMedidasCanal() {
+        String sel="SELECT canal, valor, magnitud FROM medidas_canal WHERE curva_iv="+this.getId()+" ;";
         BD bd=BD.getInstance();
         List<String[]> l=bd.select(sel);
-        List<MedidaSensor> ms=new ArrayList();
+        
+        List<MedidaCanal> ms=new ArrayList();
+        AlmacenMedidasCanal amc=new AlmacenMedidasCanal(this);
+        AlmacenCanales ac=AlmacenCanales.getInstance();
         for(String [] e  : l  ){
-            ms.add(new MedidaSensor(this,new Canal(e[0],false)));
+            //ms.add(new MedidaCanal(this,new Canal(e[0])));
+            ms.add(amc.nuevo(ac.buscar(e[0]),Double.parseDouble(e[1]), e[2]));
         }
         
         medidasCanal=ms;
@@ -92,9 +96,9 @@ public class CurvaMedida extends CurvaIV {
         this.campaña = campaña;
     }
 
-    public void setMedidasCanal(List<MedidaSensor> medidasCanal) {
+    public void setMedidasCanal(List<MedidaCanal> medidasCanal) {
         BD bd=BD.getInstance();
-        for(MedidaSensor ms:medidasCanal){
+        for(MedidaCanal ms:medidasCanal){
             try{
                 bd.insert("INSERT INTO medidas_canal VALUES ("+ms.getIdc()+", "+ms.getValor()+", "+ms.getMagnitud()+", "+ms.getCanal().getNombre()+") ;");
         
@@ -105,13 +109,14 @@ public class CurvaMedida extends CurvaIV {
         this.medidasCanal = medidasCanal;
     }
     
-    public List<Canal> getCanales() {
-        List<Canal> result = new ArrayList<>();
+    public Canal[] getCanales() {
+        Canal[] result;
         BD bd = BD.getInstance();
         String qq = "SELECT canal FROM medidas_canal WHERE curva_iv = " + getId();
-        
-        for (String [] tupla : bd.select(qq))
-            result.add(new Canal(tupla[0], false));
+        AlmacenMedidasCanal amc=new AlmacenMedidasCanal(this);
+        result=amc.buscarCanales();
+//        for (String [] tupla : bd.select(qq))
+//            result.add(new Canal(tupla[0], false));
         
         return result;
     }
