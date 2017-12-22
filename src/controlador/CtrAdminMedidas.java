@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
 import modelo.Campaña;
 import modelo.CurvaMedida;
 import vista.ViewAdminMedidas;
@@ -23,12 +24,12 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     private ViewAdminMedidas vm;
     private CtrAdminCampanyas ctra;
     private CtrAdminCurvaMedida ctrcm;
-   
+    private CurvaMedida cm;
     public CtrAdminMedidas(ViewAdminMedidas vm) {
         this.vm = vm;
         vm.setControlador(this);
         ctra=null;
-       
+        ctrcm=null;
        
     }
 
@@ -50,6 +51,12 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
             
             case ViewAdminMedidas.SELECC_MEDIDA:
                 medidaSeleccionada();
+                //cm=vm.getCurva();
+                System.out.println(cm);
+                break;
+            
+            case ViewAdminMedidas.GRAFICA:
+                verGrafica(cm);
                 break;
         }
     }
@@ -72,6 +79,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     }
     
     public void medidaSeleccionada(){
+        //System.out.println("HOLA");
         vm.habilitarBorrar(true);
         vm.habilitarExportar(true);
         vm.habilitarGrafica(true);

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import modelo.CurvaMedida;
 import vista.JFramePrincipal;
 
@@ -127,6 +128,8 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
         Campañas.addActionListener(controlador);
         Campañas.setActionCommand(ViewAdminMedidas.CAMPAÑA);
         
+        Grafica.addActionListener(controlador);
+        Grafica.setActionCommand(ViewAdminMedidas.GRAFICA);
        
         
         jTable1.getSelectionModel().addListSelectionListener(controlador);
@@ -165,5 +168,7 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
         Exportar.setEnabled(habilitar);
     }
 
+    
+    
 
 }

@@ -5,7 +5,8 @@
  */
 package vista.curvamedida;
 
-import controlador.ViewAdminCurvaMedida;
+import controlador.CtrAdminCurvaMedida;
+import vista.ViewAdminCurvaMedida;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -34,8 +35,8 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     private static final String IV= "CURVA I-V";
     private static final String PV= "CURVA P-V";
     
-    List<Double> mt =new ArrayList<>();
-    List<Double> mi=new ArrayList<>();
+    List<MedidaTension> mt =new ArrayList<>();
+    List<MedidaIntensidad> mi=new ArrayList<>();
     
     
     
@@ -44,14 +45,9 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
         //Object[] datos={isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
         initComponents();
         //cargaDatos(new Object[]{new Medida(10, "A"), new Medida(15,"V"), new Medida(50,"W"), new Medida (25,"V"), new Medida(12.5,"A"), "10/10/10", "12:59", new Double(100.256),20} );
-        Random rnd=new Random();
-        
-        for(int i=0;i<1000;i++){
-            mt.add((double)i/2);
-            mi.add((double)1-i/2);
-        }
-        
-        generaGrafica(mt, mi);
+        //Random rnd=new Random();
+
+       //generaGrafica(mt, mi);
     }
 
     /**
@@ -148,6 +144,10 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     private vista.curvamedida.JPanelInfoCurvaMedida jPanelInfoCurvaMedida1;
     private vista.curvamedida.JPanelToggleButtonsIV_PV jPanelToggleButtonsIV_PV1;
     // End of variables declaration//GEN-END:variables
+    @Override
+    public void setControlador(CtrAdminCurvaMedida ctr) {
+        
+    }
     
     public void cargaDatos(Object[] datos){
        jPanelInfoCurvaMedida1.cargaInfo(datos);
@@ -156,7 +156,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     @Override
     public void visualizaGrafica(List<MedidaTension> tensiones, List<MedidaIntensidad> intensidades, Object[] datos) {
         cargaDatos(datos);
-        
+        generaGrafica(tensiones, intensidades);
     }
 
     private JPanel createChartPanel() {
@@ -183,11 +183,11 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
         return dataset;
     }
    
-    private void generaGrafica(List</*MedidaTension*/Double> lt, List</*MedidaIntensidad*/Double> li){
+    private void generaGrafica(List<MedidaTension> lt, List<MedidaIntensidad> li){
         
         int i=0;
         while(i<lt.size()){
-            curva.addOrUpdate(lt.get(i)/*.getValor()*/,li.get(i)/*.getValor()*/);
+            curva.addOrUpdate(lt.get(i).getValor(),li.get(i).getValor());
             i++;
         }
         
@@ -200,5 +200,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
         jPanel1=new ChartPanel(chart);
         jPanel1.updateUI();
     }
+
+    
 
 }

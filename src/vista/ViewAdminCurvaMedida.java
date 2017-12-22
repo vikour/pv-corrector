@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador;
+package vista;
 
+import controlador.CtrAdminCurvaMedida;
 import java.util.List;
 import modelo.MedidaIntensidad;
 import modelo.MedidaTension;
@@ -15,7 +16,10 @@ import modelo.MedidaTension;
  */
 public interface ViewAdminCurvaMedida {
 
-    public void visualizaGrafica(List<MedidaTension> tensiones, List<MedidaIntensidad> intensidades, Object[] datos);
+    
+    void setControlador(CtrAdminCurvaMedida ctr);
+    
+    void visualizaGrafica(List<MedidaTension> tensiones, List<MedidaIntensidad> intensidades, Object[] datos);
     
     
 }

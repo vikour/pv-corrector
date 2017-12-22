@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import vista.ViewAdminCurvaMedida;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,20 +13,30 @@ import modelo.CurvaMedida;
 import modelo.Medida;
 import modelo.MedidaIntensidad;
 import modelo.MedidaTension;
+import vista.curvamedida.jFrameCurvas;
 
 /**
  *
  * @author Elias
  */
-class CtrAdminCurvaMedida {
+public class CtrAdminCurvaMedida {
     
-    ViewAdminCurvaMedida vcm;
+    private ViewAdminCurvaMedida vcm;
+    private CtrAdminMedidas cam;
 
     public CtrAdminCurvaMedida(ViewAdminCurvaMedida vcm) {
         this.vcm = vcm;
+        vcm.setControlador(this);
+        cam=null;
     }
     
+    public void setControladorAnterior(CtrAdminMedidas ctr){
+        cam=ctr;
+    }
+    
+    
     void showCurva(CurvaMedida c) {
+        //System.out.println("HOLAAA A A A A ");
         Medida isc,voc,pmax,vmax,imax;
         String fecha,hora;
         double ff=c.getFf();
@@ -41,6 +52,7 @@ class CtrAdminCurvaMedida {
         vmax=c.getVmax();
         imax=c.getImax();
         Object[] datos={isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
+        //vcm=new jFrameCurvas();
         vcm.visualizaGrafica(tensiones,intensidades,datos);
     
     }
