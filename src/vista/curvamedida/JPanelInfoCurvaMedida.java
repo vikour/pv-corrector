@@ -5,6 +5,8 @@
  */
 package vista.curvamedida;
 
+import modelo.Medida;
+
 /**
  *
  * @author Elias
@@ -48,35 +50,19 @@ public class JPanelInfoCurvaMedida extends javax.swing.JPanel {
 
         jLabel1.setText("Fecha :");
 
-        jLabelValorFecha.setText("jLabel2");
-
         jLabel2.setText("Hora   :");
-
-        jLabelValorHora.setText("jLabel3");
 
         jLabel3.setText("ISC     :");
 
-        jLabelValorISC.setText("jLabel4");
-
         jLabel4.setText("VOC    :");
-
-        jLabelValorVOC.setText("jLabel5");
 
         jLabel5.setText("PMAX  :");
 
-        jLabelValorPMAX.setText("jLabel6");
-
         jLabel6.setText("IMAX   :");
-
-        jLabelValorIMAX.setText("jLabel7");
 
         jLabel7.setText("VMAX  :");
 
-        jLabelValorVMAX.setText("jLabel8");
-
         jLabel8.setText("FF       :");
-
-        jLabelValorFF.setText("jLabel9");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -175,10 +161,16 @@ public class JPanelInfoCurvaMedida extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void cargaInfo(Object[] datos){
-        //todo
-        jLabelValorFecha.setText((String)datos[5]);
-        jLabelValorHora.setText((String)datos[6]);
+        //Object[] datos={isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
         
+        jLabelValorFecha.setText(datos[5].toString());
+        jLabelValorHora.setText(datos[6].toString());
+        jLabelValorISC.setText( datos[0].toString() );
+        jLabelValorVOC.setText(datos[1].toString());
+        jLabelValorPMAX.setText(datos[2].toString());
+        jLabelValorVMAX.setText(datos[3].toString());
+        jLabelValorIMAX.setText(datos[4].toString());
+        jLabelValorFF.setText(datos[7].toString());
         
     }
     

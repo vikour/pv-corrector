@@ -5,17 +5,53 @@
  */
 package vista.curvamedida;
 
+import controlador.ViewAdminCurvaMedida;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import javax.swing.JPanel;
+import modelo.Medida;
+import modelo.MedidaIntensidad;
+import modelo.MedidaTension;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 /**
  *
  * @author Elias
  */
-public class jFrameCurvas extends javax.swing.JFrame {
+public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMedida {
 
     /**
      * Creates new form jFrameCurvas
      */
+    private XYSeries curva; //para representar varias curvas solo habria que hacer un array o una lista
+    private XYSeriesCollection dataset;
+    private static final String IV= "CURVA I-V";
+    private static final String PV= "CURVA P-V";
+    
+    List<Double> mt =new ArrayList<>();
+    List<Double> mi=new ArrayList<>();
+    
+    
+    
+    
     public jFrameCurvas() {
+        //Object[] datos={isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
         initComponents();
+        //cargaDatos(new Object[]{new Medida(10, "A"), new Medida(15,"V"), new Medida(50,"W"), new Medida (25,"V"), new Medida(12.5,"A"), "10/10/10", "12:59", new Double(100.256),20} );
+        Random rnd=new Random();
+        
+        for(int i=0;i<1000;i++){
+            mt.add((double)i/2);
+            mi.add((double)1-i/2);
+        }
+        
+        generaGrafica(mt, mi);
     }
 
     /**
@@ -29,15 +65,28 @@ public class jFrameCurvas extends javax.swing.JFrame {
 
         jPanelToggleButtonsIV_PV1 = new vista.curvamedida.JPanelToggleButtonsIV_PV();
         jPanelInfoCurvaMedida1 = new vista.curvamedida.JPanelInfoCurvaMedida();
+        jPanel1 = createChartPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 406, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(416, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelToggleButtonsIV_PV1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelInfoCurvaMedida1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -47,9 +96,12 @@ public class jFrameCurvas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jPanelToggleButtonsIV_PV1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelInfoCurvaMedida1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelToggleButtonsIV_PV1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanelInfoCurvaMedida1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -92,7 +144,61 @@ public class jFrameCurvas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     private vista.curvamedida.JPanelInfoCurvaMedida jPanelInfoCurvaMedida1;
     private vista.curvamedida.JPanelToggleButtonsIV_PV jPanelToggleButtonsIV_PV1;
     // End of variables declaration//GEN-END:variables
+    
+    public void cargaDatos(Object[] datos){
+       jPanelInfoCurvaMedida1.cargaInfo(datos);
+    }
+
+    @Override
+    public void visualizaGrafica(List<MedidaTension> tensiones, List<MedidaIntensidad> intensidades, Object[] datos) {
+        cargaDatos(datos);
+        
+    }
+
+    private JPanel createChartPanel() {
+        String chartTitle = "Curva I-V";
+        String xAxisLabel = "V";
+        String yAxisLabel = "I";
+ 
+    XYDataset dataset = createDataset();
+ 
+    JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
+            xAxisLabel, yAxisLabel, dataset);
+    
+    return new ChartPanel(chart);
+    }
+
+    private XYDataset createDataset() {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeries curva1 = new XYSeries("Curva 1");
+        
+        curva=curva1;
+        this.dataset=dataset;
+        
+        dataset.addSeries(curva1);
+        return dataset;
+    }
+   
+    private void generaGrafica(List</*MedidaTension*/Double> lt, List</*MedidaIntensidad*/Double> li){
+        
+        int i=0;
+        while(i<lt.size()){
+            curva.addOrUpdate(lt.get(i)/*.getValor()*/,li.get(i)/*.getValor()*/);
+            i++;
+        }
+        
+        //crearChart(IV,"V","I");
+    }
+
+    private void crearChart(String IV, String v, String i) {
+        JFreeChart chart=ChartFactory.createXYLineChart(IV, v, i, dataset);
+        
+        jPanel1=new ChartPanel(chart);
+        jPanel1.updateUI();
+    }
+
 }

@@ -125,9 +125,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelValorFecha">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel2"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -135,9 +132,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelValorHora">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel3"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -145,9 +139,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelValorISC">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel4"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
@@ -155,9 +146,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelValorVOC">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel5"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
@@ -165,9 +153,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelValorPMAX">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel6"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -175,9 +160,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelValorIMAX">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel7"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
@@ -185,9 +167,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelValorVMAX">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel8"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
@@ -195,9 +174,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelValorFF">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel9"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
