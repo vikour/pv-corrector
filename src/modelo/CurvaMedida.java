@@ -31,7 +31,7 @@ public class CurvaMedida extends CurvaIV {
         
 
         //campaña = new Campaña(new Modulo(tupla[0]), tupla[1], false);
-        campaña = AlmacenCampañas.getInstance().nueva(tupla[0], tupla[1]);
+        campaña = AlmacenCampañas.getInstance().buscar(tupla[0], tupla[1]);
         medidasCanal = null;
         correcciones = null;
     }
