@@ -29,7 +29,7 @@ public interface ViewAdminMedidas {
     
     void setControlador(CtrAdminMedidas ctr);
     
-    void mostrarCurvas(List<CurvaMedida> curva);
+    void mostrarCurvas(CurvaMedida [] curva);
     
     void vistaAnterior();
     

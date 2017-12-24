@@ -34,7 +34,7 @@ public class ListModelCampanya extends AbstractListModel{
 
     @Override
     public Object getElementAt(int index) {
-        return model[index];
+        return model[index].getNombre();
     }
 
     void setList(Campaña [] c) {

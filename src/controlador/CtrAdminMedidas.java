@@ -51,7 +51,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     }
 
     public void setMedidas(Campaña c) {
-        List<CurvaMedida> model=c.getCurvas();
+        CurvaMedida [] model=c.getCurvas();
         
         vm.mostrarCurvas(model);
     }

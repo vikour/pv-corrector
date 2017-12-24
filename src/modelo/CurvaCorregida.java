@@ -11,7 +11,7 @@ public class CurvaCorregida extends CurvaIV
    private CurvaMedida curvas;
 
     public CurvaCorregida(int id, MetodoCorrecion m, CurvaMedida cm,boolean str) {
-        super(id);
+       CurvaIV.buscar(this, id);
     }
    
    

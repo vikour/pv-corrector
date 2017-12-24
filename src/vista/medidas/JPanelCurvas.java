@@ -135,7 +135,7 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
     }
 
     @Override
-    public void mostrarCurvas(List<CurvaMedida> curva) {
+    public void mostrarCurvas(CurvaMedida[] curva) {
         TableModelMedidas model = new TableModelMedidas(curva);
         jTable1.setModel(model);
         

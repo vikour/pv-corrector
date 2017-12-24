@@ -95,11 +95,12 @@ public class Campaña {
         }
     }
 
-    public List<CurvaMedida> getCurvas() {
-        throw new UnsupportedOperationException();
+    public CurvaMedida [] getCurvas() {
+       return AlmacenCurvasMedidas.getInstance().buscar(this);
     }
 
     public List<Canal> getCanales() {
+
         throw new UnsupportedOperationException();
     }
 

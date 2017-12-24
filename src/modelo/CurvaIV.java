@@ -24,28 +24,6 @@ public abstract class CurvaIV {
     private int id;
     private int tipo;
 
-    public CurvaIV(int id) {
-        String select = "SELECT fecha, hora, isc_v ,isc_m, voc_v, voc_m, pmax_v, pmax_m, vmax_v ,vmax_m, ff_v,imax_v,imax_m FROM curvas_iv WHERE id=" + id + " ;";
-        BD bd = BD.getInstance();
-        List<String[]> l = bd.select(select);
-
-        if (l.isEmpty()) {
-            throw new Error("La curva no existe en la base de datos");
-        }
-        String[] aux = l.get(0);
-
-        this.id = id;
-        this.fecha = aux[0];
-        this.hora = aux[1];
-        this.isc = new Medida(Double.parseDouble(aux[2]), aux[3]);
-        this.voc = new Medida(Double.parseDouble(aux[4]), aux[5]);
-        this.pmax = new Medida(Double.parseDouble(aux[6]), aux[7]);
-        this.vmax = new Medida(Double.parseDouble(aux[8]), aux[9]);
-        this.ff = Double.parseDouble(aux[10]);
-        this.imax = new Medida(Double.parseDouble(aux[11]), aux[12]);
-
-    }
-
     public CurvaIV( int tipo, String fecha, String hora, Medida isc, Medida voc, Medida pmax, Medida imax, Medida vmax, double ff) {
         this.intensidades = null;
         this.tensiones = null;
@@ -69,9 +47,31 @@ public abstract class CurvaIV {
         this.vmax = vmax;
         this.ff = ff;
     }
+    
+    protected CurvaIV() {
+       
+    }
+    
+    protected static void buscar(CurvaIV medida, int id) {
+        String select = "SELECT fecha, hora, isc_v ,isc_m, voc_v, voc_m, pmax_v, pmax_m, vmax_v ,vmax_m, ff_v,imax_v,imax_m FROM curvas_iv WHERE id=" + id + " ;";
+        BD bd = BD.getInstance();
+        List<String[]> l = bd.select(select);
 
-    
-    
+        if (l.isEmpty()) {
+            throw new Error("La curva no existe en la base de datos");
+        }
+        String[] aux = l.get(0);
+
+        medida.id = id;
+        medida.fecha = aux[0];
+        medida.hora = aux[1];
+        medida.isc = new Medida(Double.parseDouble(aux[2]), aux[3]);
+        medida.voc = new Medida(Double.parseDouble(aux[4]), aux[5]);
+        medida.pmax = new Medida(Double.parseDouble(aux[6]), aux[7]);
+        medida.vmax = new Medida(Double.parseDouble(aux[8]), aux[9]);
+        medida.ff = Double.parseDouble(aux[10]);
+        medida.imax = new Medida(Double.parseDouble(aux[11]), aux[12]);
+    }
     
     public List<MedidaIntensidad> getIntensidades() {
         List<MedidaIntensidad> l = MedidaIntensidad.listar(this);

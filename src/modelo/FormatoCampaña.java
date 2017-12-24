@@ -101,7 +101,6 @@ public class FormatoCampaña extends FormatoFichero{
         while (!line.contains("mero de puntos curva IV")) {
             parts = line.split(":");
             AlmacenCanales ac=AlmacenCanales.getInstance();
-            AlmacenMedidasCanal amc= new AlmacenMedidasCanal(curva);
             if (parts.length >= 2) {
                 nombreCanal = parts[parts.length-2];
                 parts = parts[parts.length-1].split("\t");
@@ -113,20 +112,20 @@ public class FormatoCampaña extends FormatoFichero{
                     
                     try {
                         //canal = new Canal(nombreCanal, false);
-                        canal=ac.buscar(nombreCanal);
+                        canal=ac.nuevo(nombreCanal);
                     }
                     catch (Error err) {
                         //canal = new Canal(nombreCanal, true);
-                        canal = ac.nuevo(nombreCanal);
+                        canal = ac.buscar(nombreCanal);
                     }
                     
                     try {
                         //medida = new MedidaSensor(valor, magnitud, canal, curva);
-                        medida=amc.nuevo(canal, valor, magnitud);
+                        curva.addMedidaCanal(canal, valor, magnitud);
                     }
                     catch (Error err) {
                         //medida = new MedidaSensor(curva, canal);
-                        medida=amc.buscar(canal);
+                        medida = curva.getMedidaCanal(canal);
                         medida.setValor(valor);
                         medida.setMagnitud(magnitud);
                     } // Si existe no importa.
@@ -203,8 +202,10 @@ public class FormatoCampaña extends FormatoFichero{
             line = readNotEmptyLine(br);
         }
         
+        AlmacenCurvasMedidas almacenMedidas = AlmacenCurvasMedidas.getInstance();
+        
         try {
-            curva = new CurvaMedida(campaña, fecha, hora, medidas[0],
+            curva = almacenMedidas.nueva(campaña, fecha, hora, medidas[0],
                     medidas[1], medidas[2], medidas[3],
                     medidas[4], medidas[5].getValor());
         }
@@ -212,8 +213,8 @@ public class FormatoCampaña extends FormatoFichero{
             sobreescribir = notificar.confirmSobrescribirFormatoFichero(new Object[] {fecha,hora});
             
             if (sobreescribir) {
-                CurvaIV.borrar(fecha, hora);
-                curva = new CurvaMedida(campaña, fecha, hora, medidas[0],
+               almacenMedidas.borrar(fecha, hora);
+               curva = almacenMedidas.nueva(campaña, fecha, hora, medidas[0],
                     medidas[1], medidas[2], medidas[3],
                     medidas[4], medidas[5].getValor());
             }
@@ -237,7 +238,10 @@ public class FormatoCampaña extends FormatoFichero{
             throw new RuntimeException("Error de formato");
         
         value = extractValue(line);
-        modulos.nuevo(value);
+        modulo = modulos.buscar(value);
+        
+        if (modulo == null)
+           modulo = modulos.nuevo(value);
 
         line = readNotEmptyLine(br);
         value = extractValue(line);
