@@ -14,6 +14,7 @@ import javax.swing.table.AbstractTableModel;
 import modelo.Campaña;
 import modelo.CurvaMedida;
 import vista.ViewAdminMedidas;
+import vista.curvamedida.jFrameCurvas;
 
 /**
  *
@@ -49,13 +50,21 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
                 vistaAnterior();
                 break;
             
-            case ViewAdminMedidas.SELECC_MEDIDA:
-                medidaSeleccionada();
+            case ViewAdminMedidas.SELECC_MEDIDA: //ESTO ESTA MAL
+                //System.out.println("HE CC_MEDIDA: //ESTO ESTA MAL
+                //System.out.println("SELECCIONADO UNA CURVA");
+                //medidaSeleccionada();
+                //System.out.println("HE PASADO POR MEDIDA SELECCIOADA");
                 //cm=vm.getCurva();
-                System.out.println(cm);
+                //System.out.println(cm);
                 break;
             
             case ViewAdminMedidas.GRAFICA:
+                if(cm==null){
+                    cm=vm.getCurva();
+                    System.out.println("La curva era null");
+                }
+                System.out.println(cm);
                 verGrafica(cm);
                 break;
         }
@@ -75,17 +84,19 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     public void valueChanged(ListSelectionEvent e) {
         if(!e.getValueIsAdjusting()){
             medidaSeleccionada();
+            cm=vm.getCurva();
         }
     }
     
     public void medidaSeleccionada(){
-        //System.out.println("HOLA");
+        
         vm.habilitarBorrar(true);
         vm.habilitarExportar(true);
         vm.habilitarGrafica(true);
     }
     
     public void verGrafica(CurvaMedida c){
+        
         ctrcm.showCurva(c);
         
         

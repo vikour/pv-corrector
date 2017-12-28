@@ -167,7 +167,19 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
     public void habilitarExportar(boolean habilitar) {
         Exportar.setEnabled(habilitar);
     }
-
+    
+    @Override
+    public CurvaMedida getCurva(){
+        int f=jTable1.getSelectedRow();
+        TableModelMedidas m =(TableModelMedidas) jTable1.getModel();
+        CurvaMedida ret=m.getMedida(f);
+        if(ret==null){
+            System.out.println("La curva es null");
+        }else{
+            System.out.println("YOLO");
+        }
+        return ret;
+    }
     
     
 

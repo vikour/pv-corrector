@@ -20,6 +20,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import vista.JFramePrincipal;
 
 /**
  *
@@ -34,6 +35,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     private XYSeriesCollection dataset;
     private static final String IV= "CURVA I-V";
     private static final String PV= "CURVA P-V";
+
     
     List<MedidaTension> mt =new ArrayList<>();
     List<MedidaIntensidad> mi=new ArrayList<>();
@@ -199,6 +201,11 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
         
         jPanel1=new ChartPanel(chart);
         jPanel1.updateUI();
+    }
+
+    @Override
+    public void muestrate() {
+        this.setVisible(true);
     }
 
     

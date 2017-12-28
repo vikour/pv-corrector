@@ -37,6 +37,7 @@ public class CtrAdminCurvaMedida {
     
     void showCurva(CurvaMedida c) {
         //System.out.println("HOLAAA A A A A ");
+        
         Medida isc,voc,pmax,vmax,imax;
         String fecha,hora;
         double ff=c.getFf();
@@ -52,8 +53,8 @@ public class CtrAdminCurvaMedida {
         vmax=c.getVmax();
         imax=c.getImax();
         Object[] datos={isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
-        //vcm=new jFrameCurvas();
         vcm.visualizaGrafica(tensiones,intensidades,datos);
+        vcm.muestrate();
     
     }
 }

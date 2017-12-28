@@ -21,5 +21,6 @@ public interface ViewAdminCurvaMedida {
     
     void visualizaGrafica(List<MedidaTension> tensiones, List<MedidaIntensidad> intensidades, Object[] datos);
     
+    void muestrate();
     
 }

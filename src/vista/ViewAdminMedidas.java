@@ -33,6 +33,7 @@ public interface ViewAdminMedidas {
     
     void vistaAnterior();
     
+    CurvaMedida getCurva();
     
     
 }
