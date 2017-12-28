@@ -14,7 +14,7 @@ import modelo.CurvaMedida;
  *
  * @author Elias
  */
-public class AlmacenMedidasCanal {
+class AlmacenMedidasCanal {
     private List<MedidaCanal> medidas;
     private int idc;
     private boolean todas;

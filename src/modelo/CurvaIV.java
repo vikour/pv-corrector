@@ -71,18 +71,38 @@ public abstract class CurvaIV {
         medida.vmax = new Medida(Double.parseDouble(aux[8]), aux[9]);
         medida.ff = Double.parseDouble(aux[10]);
         medida.imax = new Medida(Double.parseDouble(aux[11]), aux[12]);
+        medida.intensidades = null;
+        medida.tensiones = null;
+    }
+    
+    public void addPuntoIntensidad(MedidaIntensidad intensidad) {
+       
+       if (intensidades != null && !intensidades.contains(intensidad))
+          intensidades.add(intensidad);
+       
     }
     
     public List<MedidaIntensidad> getIntensidades() {
-        List<MedidaIntensidad> l = MedidaIntensidad.listar(this);
-        intensidades = l;
+       
+       if (intensidades == null) 
+          intensidades = MedidaIntensidad.listar(this);
+
         return intensidades;
+    }
+    
+    public void addPuntoTension(MedidaTension tension) {
+       
+       if (tensiones != null && !tensiones.contains(tension))
+          tensiones.add(tension);
+       
     }
 
     public List<MedidaTension> getTensiones() {
-        List<MedidaTension> l=MedidaTension.listar(this);
-        tensiones=l;
-        return l;
+       
+       if (tensiones == null)
+          tensiones = MedidaTension.listar(this);
+
+        return tensiones;
     }
 
     public String getFecha() {

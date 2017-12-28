@@ -44,6 +44,8 @@ public class AlmacenCurvasMedidas {
          medidas.put(c, list);
          registroConsultaEntera.put(c, Boolean.FALSE);
       }
+      else
+         list.add(result);
       
       return result;
    }
@@ -80,10 +82,14 @@ public class AlmacenCurvasMedidas {
    
    public void borrar(String fecha, String hora) {
       CurvaMedida curva = buscarMedidaCacheClaveCandidata(medidas.values().iterator(), fecha, hora);
-      List<CurvaMedida> list = medidas.get(curva.getCampaña());
+      List<CurvaMedida> list;
       
-      CurvaMedida.borrar(fecha, hora);
-      medidas.remove(curva);
+      if (curva == null)
+         CurvaMedida.borrar(fecha, hora);
+      else {
+         list = medidas.get(curva.getCampaña());
+         list.remove(curva);
+      }
    }
 
    private CurvaMedida buscarMedidaCache(Iterator<List<CurvaMedida>> it, int id) {

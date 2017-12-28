@@ -8,16 +8,16 @@ import java.util.List;
 
 public abstract class MedidaCurva extends Medida implements Comparable {
 
-    protected NombreValorCurva tipo;
+    protected TipoValorCurva tipo;
     protected int orden;
     protected int idCurva;
     
-    public MedidaCurva(CurvaIV curva, int orden, NombreValorCurva tipo) {
+    public MedidaCurva(CurvaIV curva, int orden, TipoValorCurva tipo) {
         super(0,"");
         String qq = "SELECT * FROM medidas_curvas WHERE " +
                     "curva_iv = " + curva.getId() + " AND " +
                     "orden = " + orden + " AND " +
-                    "tipo = " + NombreValorCurva.BD(tipo);
+                    "tipo = " + TipoValorCurva.BD(tipo);
         BD bd = BD.getInstance();
         List<String[]> result = bd.select(qq);
         String [] medida;
@@ -30,18 +30,18 @@ public abstract class MedidaCurva extends Medida implements Comparable {
         magnitud = medida[2];
         this.orden = Integer.valueOf(medida[3]);
         
-        if (Integer.valueOf(medida[4]) == NombreValorCurva.BD(NombreValorCurva.INTENSIDAD))
-            this.tipo = NombreValorCurva.INTENSIDAD;
+        if (Integer.valueOf(medida[4]) == TipoValorCurva.BD(TipoValorCurva.INTENSIDAD))
+            this.tipo = TipoValorCurva.INTENSIDAD;
         else 
-            this.tipo = NombreValorCurva.TENSION;
+            this.tipo = TipoValorCurva.TENSION;
         
         idCurva = curva.getId();
     }
     
-    protected MedidaCurva(double valor, String magnitud, int orden, CurvaIV curva, NombreValorCurva tipo) {
+    protected MedidaCurva(double valor, String magnitud, int orden, CurvaIV curva, TipoValorCurva tipo) {
         super(valor, magnitud);
         String stm = "INSERT INTO medidas_curvas VALUES (" + curva.getId() + ", " + valor + ", " + 
-                     "'" + magnitud + "', " + orden + ", " + NombreValorCurva.BD(tipo) + ")";
+                     "'" + magnitud + "', " + orden + ", " + TipoValorCurva.BD(tipo) + ")";
         BD bd = BD.getInstance();
         
         try {
@@ -59,7 +59,7 @@ public abstract class MedidaCurva extends Medida implements Comparable {
     public void setMagnitud(String magnitud) {
         String update = "UPDATE medidas_curvas SET magnitud = '" + magnitud + "' WHERE " +
                         "orden = " + orden + " AND curva_iv = " + idCurva + " AND " +
-                        "tipo = " + NombreValorCurva.BD(tipo);
+                        "tipo = " + TipoValorCurva.BD(tipo);
         
         if (!magnitud.equals(this.magnitud)) {
             BD.getInstance().update(update);
@@ -71,7 +71,7 @@ public abstract class MedidaCurva extends Medida implements Comparable {
     public void setValor(double valor) {
         String update = "UPDATE medidas_curvas SET valor = " + valor + " WHERE " +
                         "orden = " + orden + " AND curva_iv = " + idCurva + " AND " +
-                        "tipo = " + NombreValorCurva.BD(tipo);
+                        "tipo = " + TipoValorCurva.BD(tipo);
         
         if (valor != this.valor) {
             BD.getInstance().update(update);

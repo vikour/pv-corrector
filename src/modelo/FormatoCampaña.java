@@ -110,14 +110,10 @@ public class FormatoCampaña extends FormatoFichero{
                     valor = Double.valueOf(valorStr);
                     magnitud = parts[parts.length-1];
                     
-                    try {
-                        //canal = new Canal(nombreCanal, false);
-                        canal=ac.nuevo(nombreCanal);
-                    }
-                    catch (Error err) {
-                        //canal = new Canal(nombreCanal, true);
-                        canal = ac.buscar(nombreCanal);
-                    }
+                    canal = ac.buscar(nombreCanal);
+                    
+                    if (canal == null)
+                       canal = ac.nuevo(nombreCanal);
                     
                     try {
                         //medida = new MedidaSensor(valor, magnitud, canal, curva);
@@ -246,21 +242,10 @@ public class FormatoCampaña extends FormatoFichero{
         line = readNotEmptyLine(br);
         value = extractValue(line);
         
-        /*
-        try { // CampaÃ±a.
-            //campaña = new Campaña(modulo, value, false);
-        } catch (Error err) {
-            //campaña = new Campaña(modulo, value, true);
-        } // Si existe la campaÃ±a no hacemos nada.    
-        */
+        campaña = campañas.buscar(modulo, value);
         
-        try {
-            campaña = campañas.nueva(modulo, value);
-        }
-        catch (Error err) {
-            campaña = campañas.buscar(modulo, value);
-        }
-
+        if (campaña == null)
+           campaña = campañas.nueva(modulo, value);
         
         return campaña;
     }

@@ -4,11 +4,11 @@
 
 package modelo;
 
-public enum NombreValorCurva
+public enum TipoValorCurva
 {
    INTENSIDAD,TENSION;
    
-   public static int BD(NombreValorCurva tipo) {
+   public static int BD(TipoValorCurva tipo) {
        int value = 0;
        
        if (tipo == TENSION)
