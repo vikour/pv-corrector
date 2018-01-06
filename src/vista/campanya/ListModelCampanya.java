@@ -17,32 +17,32 @@ import modelo.Campaña;
  */
 public class ListModelCampanya extends AbstractListModel{
 
-    private Campaña [] model;
+    private List<Campaña> model;
 
     public ListModelCampanya() {
-        model= null;
+        model= new ArrayList<>();
     }
 
-    public ListModelCampanya(Campaña [] model) {
+    public ListModelCampanya(List<Campaña> model) {
         this.model = model;
     }
     
     @Override
     public int getSize() {
-        return model.length;
+        return model.size();
     }
 
     @Override
     public Object getElementAt(int index) {
-        return model[index].getNombre();
+        return model.get(index).getNombre();
     }
 
-    void setList(Campaña [] c) {
+    void setList(List<Campaña> c) {
         model = c;
     }
     
     public Campaña getCampaña(int index){
-        return model[index];
+        return model.get(index);
     }
     
 }

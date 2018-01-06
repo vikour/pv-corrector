@@ -3,6 +3,7 @@
  */
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,8 +12,8 @@ public abstract class CurvaIV {
     public static int MEDIDA = 0;
     public static int CORREGIDA = 1;
     
-    private List<MedidaIntensidad> intensidades;
-    private List<MedidaTension> tensiones;
+    private List<MedidaCurva> intensidades;
+    private List<MedidaCurva> tensiones;
     private String fecha;
     private String hora;
     private Medida isc;
@@ -82,7 +83,7 @@ public abstract class CurvaIV {
        
     }
     
-    public List<MedidaIntensidad> getIntensidades() {
+    public List<MedidaCurva> getIntensidades() {
        
        if (intensidades == null) 
           intensidades = MedidaIntensidad.listar(this);
@@ -97,14 +98,34 @@ public abstract class CurvaIV {
        
     }
 
-    public List<MedidaTension> getTensiones() {
+    public List<MedidaCurva> getTensiones() {
        
        if (tensiones == null)
           tensiones = MedidaTension.listar(this);
 
         return tensiones;
     }
+    
+    public List<MedidaOrdenada> getPotencias() {
+       List<MedidaOrdenada> potencias = new ArrayList<>();
+       List<MedidaCurva> i = getIntensidades();
+       List<MedidaCurva> v = getTensiones();
+       int tam = Math.min(i.size(), v.size());
+       
+       for (int j = 0; j < tam ; j++)
+          potencias.add(new MedidaOrdenada(j+1, i.get(j).getValor() * v.get(j).getValor(),"W"));
+       
+       return potencias;
+    }
 
+   protected void setTensiones(List<MedidaCurva> tensiones) {
+      this.tensiones = tensiones;
+   }
+
+   protected void setIntensidades(List<MedidaCurva> intensidades) {
+      this.intensidades = intensidades;
+   }
+    
     public String getFecha() {
         return fecha;
     }
@@ -124,13 +145,25 @@ public abstract class CurvaIV {
     public Medida getPmax() {
         return pmax;
     }
+    
+    public Medida calcularPMAX() {
+       return buscarMedidaMaxima(getPotencias());
+    }
 
     public Medida getVmax() {
         return vmax;
     }
+    
+    public Medida calcularVMAX() {
+       return buscarMedidaMaxima(new ArrayList<>(getTensiones()));
+    }
 
-    public double getFf() {
+    public double getFF() {
         return ff;
+    }
+    
+    public double calculateFF() {
+       return getPmax().getValor() / (getImax().getValor() * getVmax().getValor());
     }
 
     public int getId() {
@@ -140,6 +173,25 @@ public abstract class CurvaIV {
     public Medida getImax() {
         return imax;
     }
+    
+    public Medida calcularIMAX() {
+       return buscarMedidaMaxima(new ArrayList<>(getIntensidades()));
+    }
+
+   private Medida buscarMedidaMaxima(List<MedidaOrdenada> medidas) {
+      Medida maxima = null;
+      
+      if (medidas != null && !medidas.isEmpty()) {
+         maxima = medidas.get(0);
+         
+         for (int i = 1 ; i < medidas.size() ; i++)
+            
+            if (medidas.get(i).getValor() > maxima.getValor())
+               maxima = medidas.get(i);
+         
+      }
+      return maxima;
+   }
     
     public void setFecha(String fecha) {
         String up="UPDATE curvas_iv SET fecha="+fecha+" WHERE id="+this.id+" ; ";
@@ -199,7 +251,7 @@ public abstract class CurvaIV {
     }
     
     public void setImax(Medida imax) {
-        String upd = "UPDATE curva_iv SET imax_v = " + imax.getValor() + ", " +
+        String upd = "UPDATE curvas_iv SET imax_v = " + String.format("%f",imax.getValor()).replace(",", ".") + ", " +
                      "imax_m = '" + imax.getMagnitud() + "' WHERE " +
                      "id = " + id;
         BD.getInstance().update(upd);

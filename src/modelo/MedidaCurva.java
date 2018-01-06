@@ -6,14 +6,14 @@ package modelo;
 
 import java.util.List;
 
-public abstract class MedidaCurva extends Medida implements Comparable {
+public abstract class MedidaCurva extends MedidaOrdenada {
 
     protected TipoValorCurva tipo;
     protected int orden;
     protected int idCurva;
     
     public MedidaCurva(CurvaIV curva, int orden, TipoValorCurva tipo) {
-        super(0,"");
+       super(orden, 0, "");
         String qq = "SELECT * FROM medidas_curvas WHERE " +
                     "curva_iv = " + curva.getId() + " AND " +
                     "orden = " + orden + " AND " +
@@ -38,21 +38,25 @@ public abstract class MedidaCurva extends Medida implements Comparable {
         idCurva = curva.getId();
     }
     
-    protected MedidaCurva(double valor, String magnitud, int orden, CurvaIV curva, TipoValorCurva tipo) {
-        super(valor, magnitud);
-        String stm = "INSERT INTO medidas_curvas VALUES (" + curva.getId() + ", " + valor + ", " + 
+    protected MedidaCurva(double valor, String magnitud, int orden, int curva, TipoValorCurva tipo) {
+        super(orden, valor, magnitud);
+        String stm = "INSERT INTO medidas_curvas VALUES (" + curva + ", " + valor + ", " + 
                      "'" + magnitud + "', " + orden + ", " + TipoValorCurva.BD(tipo) + ")";
         BD bd = BD.getInstance();
         
         try {
             bd.insert(stm);
             this.orden = orden;
-            idCurva = curva.getId();
+            idCurva = curva;
             this.tipo = tipo;
         }
         catch (Error err) {
             throw new Error("Medida duplicada");
         }
+    }
+    
+    protected MedidaCurva(double valor, String magnitud, int orden, CurvaIV curva, TipoValorCurva tipo) {
+       this(valor,magnitud,orden,curva.getId(),tipo);
     }
 
     @Override
@@ -89,16 +93,6 @@ public abstract class MedidaCurva extends Medida implements Comparable {
                (((MedidaCurva) obj).orden == orden) &&
                (((MedidaCurva) obj).idCurva == idCurva) &&
                (((MedidaCurva) obj).tipo.equals(tipo));
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        int i = -1;
-        
-        if (o instanceof MedidaCurva)
-            i = ((MedidaCurva) o).orden - orden;
-        
-        return i;
     }
     
 }

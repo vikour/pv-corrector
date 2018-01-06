@@ -33,8 +33,6 @@ public class CtrAdminModulos implements ActionListener,ListSelectionListener {
       Modulo m= vm.getModulosSeleccionados();
       ctrs.setModulos(m);
       vm.siguienteVista();
-      
-      
     }
 
     public void setCtrSiguiente(CtrAdminCampanyas ctrs) {

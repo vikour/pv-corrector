@@ -43,7 +43,7 @@ public class AlmacenCampañas {
      */
     
     
-    public Campaña [] buscar(Modulo modulo) {
+    public List<Campaña> buscar(Modulo modulo) {
         Boolean consultaAnterior = registroConsultaEntera.get(modulo);
         List<Campaña> list;
         
@@ -55,7 +55,7 @@ public class AlmacenCampañas {
             list = campañas.get(modulo);
         
         
-        return list.toArray(new Campaña[list.size()]);
+        return list;
     }
     
     /**

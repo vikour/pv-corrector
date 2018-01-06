@@ -10,8 +10,8 @@ import java.util.List;
 public class MedidaTension extends MedidaCurva
 {
     
-    public static List<MedidaTension> listar(CurvaIV curva) {
-        List<MedidaTension> result = new ArrayList<>();
+    public static List<MedidaCurva> listar(CurvaIV curva) {
+        List<MedidaCurva> result = new ArrayList<>();
         String qq = "SELECT orden FROM medidas_curvas " +
                     "WHERE curva_iv = " + curva.getId() + " AND tipo = " +
                     TipoValorCurva.BD(TipoValorCurva.TENSION);

@@ -43,7 +43,7 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     }
     
     private void consultarCampañas() {
-       Campaña[] mc=ms.getCampañas();
+       List<Campaña> mc=ms.getCampañas();
        
        vc.mostrarCampanyas(mc);
     }
@@ -105,10 +105,9 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
     private void importar() {
        File f = vc.mostrarSelectorFicheros();
        
-       if (f != null) {
+       if (f != null) 
            vc.mostrarVistaImportacion(FormatoFicheroFactory.FORMATO_CAMPAÑA, f);
-           consultarCampañas();
-       }
+           
     }
 
 }

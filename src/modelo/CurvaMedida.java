@@ -37,7 +37,6 @@ public class CurvaMedida extends CurvaIV {
 
     private Campaña campaña;
     private AlmacenMedidasCanal medidasCanal;
-    private CurvaCorregida correcciones;
 
     private CurvaMedida() {
        super();
@@ -49,7 +48,6 @@ public class CurvaMedida extends CurvaIV {
         
         this.campaña = c;
         this.medidasCanal = new AlmacenMedidasCanal(this);
-        this.correcciones = null;
         
         BD.getInstance().insert(stm);
     }
@@ -70,8 +68,8 @@ public class CurvaMedida extends CurvaIV {
        return medidasCanal.nuevo(canal, value, magnitud);
     }
 
-    public CurvaCorregida getCorrecciones() {
-        return correcciones;
+    public CurvaCorregida [] getCorrecciones() {
+       return AlmacenCurvasCorregidas.getInstance().buscar(this);
     }
 
     public void setCampaña(Campaña campaña) {
@@ -111,5 +109,9 @@ public class CurvaMedida extends CurvaIV {
     public String toString(){
         return "ID: "+this.getId()+"\nCampaña: "+campaña.getNombre();
     }
+
+   Modulo getModulo() {
+      return campaña.getModulo();
+   }
 
 }

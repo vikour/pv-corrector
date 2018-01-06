@@ -49,13 +49,13 @@ public class Canal {
     * @param nombre El nombre del canal a buscar
     * @return Devuelve un canal nuevo con el nombre que  
     */
-    Canal buscar(String nombre){
+    static Canal buscar(String nombre){
         BD bd=BD.getInstance();
         Canal c =null;
         List<String[]>l= bd.select("SELECT * FROM canales WHERE nombre='"+nombre+"'");
         if(!l.isEmpty()){
             c=new Canal();
-            setNombre( l.get(0)[0]);
+            c.setNombre( l.get(0)[0]);
         }
         return c;
     }

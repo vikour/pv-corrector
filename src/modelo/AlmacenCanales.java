@@ -62,10 +62,14 @@ public class AlmacenCanales {
     public Canal buscar(String nombre){
         Canal c = buscarEnCanales(nombre);
         
-        if(c==null){
+        if(c==null){ /*
             c=new Canal();
             c.buscar(nombre);
-            canales.add(c);
+            canales.add(c);*/
+           c = Canal.buscar(nombre);
+           
+           if (c != null)
+              canales.add(c);
         }
         return c;
     }

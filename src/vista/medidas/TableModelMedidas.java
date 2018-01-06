@@ -106,7 +106,7 @@ public class TableModelMedidas extends AbstractTableModel{
                 break;
                 
             case FF:
-                value = curvas[rowIndex].getFf() + "   %";
+                value = curvas[rowIndex].getFF() + "   %";
                 break;
             
             default:

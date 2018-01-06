@@ -62,6 +62,8 @@ public class AlmacenCurvasMedidas {
          list = medidas.get(result.getCampaña());
          
          if (list == null) {
+            list = new ArrayList<>();
+            list.add(result);
             medidas.put(result.getCampaña(), list);
             registroConsultaEntera.put(result.getCampaña(), Boolean.FALSE);
          }

@@ -182,7 +182,7 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
     }
 
     @Override
-    public void mostrarCampanyas(Campaña [] campanyas) {
+    public void mostrarCampanyas(List<Campaña> campanyas) {
         ListModelCampanya modelo=(ListModelCampanya) jListC.getModel();
         
         modelo.setList(campanyas);
@@ -226,6 +226,7 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         JDialogProcessImport dImport = new JDialogProcessImport(prin, true);
         CtrImportacion ctrImportacion = new CtrImportacion(dImport);
         dImport.setVisible(true, format, f);
+        jListC.updateUI();
     }
 
 }

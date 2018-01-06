@@ -422,7 +422,7 @@ public class Modulo
         this.np = np;
     }
 
-    public Campaña [] getCampañas() {
+    public List<Campaña> getCampañas() {
         return AlmacenCampañas.getInstance().buscar(this);
     }
 

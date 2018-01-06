@@ -62,7 +62,9 @@ public class AlmacenModulos {
 
         if (result == null) {
             result = Modulo.buscar(nombre);
-            modulos.add(result);
+            
+            if (result != null)
+               modulos.add(result);
         }
         
         return result;
