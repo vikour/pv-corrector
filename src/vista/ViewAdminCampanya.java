@@ -37,6 +37,8 @@ public interface ViewAdminCampanya {
    void mostrarModuloNuevo( Campaña m );
 
    File mostrarSelectorFicheros();
+   
+   File mostrarSelectorFicherosNuevo();
 
    void vistaAnterior();
    
@@ -45,4 +47,7 @@ public interface ViewAdminCampanya {
     public void siguienteVista();
    
     public void mostrarVistaImportacion(String format, File f);
+    
+    public void mostrarMensajeSuccess(String message);
+    public void mostrarMensajeError(String message);
 }
