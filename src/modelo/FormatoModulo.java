@@ -145,7 +145,7 @@ public class FormatoModulo extends FormatoFichero {
     
  
     @Override
-    public void escribir(File file) {
+    public void escribir(File file, Object objeto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
