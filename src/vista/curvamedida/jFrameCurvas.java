@@ -41,9 +41,9 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     private List<MedidaTension> tensiones;
     private List<MedidaIntensidad> intensidades;
     private Object[] datos;
-    List<MedidaTension> mt =new ArrayList<>();
-    List<MedidaIntensidad> mi=new ArrayList<>();
-    
+    private List<MedidaTension> mt =new ArrayList<>();
+    private List<MedidaIntensidad> mi=new ArrayList<>();
+    private TableModelGrafica tm;
     
     
     
@@ -210,8 +210,11 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
         this.datos=datos;
         this.tensiones=tensiones;
         this.intensidades=intensidades;
+        tm=new TableModelGrafica(intensidades, tensiones);
+        jTable1.setModel(tm);
         cargaDatos(datos);
         generaGrafica(tensiones, intensidades);
+        jTable1.updateUI();
     }
 
     private JPanel createChartPanel() {
