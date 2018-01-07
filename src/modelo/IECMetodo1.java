@@ -17,24 +17,33 @@ public class IECMetodo1 implements MetodoCorreccion {
    
    @Override
    public CurvaCorregida corregir(List<ConfiguracionCorreccion> configuracion, CurvaMedida original) {
-      CurvaCorregida correccion = new CurvaCorregida(NombreMetodoCorreccion.METODO_1_IEC, original, configuracion);
+      CurvaCorregida correccion = null;
       
       // Obtención de medidas.
       Modulo modulo = original.getModulo();
+      
+      double alpha = modulo.getAlpha() * 10E3;
+      double beta = modulo.getBeta() * 10E3;
+      double rs = modulo.getRs();
+      double kappa = modulo.getKappa() * 10E3;
+      
+      // Caso de error.
+      if (alpha == 0 || beta == 0 || rs == 0 || kappa == 0)
+         throw new RuntimeException();
+      
       ConfiguracionCorreccion config = configuracion.get(0);
       double isc = original.getIsc().getValor();
       double g1 = config.getIrradiancia().getValor();
       double g2 = config.getValorI();
       double t1 = config.getTemperatura().getValor();
       double t2 = config.getValorT();
-      double alpha = modulo.getAlpha() * 10E3;
-      double beta = modulo.getBeta() * 10E3;
-      double rs = modulo.getRs();
-      double kappa = modulo.getKappa() * 10E3;
+      
+      correccion = new CurvaCorregida(NombreMetodoCorreccion.METODO_1_IEC, original, configuracion);
       List<MedidaCurva> i1 = original.getIntensidades();
       List<MedidaCurva> i2 = correccion.getIntensidades();
       List<MedidaCurva> v1 = original.getTensiones();
       List<MedidaCurva> v2 = correccion.getTensiones();
+      
       
       // Cálculo de valores.
       double incremento = isc * (g2/g1 - 1) + alpha * (t2 - t1);
