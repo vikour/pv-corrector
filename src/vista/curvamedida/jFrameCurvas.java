@@ -10,6 +10,9 @@ import vista.ViewAdminCurvaMedida;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import modelo.Medida;
 import modelo.MedidaIntensidad;
@@ -35,8 +38,9 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     private XYSeriesCollection dataset;
     private static final String IV= "CURVA I-V";
     private static final String PV= "CURVA P-V";
-
-    
+    private List<MedidaTension> tensiones;
+    private List<MedidaIntensidad> intensidades;
+    private Object[] datos;
     List<MedidaTension> mt =new ArrayList<>();
     List<MedidaIntensidad> mi=new ArrayList<>();
     
@@ -44,12 +48,8 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     
     
     public jFrameCurvas() {
-        //Object[] datos={isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
         initComponents();
-        //cargaDatos(new Object[]{new Medida(10, "A"), new Medida(15,"V"), new Medida(50,"W"), new Medida (25,"V"), new Medida(12.5,"A"), "10/10/10", "12:59", new Double(100.256),20} );
-        //Random rnd=new Random();
-
-       //generaGrafica(mt, mi);
+       
     }
 
     /**
@@ -157,6 +157,9 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
 
     @Override
     public void visualizaGrafica(List<MedidaTension> tensiones, List<MedidaIntensidad> intensidades, Object[] datos) {
+        this.datos=datos;
+        this.tensiones=tensiones;
+        this.intensidades=intensidades;
         cargaDatos(datos);
         generaGrafica(tensiones, intensidades);
     }
@@ -203,9 +206,13 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
         jPanel1.updateUI();
     }
 
+    
     @Override
     public void muestrate() {
-        this.setVisible(true);
+        jFrameCurvas jf=new jFrameCurvas();
+        jf.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        jf.visualizaGrafica(tensiones, intensidades, datos);
+        jf.setVisible(true);
     }
 
     

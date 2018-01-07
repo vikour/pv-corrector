@@ -12,7 +12,7 @@ import modelo.Medida;
  * @author Elias
  */
 public class JPanelInfoCurvaMedida extends javax.swing.JPanel {
-
+    private Object[] datos;
     /**
      * Creates new form JPanelInfoCurvaMedida
      */
@@ -171,8 +171,8 @@ public class JPanelInfoCurvaMedida extends javax.swing.JPanel {
         jLabelValorVMAX.setText(datos[3].toString());
         jLabelValorIMAX.setText(datos[4].toString());
         jLabelValorFF.setText(datos[7].toString());
-        
+        this.datos=datos;
     }
     
-
+    
 }
