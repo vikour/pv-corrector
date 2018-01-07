@@ -35,11 +35,26 @@ public class ExportadorMedidas {
       FileOutputStream fos = new FileOutputStream(file.getAbsolutePath() + ".zip");
       ZipOutputStream zipOut = new ZipOutputStream(fos);
 
+      exportarFicherosCampaña(campaña);
+      comprimirFicherosMedidas(zipOut);
+
+      zipOut.close();
+      fos.close();
+      borrarRecursivamente(file);
+
+   }
+
+   private void exportarFicherosCampaña(Campaña campaña) {
+      
       for (CurvaMedida medida : campaña.getCurvas()) {
          File fMedFile = new File(nombeFicheroMedida(file, medida));
          ff.escribir(fMedFile, medida);
       }
+      
+   }
 
+   private void comprimirFicherosMedidas(ZipOutputStream zipOut) throws IOException {
+      
       for (File f : file.listFiles()) {
          FileInputStream fis = new FileInputStream(f);
          ZipEntry zipEntry = new ZipEntry(f.getName());
@@ -53,11 +68,7 @@ public class ExportadorMedidas {
 
          fis.close();
       }
-
-      zipOut.close();
-      fos.close();
-      borrarRecursivamente(file);
-
+      
    }
 
    private String nombeFicheroMedida(File dir, CurvaMedida medida) {
