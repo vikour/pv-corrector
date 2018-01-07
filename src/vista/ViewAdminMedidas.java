@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.CtrAdminMedidas;
+import java.io.File;
 import java.util.List;
 import modelo.ConfiguracionCorreccion;
 
@@ -47,5 +48,9 @@ public interface ViewAdminMedidas {
     MetodoCorreccion getMetodoCorreccion();
 
    public void error(String messageString);
+
+   public File mostrarSelectorFicheroNuevo();
+
+   public void mostrarMensajeSuccess(String message);
     
 }

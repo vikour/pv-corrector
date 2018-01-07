@@ -6,13 +6,19 @@
 package vista.medidas;
 
 import controlador.CtrAdminMedidas;
+import java.io.File;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableColumn;
 import modelo.ConfiguracionCorreccion;
 import modelo.CurvaMedida;
+import modelo.FormatoFichero;
+import modelo.FormatoFicheroFactory;
+import modelo.Importador;
 import modelo.MetodoCorreccion;
 import vista.JFramePrincipal;
 
@@ -26,6 +32,7 @@ import vista.correccion.JDialogConfiguracionCorreccion;
 public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas {
     private JFramePrincipal prin;
     private JDialogConfiguracionCorreccion jDialogConfiguracionCorreccion;
+    private JFileChooser fc;
 
     /**
      * Creates new form JPanelCurvas
@@ -34,6 +41,14 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
         //jTable1.setRowSelectionAllowed(true);
         initComponents();
         prin=p;
+        String ffCmp = Importador.EXTENSION_COMPRIMIDO;
+        fc = new JFileChooser();
+        fc.setDialogTitle("Selecciona el fichero con el módulo");
+        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_CAMPAÑA);
+        String filterName = "Módulos (." + ffCmp +", " + ff.getExtension() + ")";
+        fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp, ff.getExtension()));
+        fc.setMultiSelectionEnabled(false);
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
     }
 
     /**
@@ -215,6 +230,22 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
    @Override
    public void error(String messageString) {
       JOptionPane.showMessageDialog(prin, messageString);
+   }
+
+   @Override
+   public File mostrarSelectorFicheroNuevo() {
+      int returnVal = fc.showSaveDialog(prin);
+      File f = null;
+
+      if (returnVal == JFileChooser.APPROVE_OPTION)
+         f = fc.getSelectedFile();
+      
+      return f;
+   }
+
+   @Override
+   public void mostrarMensajeSuccess(String message) {
+      JOptionPane.showMessageDialog(prin, message);
    }
 
 

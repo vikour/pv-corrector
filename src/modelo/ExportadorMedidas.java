@@ -26,6 +26,10 @@ public class ExportadorMedidas {
    
 
    public void exportar(CurvaMedida medida) {
+      
+      if (!file.getName().contains(ff.getExtension()))
+         file = new File(file.getAbsolutePath()+"."+ff.getExtension());
+      
       ff.escribir(file, medida);
    }
    

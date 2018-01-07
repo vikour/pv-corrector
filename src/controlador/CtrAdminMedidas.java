@@ -7,6 +7,7 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -14,6 +15,9 @@ import modelo.AlmacenCurvasCorregidas;
 import modelo.Campaña;
 import modelo.ConfiguracionCorreccion;
 import modelo.CurvaMedida;
+import modelo.ExportadorMedidas;
+import modelo.FormatoFichero;
+import modelo.FormatoFicheroFactory;
 import modelo.MetodoCorreccion;
 import vista.ViewAdminMedidas;
 
@@ -52,6 +56,10 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
                 
             case ViewAdminMedidas.CORREGIR:
                corregirCurva();
+               break;
+               
+            case ViewAdminMedidas.EXPORTAR:
+               exportarCurva();
                break;
             
         }
@@ -98,6 +106,18 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
          catch (RuntimeException ex) {
             vm.error("El modulo de la curva no tiene los parámetros necesarios para la corrección");
          }
+      }
+   }
+
+   private void exportarCurva() {
+      File f = vm.mostrarSelectorFicheroNuevo();
+      FormatoFicheroFactory fff = new FormatoFicheroFactory();
+      ExportadorMedidas exp = null;
+      
+      if (f != null) {
+         exp = new ExportadorMedidas(fff.create(FormatoFicheroFactory.FORMATO_CAMPAÑA), f);
+         exp.exportar(vm.getMedidaSeleccionada());
+         vm.mostrarMensajeSuccess("Medida exportada satisfactoriamente.");
       }
    }
    
