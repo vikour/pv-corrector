@@ -73,23 +73,23 @@ public class TableModelMedidasCorregidas extends AbstractTableModel{
                 break;
                 
             case ISC:
-                value = curvas[rowIndex].getIsc().getValor();
+                value = curvas[rowIndex].getIsc();
                 break;
                 
             case VOC:
-                value = curvas[rowIndex].getVoc().getValor();
+                value = curvas[rowIndex].getVoc();
                 break;
                 
             case IMAX:
-                value = curvas[rowIndex].getImax().getValor();
+                value = curvas[rowIndex].getImax();
                 break;
                 
             case PMAX:
-                value = curvas[rowIndex].getPmax().getValor();
+                value = curvas[rowIndex].getPmax();
                 break;
                 
             case VMAX:
-                value = curvas[rowIndex].getVmax().getValor();
+                value = curvas[rowIndex].getVmax();
                 break;
                 
             case FF:
