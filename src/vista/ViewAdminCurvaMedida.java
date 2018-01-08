@@ -5,7 +5,7 @@
  */
 package vista;
 
-import controlador.CtrAdminCurvaMedida;
+import controlador.CtrAdminGrafica;
 import java.util.List;
 import modelo.MedidaIntensidad;
 import modelo.MedidaTension;
@@ -17,7 +17,7 @@ import modelo.MedidaTension;
 public interface ViewAdminCurvaMedida {
 
     
-    void setControlador(CtrAdminCurvaMedida ctr);
+    void setControlador(CtrAdminGrafica ctr);
     
     void visualizaGrafica(List<MedidaTension> tensiones, List<MedidaIntensidad> intensidades, Object[] datos);
     

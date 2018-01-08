@@ -6,7 +6,7 @@
 package vista;
 
 import controlador.CtrAdminCampanyas;
-import controlador.CtrAdminCurvaMedida;
+import controlador.CtrAdminGrafica;
 import controlador.CtrAdminMedidas;
 import controlador.CtrAdminModulos;
 import java.awt.BorderLayout;
@@ -60,7 +60,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
         CtrAdminCampanyas ctrAdminCampanyas = new CtrAdminCampanyas(p1);
         CtrAdminMedidas ctrAdminMedidas = new CtrAdminMedidas(p2);
         
-        CtrAdminCurvaMedida ctrAdminCurvaMedida=new CtrAdminCurvaMedida(p3);
+        CtrAdminGrafica ctrAdminCurvaMedida=new CtrAdminGrafica(p3);
         
         ctrm.setCtrSiguiente(ctrAdminCampanyas);
         ctrAdminCampanyas.setCtrAnterior(ctrm);

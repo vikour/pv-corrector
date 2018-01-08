@@ -5,7 +5,7 @@
  */
 package vista.curvamedida;
 
-import controlador.CtrAdminCurvaMedida;
+import controlador.CtrAdminGrafica;
 import vista.ViewAdminCurvaMedida;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +35,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
      * Creates new form jFrameCurvas
      */
     private XYSeries curva; //para representar varias curvas solo habria que hacer un array o una lista
+    private XYSeries corregida;
     private XYSeriesCollection dataset;
     private static final String IV= "CURVA I-V";
     private static final String PV= "CURVA P-V";
@@ -197,7 +198,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
     @Override
-    public void setControlador(CtrAdminCurvaMedida ctr) {
+    public void setControlador(CtrAdminGrafica ctr) {
         
     }
     
@@ -249,7 +250,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
             i++;
         }
         
-        //crearChart(IV,"V","I");
+        
     }
 
     private void crearChart(String IV, String v, String i) {
@@ -263,7 +264,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     @Override
     public void muestrate() {
         jFrameCurvas jf=new jFrameCurvas();
-        jf.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         jf.visualizaGrafica(tensiones, intensidades, datos);
         jf.setVisible(true);
     }

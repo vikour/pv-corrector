@@ -24,7 +24,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     
     private ViewAdminMedidas vm;
     private CtrAdminCampanyas ctra;
-    private CtrAdminCurvaMedida ctrcm;
+    private CtrAdminGrafica ctrcm;
     private CurvaMedida cm;
     public CtrAdminMedidas(ViewAdminMedidas vm) {
         this.vm = vm;
@@ -38,7 +38,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
         this.ctra = ctra;
     }
     
-    public void setCtrSiguiente(CtrAdminCurvaMedida c){
+    public void setCtrSiguiente(CtrAdminGrafica c){
         ctrcm=c;
     }
     

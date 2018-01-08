@@ -19,12 +19,12 @@ import vista.curvamedida.jFrameCurvas;
  *
  * @author Elias
  */
-public class CtrAdminCurvaMedida {
+public class CtrAdminGrafica {
     
     private ViewAdminCurvaMedida vcm;
     private CtrAdminMedidas cam;
 
-    public CtrAdminCurvaMedida(ViewAdminCurvaMedida vcm) {
+    public CtrAdminGrafica(ViewAdminCurvaMedida vcm) {
         this.vcm = vcm;
         vcm.setControlador(this);
         cam=null;
