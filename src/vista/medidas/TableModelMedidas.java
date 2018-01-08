@@ -56,6 +56,8 @@ public class TableModelMedidas extends AbstractTableModel{
         //return COLUMN_NAMES[column];
     }
     
+    
+    
     @Override
     public int getRowCount() {
         return curvas.length;
