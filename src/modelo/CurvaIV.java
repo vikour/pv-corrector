@@ -163,7 +163,7 @@ public abstract class CurvaIV {
     }
     
     public double calculateFF() {
-       return getPmax().getValor() / (getImax().getValor() * getVmax().getValor());
+       return (getPmax().getValor() / (getImax().getValor() * getVmax().getValor()))*100;
     }
 
     public int getId() {

@@ -36,12 +36,10 @@
           <Group type="102" attributes="0">
               <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="Correcciones" linkSize="1" alignment="2" min="-2" pref="83" max="-2" attributes="0"/>
-                  <Component id="Corregir" linkSize="1" alignment="2" min="-2" pref="83" max="-2" attributes="0"/>
+                  <Component id="Medidas" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="Grafica" linkSize="1" alignment="2" min="-2" pref="83" max="-2" attributes="0"/>
                   <Component id="Borrar" linkSize="1" alignment="2" min="-2" pref="83" max="-2" attributes="0"/>
                   <Component id="Exportar" linkSize="1" alignment="2" min="-2" pref="83" max="-2" attributes="0"/>
-                  <Component id="Campañas" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="371" max="32767" attributes="0"/>
@@ -56,12 +54,8 @@
               <Component id="Borrar" linkSize="2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="Grafica" linkSize="2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="Corregir" linkSize="2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="Correcciones" linkSize="2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="Campañas" linkSize="2" min="-2" max="-2" attributes="0"/>
+              <Component id="Medidas" linkSize="2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Component id="jScrollPane1" pref="335" max="32767" attributes="0"/>
@@ -87,12 +81,12 @@
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="Campa&#xf1;as">
+    <Component class="javax.swing.JButton" name="Medidas">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Campa&#xf1;as"/>
+        <Property name="text" type="java.lang.String" value="Medidas"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Campa&#xf1;asActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MedidasActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -113,17 +107,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="Corregir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Corregir"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="Correcciones">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Correcciones"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-    </Component>
   </SubComponents>
 </Form>

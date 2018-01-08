@@ -29,6 +29,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     
     private ViewAdminMedidas vm;
     private CtrAdminCampanyas ctra;
+    private CtrAdminCorrecionesMedida ctrs;
    
     public CtrAdminMedidas(ViewAdminMedidas vm) {
         this.vm = vm;
@@ -40,6 +41,10 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
 
     public void setCtrAnterior(CtrAdminCampanyas ctra) {
         this.ctra = ctra;
+    }
+    
+    public void setCtrSiguiente(CtrAdminCorrecionesMedida ctrs) {
+        this.ctrs = ctrs;
     }
     
 
@@ -61,6 +66,10 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
             case ViewAdminMedidas.EXPORTAR:
                exportarCurva();
                break;
+               
+            case ViewAdminMedidas.CORRECCIONES:
+                mostrarCorrecciones();
+                break;
             
         }
     }
@@ -87,6 +96,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
         vm.habilitarExportar(true);
         vm.habilitarGrafica(true);
         vm.habilitarCorregir(true);
+        vm.habilitarCorrecciones(true);
     }
 
    private void corregirCurva() {
@@ -109,6 +119,10 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
       }
    }
 
+    private void mostrarCorrecciones() {
+        ctrs.mostrarCorrecciones(vm.getMedidaSeleccionada());
+        vm.vistaSiguiente();
+    }
    private void exportarCurva() {
       File f = vm.mostrarSelectorFicheroNuevo();
       FormatoFicheroFactory fff = new FormatoFicheroFactory();
