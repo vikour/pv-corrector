@@ -17,6 +17,7 @@ import modelo.MedidaTension;
  */
 public class TableModelGrafica extends AbstractTableModel{
     
+    private int i1= 1;
     private List<MedidaIntensidad> lIntensidad;
     private List<MedidaTension> lTension;
     
@@ -39,7 +40,17 @@ public class TableModelGrafica extends AbstractTableModel{
             
     }   
     
-
+    @Override
+    public String getColumnName(int column) {
+        
+        String name="";
+        
+        name = Integer.toString(i1);
+        i1++;
+        
+        return name;
+      
+    }
     
     @Override
     public int getRowCount() {
@@ -57,6 +68,7 @@ public class TableModelGrafica extends AbstractTableModel{
         switch (rowIndex){
             case INTENSIDAD:
                 value = lIntensidad.get(columnIndex);
+                
                 break;
             
             case TENSION:
