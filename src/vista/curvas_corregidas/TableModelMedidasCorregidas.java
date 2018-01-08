@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista.medidas;
+package vista.curvas_corregidas;
 
+import vista.medidas.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import modelo.Canal;
+import modelo.CurvaCorregida;
 import modelo.CurvaIV;
 import modelo.CurvaMedida;
 import modelo.Medida;
@@ -18,43 +20,32 @@ import modelo.MedidaCanal;
  *
  * @author Sergio
  */
-public class TableModelMedidas extends AbstractTableModel{
+public class TableModelMedidasCorregidas extends AbstractTableModel{
     
-    private CurvaMedida [] curvas;
-    private Canal [] canales;
+    private CurvaCorregida [] curvas;
     
     private static final String [] COLUMN_NAMES =
-            new String []{"Fecha", "Hora", "Correccion", "ISC", "VOC", "PMAX", "IMAX", "VMAX", "FF"};
+            new String []{"Fecha", "Hora", "ISC", "VOC", "PMAX", "IMAX", "VMAX", "FF"};
     private static final int FECHA = 0;
     private static final int HORA = 1;
-    private static final int CORRECCION = 2;
-    private static final int ISC = 3;
-    private static final int VOC = 4;
-    private static final int PMAX = 5;
-    private static final int IMAX = 6;
-    private static final int VMAX = 7;
-    private static final int FF = 8;
+    private static final int ISC = 2;
+    private static final int VOC = 3;
+    private static final int PMAX = 4;
+    private static final int IMAX = 5;
+    private static final int VMAX = 6;
+    private static final int FF = 7;
 
-    public TableModelMedidas() {
-        curvas = new CurvaMedida[0];
-        canales = new Canal[0];
+    public TableModelMedidasCorregidas() {
+        curvas = new CurvaCorregida[0];
     }
 
-    public TableModelMedidas(CurvaMedida [] curvas) {
+    public TableModelMedidasCorregidas(CurvaCorregida [] curvas) {
         setCurvas(curvas);
     }
     
     @Override
     public String getColumnName(int column) {
-        String name = "";
-        
-        if (column >= COLUMN_NAMES.length)
-            name = canales[column - COLUMN_NAMES.length].getNombre();
-        else
-            name = COLUMN_NAMES[column];
-            
-        return name;
-        //return COLUMN_NAMES[column];
+        return COLUMN_NAMES[column];
     }
     
     @Override
@@ -64,24 +55,7 @@ public class TableModelMedidas extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-       int count = COLUMN_NAMES.length;
-       
-       if (canales != null)
-          count += canales.length;
-
-       return count;
-    }
-
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        Class<?> result = null;
-        
-        if (columnIndex == CORRECCION)
-            result = Boolean.class;
-        else
-            result = String.class;
-        
-        return result;
+       return COLUMN_NAMES.length;
     }
     
     @Override
@@ -96,10 +70,6 @@ public class TableModelMedidas extends AbstractTableModel{
                 
             case FECHA:
                 value = curvas[rowIndex].getFecha();
-                break;
-                
-            case CORRECCION:
-                value = curvas[rowIndex].estaCorregida();
                 break;
                 
             case ISC:
@@ -124,27 +94,17 @@ public class TableModelMedidas extends AbstractTableModel{
                 
             case FF:
                 value = String.format("%.2f", curvas[rowIndex].getFF()) + "   %";
-                break;
-            
-            default:
-                CurvaMedida curvaIV = curvas[rowIndex];
-                MedidaCanal medida = curvaIV.getMedidaCanal(canales[columnIndex -FF -1]);
-                value = "" + medida.getValor() + "   " +medida.getMagnitud();
-                value = medida.toString();
-               
+                
         }
         
         return value;
     }
     
-    public void setCurvas(CurvaMedida [] curvas) {
+    public void setCurvas(CurvaCorregida [] curvas) {
         this.curvas = curvas;
-        
-        if (curvas.length != 0)
-           canales = curvas[0].getCanales();
     }
     
-    public CurvaMedida getMedida(int selectedRow){
+    public CurvaCorregida getMedida(int selectedRow){
         return curvas[selectedRow];
     }
 }
