@@ -24,15 +24,16 @@ public class TableModelMedidas extends AbstractTableModel{
     private Canal [] canales;
     
     private static final String [] COLUMN_NAMES =
-            new String []{"Fecha", "Hora", "ISC", "VOC", "PMAX", "IMAX", "VMAX", "FF"};
+            new String []{"Fecha", "Hora", "Correccion", "ISC", "VOC", "PMAX", "IMAX", "VMAX", "FF"};
     private static final int FECHA = 0;
     private static final int HORA = 1;
-    private static final int ISC = 2;
-    private static final int VOC = 3;
-    private static final int PMAX = 4;
-    private static final int IMAX = 5;
-    private static final int VMAX = 6;
-    private static final int FF = 7;
+    private static final int CORRECCION = 2;
+    private static final int ISC = 3;
+    private static final int VOC = 4;
+    private static final int PMAX = 5;
+    private static final int IMAX = 6;
+    private static final int VMAX = 7;
+    private static final int FF = 8;
 
     public TableModelMedidas() {
         curvas = new CurvaMedida[0];
@@ -72,6 +73,18 @@ public class TableModelMedidas extends AbstractTableModel{
     }
 
     @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        Class<?> result = null;
+        
+        if (columnIndex == CORRECCION)
+            result = Boolean.class;
+        else
+            result = String.class;
+        
+        return result;
+    }
+    
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object value = "";
         
@@ -83,6 +96,10 @@ public class TableModelMedidas extends AbstractTableModel{
                 
             case FECHA:
                 value = curvas[rowIndex].getFecha();
+                break;
+                
+            case CORRECCION:
+                value = curvas[rowIndex].estaCorregida();
                 break;
                 
             case ISC:
@@ -106,7 +123,7 @@ public class TableModelMedidas extends AbstractTableModel{
                 break;
                 
             case FF:
-                value = curvas[rowIndex].getFF() + "   %";
+                value = String.format("%.2f", curvas[rowIndex].getFF()) + "   %";
                 break;
             
             default:

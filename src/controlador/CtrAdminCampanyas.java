@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modelo.Campaña;
+import modelo.ExportadorMedidas;
 import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
 import modelo.IFormatoFicheroNotificable;
@@ -80,6 +81,10 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
             case ViewAdminCampanya.IMPORTAR:
                 importar();
                 break;
+                
+            case ViewAdminCampanya.EXPORTAR:
+               exportar();
+               break;
                        
         }
     }
@@ -109,5 +114,21 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
            vc.mostrarVistaImportacion(FormatoFicheroFactory.FORMATO_CAMPAÑA, f);
            
     }
+
+   private void exportar() {
+      File f = vc.mostrarSelectorFicherosNuevo();
+      ExportadorMedidas exp;
+      FormatoFicheroFactory fff = new FormatoFicheroFactory();
+      
+      if (f != null) 
+         try {
+            exp = new ExportadorMedidas(fff.create(FormatoFicheroFactory.FORMATO_CAMPAÑA), f);
+            exp.exportar(vc.getCampañaSeleccionada());
+            vc.mostrarMensajeSuccess("Exportación finalizada con éxito.");
+         }
+         catch (IOException ex) {
+            vc.mostrarMensajeError("Hubo algún problema al exportar.");
+         }
+   }
 
 }

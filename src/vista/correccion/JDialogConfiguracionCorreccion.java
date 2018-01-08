@@ -47,8 +47,8 @@ public class JDialogConfiguracionCorreccion extends javax.swing.JDialog implemen
       
       jComboBox1.removeAllItems();
       
-      for (NombreMetodoCorreccion metodo : NombreMetodoCorreccion.values())
-         jComboBox1.addItem(metodo.toString());
+      jComboBox1.addItem("IEC Método 1");
+      jComboBox1.addItem("IEC Método 2");
       
       this.addWindowListener(this);
    }

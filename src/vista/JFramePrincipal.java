@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.CtrAdminCampanyas;
+import controlador.CtrAdminCorrecionesMedida;
 import controlador.CtrAdminMedidas;
 import controlador.CtrAdminModulos;
 import java.awt.BorderLayout;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import vista.campanya.JPanelCampaña;
+import vista.curvas_corregidas.JPanelCurvasCorregidas;
 import vista.medidas.JPanelCurvas;
 import vista.modulo.JPanelModulo;
 
@@ -27,7 +29,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
     
     private JPanel [] paneles;
     private int nivel;
-    private static final int MAX_LEVEL=3;
+    private static final int MAX_LEVEL=4;
     private String [] titulos;
     /**
      * Creates new form JFramePrincipal2
@@ -44,25 +46,31 @@ public class JFramePrincipal extends javax.swing.JFrame {
             System.err.println("Error al cambiar de tema.");
         }
        
-        titulos= new String[] {"MÓDULOS", "CAMPAÑAS","MEDIDAS"};
+        titulos= new String[] {"MÓDULOS", "CAMPAÑAS","MEDIDAS", "CORRECCIONES"};
         
         paneles=new JPanel[MAX_LEVEL];
         jPanel3.setLayout(new BorderLayout());
         JPanelModulo p=new JPanelModulo(this);
         JPanelCampaña p1= new JPanelCampaña(this);
         JPanelCurvas p2=new JPanelCurvas(this);
+        JPanelCurvasCorregidas p3 = new JPanelCurvasCorregidas(this);
         
         CtrAdminModulos ctrm=new CtrAdminModulos(p);
         CtrAdminCampanyas ctrAdminCampanyas = new CtrAdminCampanyas(p1);
         CtrAdminMedidas ctrAdminMedidas = new CtrAdminMedidas(p2);
+        CtrAdminCorrecionesMedida ctrAdminCorrecionesMedida = new CtrAdminCorrecionesMedida(p3);
         
         ctrm.setCtrSiguiente(ctrAdminCampanyas);
         ctrAdminCampanyas.setCtrAnterior(ctrm);
         ctrAdminCampanyas.setCtrSiguiente(ctrAdminMedidas);
         ctrAdminMedidas.setCtrAnterior(ctrAdminCampanyas);
+        ctrAdminMedidas.setCtrSiguiente(ctrAdminCorrecionesMedida);
+        ctrAdminCorrecionesMedida.setCtrAnterior(ctrAdminMedidas);
+        
         paneles[0]=p;
         paneles[1]=p1;
         paneles[2]=p2;
+        paneles[3]=p3;
         
         jLabelTitulo.setText(titulos[nivel]);
         
@@ -109,7 +117,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelIdioma)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
