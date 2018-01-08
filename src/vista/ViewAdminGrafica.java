@@ -8,6 +8,7 @@ package vista;
 import controlador.CtrAdminGrafica;
 import java.awt.event.ActionListener;
 import java.util.List;
+import modelo.CurvaCorregida;
 import modelo.CurvaIV;
 import modelo.CurvaMedida;
 import modelo.MedidaCurva;
@@ -25,7 +26,7 @@ public interface ViewAdminGrafica {
     
     void visualizaGrafica(List<MedidaCurva> tensiones, List<MedidaCurva> intensidades, Object[] datos);
     
-
+    void muestraGraficaCorregida(CurvaCorregida c);
 
     public void showCurva(CurvaIV c);
 

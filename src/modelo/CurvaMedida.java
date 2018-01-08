@@ -20,7 +20,7 @@ public class CurvaMedida extends CurvaIV {
         return result;
     }
     
-    protected static CurvaMedida buscar(int id) {
+    public static CurvaMedida buscar(int id) {
        CurvaMedida curva = new CurvaMedida();
        
        CurvaIV.buscar(curva, id);
