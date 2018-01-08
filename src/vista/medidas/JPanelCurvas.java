@@ -268,5 +268,10 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
       JOptionPane.showMessageDialog(prin, message);
    }
 
+    @Override
+    public void actualizarTabla() {
+        jTable1.updateUI();
+    }
+
 
 }

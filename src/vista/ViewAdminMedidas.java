@@ -57,5 +57,7 @@ public interface ViewAdminMedidas {
    public File mostrarSelectorFicheroNuevo();
 
    public void mostrarMensajeSuccess(String message);
+
+    public void actualizarTabla();
     
 }

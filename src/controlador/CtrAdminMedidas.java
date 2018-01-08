@@ -112,6 +112,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
          
          try {
             AlmacenCurvasCorregidas.getInstance().nueva(metodo, config, seleccionada);
+            vm.actualizarTabla();
          }
          catch (RuntimeException ex) {
             vm.error(ex.getMessage());
