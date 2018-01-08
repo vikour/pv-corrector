@@ -6,7 +6,6 @@
 package vista.curvamedida;
 
 import controlador.CtrAdminGrafica;
-import vista.ViewAdminCurvaMedida;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import modelo.Medida;
+import modelo.MedidaCurva;
 import modelo.MedidaIntensidad;
 import modelo.MedidaTension;
 import org.jfree.chart.ChartFactory;
@@ -24,12 +24,13 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import vista.JFramePrincipal;
+import vista.ViewAdminGrafica;
 
 /**
  *
  * @author Elias
  */
-public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMedida {
+public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminGrafica {
 
     /**
      * Creates new form jFrameCurvas
@@ -39,8 +40,8 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     private XYSeriesCollection dataset;
     private static final String IV= "CURVA I-V";
     private static final String PV= "CURVA P-V";
-    private List<MedidaTension> tensiones;
-    private List<MedidaIntensidad> intensidades;
+    private List<MedidaCurva> tensiones;
+    private List<MedidaCurva> intensidades;
     private Object[] datos;
     private List<MedidaTension> mt =new ArrayList<>();
     private List<MedidaIntensidad> mi=new ArrayList<>();
@@ -207,7 +208,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
     }
 
     @Override
-    public void visualizaGrafica(List<MedidaTension> tensiones, List<MedidaIntensidad> intensidades, Object[] datos) {
+    public void visualizaGrafica(List<MedidaCurva> tensiones, List<MedidaCurva> intensidades, Object[] datos) {
         this.datos=datos;
         this.tensiones=tensiones;
         this.intensidades=intensidades;
@@ -242,7 +243,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminCurvaMe
         return dataset;
     }
    
-    private void generaGrafica(List<MedidaTension> lt, List<MedidaIntensidad> li){
+    private void generaGrafica(List<MedidaCurva> lt, List<MedidaCurva> li){
         
         int i=0;
         while(i<lt.size()){

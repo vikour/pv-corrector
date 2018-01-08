@@ -8,6 +8,7 @@ package vista.curvamedida;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import modelo.MedidaCurva;
 import modelo.MedidaIntensidad;
 import modelo.MedidaTension;
 
@@ -17,8 +18,8 @@ import modelo.MedidaTension;
  */
 public class TableModelGrafica extends AbstractTableModel{
     
-    private List<MedidaIntensidad> lIntensidad;
-    private List<MedidaTension> lTension;
+    private List<MedidaCurva> lIntensidad;
+    private List<MedidaCurva> lTension;
     
     private static final String [] ROW_NAMES = 
             new String []{"Intensidad","Tension"};
@@ -32,7 +33,7 @@ public class TableModelGrafica extends AbstractTableModel{
         lTension = new ArrayList<>();
     }
     
-    public TableModelGrafica(List<MedidaIntensidad> intensidad, List<MedidaTension> ten){
+    public TableModelGrafica(List<MedidaCurva> intensidad, List<MedidaCurva> ten){
     
             setIntensidad(intensidad);
             setTension(ten);
@@ -70,12 +71,12 @@ public class TableModelGrafica extends AbstractTableModel{
         return value;
     }
     
-    public void setIntensidad(List<MedidaIntensidad> intensidad) {
+    public void setIntensidad(List<MedidaCurva> intensidad) {
         this.lIntensidad = intensidad;
         
     }
     
-    public void setTension(List<MedidaTension> tension){
+    public void setTension(List<MedidaCurva> tension){
         this.lTension = tension;
     }
     

@@ -115,14 +115,31 @@ CREATE TABLE medidas_curvas (
 CREATE TABLE curvas_corregidas (
    id      INTEGER,
    metodo  VARCHAR(50),
+   original INTEGER,
    FOREIGN KEY (id) REFERENCES curvas_iv(id)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
-   FOREIGN KEY (metodo) REFERENCES metodo_correccion(nombre)
+   FOREIGN KEY (original) REFERENCES curvas_medidas(id)
       ON UPDATE CASCADE
       ON DELETE CASCADE
 );
 
-CREATE TABLE metodo_correccion (
-    nombre  VARCHAR(50) PRIMARY KEY
+CREATE TABLE configuraciones_correccion (
+   correccion  INTEGER,
+   ref_irradiancia INTEGER  NOT NULL,
+   canal_irradiancia VARCHAR(50) NOT NULL,
+   ref_temperatura  INTEGER  NOT NULL,
+   canal_temperatura VARCHAR(50) NOT NULL,
+   valor_temperatura NUMERIC NOT NULL,
+   valor_irradiancia NUMERIC NOT NULL,
+   PRIMARY KEY(correccion,ref_irradiancia,ref_temperatura),
+   FOREIGN KEY(correccion) REFERENCES curvas_corregidas
+      ON UPDATE CASCADE
+      ON DELETE CASCADE,
+   FOREIGN KEY(ref_irradiancia,canal_irradiancia) 
+      REFERENCES medidas_canal
+      ON DELETE NO ACTION,
+   FOREIGN KEY(ref_temperatura,canal_temperatura)
+      REFERENCES medidas_canal
+      ON DELETE NO ACTION
 );

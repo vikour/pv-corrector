@@ -5,15 +5,16 @@
  */
 package controlador;
 
-import vista.ViewAdminCurvaMedida;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import modelo.CurvaMedida;
 import modelo.Medida;
+import modelo.MedidaCurva;
 import modelo.MedidaIntensidad;
 import modelo.MedidaTension;
 import vista.curvamedida.jFrameCurvas;
+import vista.ViewAdminGrafica;
 
 /**
  *
@@ -21,10 +22,10 @@ import vista.curvamedida.jFrameCurvas;
  */
 public class CtrAdminGrafica {
     
-    private ViewAdminCurvaMedida vcm;
+    private ViewAdminGrafica vcm;
     private CtrAdminMedidas cam;
 
-    public CtrAdminGrafica(ViewAdminCurvaMedida vcm) {
+    public CtrAdminGrafica(ViewAdminGrafica vcm) {
         this.vcm = vcm;
         vcm.setControlador(this);
         cam=null;
@@ -40,10 +41,10 @@ public class CtrAdminGrafica {
         
         Medida isc,voc,pmax,vmax,imax;
         String fecha,hora;
-        double ff=c.getFf();
+        double ff=c.getFF();
         int id=c.getId();
-        List<MedidaTension> tensiones=c.getTensiones();
-        List<MedidaIntensidad> intensidades=c.getIntensidades();
+        List<MedidaCurva> tensiones=c.getTensiones();
+        List<MedidaCurva> intensidades=c.getIntensidades();
         
         fecha=c.getFecha();
         hora=c.getHora();

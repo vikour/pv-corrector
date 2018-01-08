@@ -22,8 +22,6 @@ public class ListModelCampanya extends AbstractListModel{
     public ListModelCampanya() {
         model= new ArrayList<>();
     }
-    
-    
 
     public ListModelCampanya(List<Campaña> model) {
         this.model = model;
@@ -40,7 +38,7 @@ public class ListModelCampanya extends AbstractListModel{
     }
 
     void setList(List<Campaña> c) {
-        model=c;
+        model = c;
     }
     
     public Campaña getCampaña(int index){

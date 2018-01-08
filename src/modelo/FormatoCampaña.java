@@ -94,13 +94,13 @@ public class FormatoCampaña extends FormatoFichero{
         double valor;
         
         Canal canal;
-        MedidaSensor medida;
+        MedidaCanal medida;
         
         line = readNotEmptyLine(br);
         
         while (!line.contains("mero de puntos curva IV")) {
             parts = line.split(":");
-            
+            AlmacenCanales ac=AlmacenCanales.getInstance();
             if (parts.length >= 2) {
                 nombreCanal = parts[parts.length-2];
                 parts = parts[parts.length-1].split("\t");
@@ -110,18 +110,18 @@ public class FormatoCampaña extends FormatoFichero{
                     valor = Double.valueOf(valorStr);
                     magnitud = parts[parts.length-1];
                     
-                    try {
-                        canal = new Canal(nombreCanal, false);
-                    }
-                    catch (Error err) {
-                        canal = new Canal(nombreCanal, true);
-                    }
+                    canal = ac.buscar(nombreCanal);
+                    
+                    if (canal == null)
+                       canal = ac.nuevo(nombreCanal);
                     
                     try {
-                        medida = new MedidaSensor(valor, magnitud, canal, curva);
+                        //medida = new MedidaSensor(valor, magnitud, canal, curva);
+                        curva.addMedidaCanal(canal, valor, magnitud);
                     }
                     catch (Error err) {
-                        medida = new MedidaSensor(curva, canal);
+                        //medida = new MedidaSensor(curva, canal);
+                        medida = curva.getMedidaCanal(canal);
                         medida.setValor(valor);
                         medida.setMagnitud(magnitud);
                     } // Si existe no importa.
@@ -198,8 +198,10 @@ public class FormatoCampaña extends FormatoFichero{
             line = readNotEmptyLine(br);
         }
         
+        AlmacenCurvasMedidas almacenMedidas = AlmacenCurvasMedidas.getInstance();
+        
         try {
-            curva = new CurvaMedida(campaña, fecha, hora, medidas[0],
+            curva = almacenMedidas.nueva(campaña, fecha, hora, medidas[0],
                     medidas[1], medidas[2], medidas[3],
                     medidas[4], medidas[5].getValor());
         }
@@ -207,8 +209,8 @@ public class FormatoCampaña extends FormatoFichero{
             sobreescribir = notificar.confirmSobrescribirFormatoFichero(new Object[] {fecha,hora});
             
             if (sobreescribir) {
-                CurvaIV.borrar(fecha, hora);
-                curva = new CurvaMedida(campaña, fecha, hora, medidas[0],
+               almacenMedidas.borrar(fecha, hora);
+               curva = almacenMedidas.nueva(campaña, fecha, hora, medidas[0],
                     medidas[1], medidas[2], medidas[3],
                     medidas[4], medidas[5].getValor());
             }
@@ -221,8 +223,10 @@ public class FormatoCampaña extends FormatoFichero{
     private Campaña leerInfoBasica(BufferedReader br) throws IOException {
         String line;
         Modulo modulo = null;
-        Campaña Campaña = null;
+        Campaña campaña = null;
         String value;
+        AlmacenModulos modulos = AlmacenModulos.getInstance();
+        AlmacenCampañas campañas = AlmacenCampañas.getInstance();
 
         line = readNotEmptyLine(br);
         
@@ -230,23 +234,20 @@ public class FormatoCampaña extends FormatoFichero{
             throw new RuntimeException("Error de formato");
         
         value = extractValue(line);
+        modulo = modulos.buscar(value);
         
-        try { // Modulo.
-            modulo = new Modulo(value);
-        } catch (Error ex) {
-            modulo = new Modulo(value,"");
-        }
+        if (modulo == null)
+           modulo = modulos.nuevo(value);
 
         line = readNotEmptyLine(br);
         value = extractValue(line);
         
-        try { // CampaÃ±a.
-            Campaña = new Campaña(modulo, value, false);
-        } catch (Error err) {
-            Campaña = new Campaña(modulo, value, true);
-        } // Si existe la campaÃ±a no hacemos nada.    
-
-        return Campaña;
+        campaña = campañas.buscar(modulo, value);
+        
+        if (campaña == null)
+           campaña = campañas.nueva(modulo, value);
+        
+        return campaña;
     }
 
 }

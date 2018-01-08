@@ -226,6 +226,7 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         JDialogProcessImport dImport = new JDialogProcessImport(prin, true);
         CtrImportacion ctrImportacion = new CtrImportacion(dImport);
         dImport.setVisible(true, format, f);
+        jListC.updateUI();
     }
 
 }

@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Modulo
 {
-   private List<Campaña> campañas;
    private String nombre;
    private double alpha;
    private double beta;
@@ -49,25 +48,66 @@ public class Modulo
    private double minFF;
    
    
-   public static void Borrar(String nombre){
+   static void Borrar(String nombre){
        BD bd=BD.getInstance();
        bd.delete("DELETE FROM modulos WHERE nombre='"+nombre+"'");
    }
    
+   /**
+    * @deprecated Usar el método {@link AlmacenModulos##buscarTodos() }
+    * 
+    * @return 
+    */
+   
    public static List<Modulo> listar( )
+   {
+      return buscarTodos();
+   }
+   
+   
+   
+   static List<Modulo> buscarTodos()
    {
       List <Modulo> mod=new ArrayList();
       BD bd=BD.getInstance();
       String str="SELECT nombre FROM modulos";
       
       for (String[] tupla : BD.getInstance().select(str)) {
-         mod.add(new Modulo(tupla[0]));
+         mod.add(buscar(tupla[0]));
       }
-
+      
       return mod;
    }
    
-   public Modulo(String nombre){
+   
+   
+   /**
+    * Crea en la base de datos el módulo con nombre pasado como argumento. 
+    * 
+    * @param nombre Nombre del nuevo módulo.
+    * 
+    * @throws Error Si existe un modulo con el nombre pasado como argumento
+    *                      en la base de datos.
+    */
+    
+   Modulo(String nombre) throws Error {
+        BD bd=BD.getInstance();
+        String insert="INSERT INTO modulos (nombre) VALUES('"+nombre+"');";
+        this.nombre=nombre;
+        bd.insert(insert);
+   }
+   
+   
+   /**
+    * Constructor privado para construcciones de búsqueda.
+    */
+   
+   private Modulo() { }
+   
+   
+   
+   static Modulo buscar (String nombre){
+       Modulo modulo = null;
        List<String[]> l=new ArrayList();
        BD bd=BD.getInstance();
        
@@ -75,66 +115,49 @@ public class Modulo
        //Busco en la base de datos
        l=bd.select(str);
        
-       
        if(!l.isEmpty()){
+           modulo = new Modulo();
            String[] aux=l.get(0);
-           this.nombre=aux[0];
-           alpha= Double.parseDouble(aux[1]);
-           beta= Double.parseDouble(aux[2]);
-           gamma= Double.parseDouble(aux[3]);
-           kappa= Double.parseDouble(aux[4]);
-           tecnologia=aux[5];
-           isc=Double.parseDouble(aux[6]);
-           pmax=Double.parseDouble(aux[7]);
-           voc=Double.parseDouble(aux[8]);
-           ipmax=Double.parseDouble(aux[9]);
-           vpmax=Double.parseDouble(aux[10]);
-           iscn=Double.parseDouble(aux[11]);
-           pmaxn=Double.parseDouble(aux[12]);
-           noct=Double.parseDouble(aux[13]);
-           vocn=Double.parseDouble(aux[14]);
-           ipmaxn=Double.parseDouble(aux[15]);
-           vpmaxn=Double.parseDouble(aux[16]);
-           mt1=Double.parseDouble(aux[17]); //maxima tension en el primer punto
-           pdv=Double.parseDouble(aux[18]); //precision del voltaje
-           pdc=Double.parseDouble(aux[19]); //precision de corriente
-           pdp=Double.parseDouble(aux[20]); //precision de potencia
-           tinicial=Double.parseDouble(aux[21]); // tension inicial.
-           tintermedia=Double.parseDouble(aux[22]);
-           tfinal=Double.parseDouble(aux[23]); 
-           ptramo=Integer.parseInt(aux[24]); //primer y segundo tramo
-           stramo=Integer.parseInt(aux[25]);
-           cmaxp=Double.parseDouble(aux[26]); //coriente maxima positiva
-           cmaxN=Double.parseDouble(aux[27]); //corriente maxima negativa.
-           ns=Double.parseDouble(aux[28]); //celilas en serie
-           eta=Double.parseDouble(aux[29]); 
-           m=Double.parseDouble(aux[30]);
-           rs=Double.parseDouble(aux[31]);
-           np=Double.parseDouble(aux[32]);
-           minIsc=Double.parseDouble(aux[33]);
-           minPmax=Double.parseDouble(aux[34]);
-           minVoc=Double.parseDouble(aux[35]);
-           minFF=Double.parseDouble(aux[36]);
+           modulo.nombre=aux[0];
+           modulo.alpha= Double.parseDouble(aux[1]);
+           modulo.beta= Double.parseDouble(aux[2]);
+           modulo.gamma= Double.parseDouble(aux[3]);
+           modulo.kappa= Double.parseDouble(aux[4]);
+           modulo.tecnologia=aux[5];
+           modulo.isc=Double.parseDouble(aux[6]);
+           modulo.pmax=Double.parseDouble(aux[7]);
+           modulo.voc=Double.parseDouble(aux[8]);
+           modulo.ipmax=Double.parseDouble(aux[9]);
+           modulo.vpmax=Double.parseDouble(aux[10]);
+           modulo.iscn=Double.parseDouble(aux[11]);
+           modulo.pmaxn=Double.parseDouble(aux[12]);
+           modulo.noct=Double.parseDouble(aux[13]);
+           modulo.vocn=Double.parseDouble(aux[14]);
+           modulo.ipmaxn=Double.parseDouble(aux[15]);
+           modulo.vpmaxn=Double.parseDouble(aux[16]);
+           modulo.mt1=Double.parseDouble(aux[17]); //maxima tension en el primer punto
+           modulo.pdv=Double.parseDouble(aux[18]); //precision del voltaje
+           modulo.pdc=Double.parseDouble(aux[19]); //precision de corriente
+           modulo.pdp=Double.parseDouble(aux[20]); //precision de potencia
+           modulo.tinicial=Double.parseDouble(aux[21]); // tension inicial.
+           modulo.tintermedia=Double.parseDouble(aux[22]);
+           modulo.tfinal=Double.parseDouble(aux[23]); 
+           modulo.ptramo=Integer.parseInt(aux[24]); //primer y segundo tramo
+           modulo.stramo=Integer.parseInt(aux[25]);
+           modulo.cmaxp=Double.parseDouble(aux[26]); //coriente maxima positiva
+           modulo.cmaxN=Double.parseDouble(aux[27]); //corriente maxima negativa.
+           modulo.ns=Double.parseDouble(aux[28]); //celilas en serie
+           modulo.eta=Double.parseDouble(aux[29]); 
+           modulo.m=Double.parseDouble(aux[30]);
+           modulo.rs=Double.parseDouble(aux[31]);
+           modulo.np=Double.parseDouble(aux[32]);
+           modulo.minIsc=Double.parseDouble(aux[33]);
+           modulo.minPmax=Double.parseDouble(aux[34]);
+           modulo.minVoc=Double.parseDouble(aux[35]);
+           modulo.minFF=Double.parseDouble(aux[36]);
        }
-       else 
-           throw new Error("No existe el modulo con nomre " + nombre);
          
-   }
-    
-   public Modulo(String nombre, String tecnologia){
-        BD bd=BD.getInstance();
-      
-        String select="SELECT * FROM modulos WHERE nombre='"+nombre+"' ;";
-        
-        
-        if(bd.select(select).isEmpty()){
-            String insert="INSERT INTO modulos (nombre, tecnologia) VALUES('"+nombre+"','"+tecnologia+"');";
-            this.nombre=nombre;
-            this.tecnologia=tecnologia;
-            bd.insert(insert);
-        }else{
-            throw new Error("El modulo ya esta en la base de datos");
-        }
+       return modulo;
    }
   
     
@@ -173,10 +196,6 @@ public class Modulo
         
         bd.update("UPDATE modulos SET kappa="+kappa+" WHERE nombre='"+this.nombre+"';");
         this.kappa = kappa;
-    }
-
-    public void setCampañas(List<Campaña> campañas) {
-        this.campañas = Campaña.listar(this);
     }
     
     public void setMinIsc(double minIsc) {
@@ -404,10 +423,7 @@ public class Modulo
     }
 
     public List<Campaña> getCampañas() {
-        if(campañas==null){
-            campañas=Campaña.listar(this);
-        }
-        return campañas;
+        return AlmacenCampañas.getInstance().buscar(this);
     }
 
     public String getNombre() {
@@ -572,4 +588,9 @@ public class Modulo
                 && (((Modulo) obj).nombre.equals(nombre));
     }
 
+    @Override
+    public int hashCode() {
+        return nombre.hashCode();
+    }
+    
 }
