@@ -7,8 +7,10 @@ package vista;
 
 import controlador.CtrAdminMedidas;
 import java.util.List;
+import modelo.ConfiguracionCorreccion;
 
 import modelo.CurvaMedida;
+import modelo.MetodoCorreccion;
 
 /**
  *
@@ -20,6 +22,7 @@ public interface ViewAdminMedidas {
     public static final String CAMPAÑA="CAMPAÑA";
     public static final String GRAFICA="GRAFICA";
     public static final String SELECC_MEDIDA="SELECC_MEDIDA";
+    public static final String CORREGIR="CORREGIR";
     
     void habilitarBorrar(boolean habilitar);
     
@@ -27,10 +30,22 @@ public interface ViewAdminMedidas {
     
     void habilitarExportar(boolean habilitar);
     
+    void habilitarCorregir(boolean habilitar);
+    
     void setControlador(CtrAdminMedidas ctr);
     
-    void mostrarCurvas(List<CurvaMedida> curva);
+    void mostrarCurvas(CurvaMedida [] curva);
     
     void vistaAnterior();
+    
+    CurvaMedida getMedidaSeleccionada();
+    
+    void mostrarVistaCorreccion(CurvaMedida original);
+    
+    List<ConfiguracionCorreccion> getConfiguracionCorreccion();
+    
+    MetodoCorreccion getMetodoCorreccion();
+
+   public void error(String messageString);
     
 }

@@ -6,18 +6,18 @@ package modelo;
 
 import java.util.List;
 
-public abstract class MedidaCurva extends Medida implements Comparable {
+public abstract class MedidaCurva extends MedidaOrdenada {
 
-    protected NombreValorCurva tipo;
+    protected TipoValorCurva tipo;
     protected int orden;
     protected int idCurva;
     
-    public MedidaCurva(CurvaIV curva, int orden, NombreValorCurva tipo) {
-        super(0,"");
+    public MedidaCurva(CurvaIV curva, int orden, TipoValorCurva tipo) {
+       super(orden, 0, "");
         String qq = "SELECT * FROM medidas_curvas WHERE " +
                     "curva_iv = " + curva.getId() + " AND " +
                     "orden = " + orden + " AND " +
-                    "tipo = " + NombreValorCurva.BD(tipo);
+                    "tipo = " + TipoValorCurva.BD(tipo);
         BD bd = BD.getInstance();
         List<String[]> result = bd.select(qq);
         String [] medida;
@@ -30,36 +30,40 @@ public abstract class MedidaCurva extends Medida implements Comparable {
         magnitud = medida[2];
         this.orden = Integer.valueOf(medida[3]);
         
-        if (Integer.valueOf(medida[4]) == NombreValorCurva.BD(NombreValorCurva.INTENSIDAD))
-            this.tipo = NombreValorCurva.INTENSIDAD;
+        if (Integer.valueOf(medida[4]) == TipoValorCurva.BD(TipoValorCurva.INTENSIDAD))
+            this.tipo = TipoValorCurva.INTENSIDAD;
         else 
-            this.tipo = NombreValorCurva.TENSION;
+            this.tipo = TipoValorCurva.TENSION;
         
         idCurva = curva.getId();
     }
     
-    protected MedidaCurva(double valor, String magnitud, int orden, CurvaIV curva, NombreValorCurva tipo) {
-        super(valor, magnitud);
-        String stm = "INSERT INTO medidas_curvas VALUES (" + curva.getId() + ", " + valor + ", " + 
-                     "'" + magnitud + "', " + orden + ", " + NombreValorCurva.BD(tipo) + ")";
+    protected MedidaCurva(double valor, String magnitud, int orden, int curva, TipoValorCurva tipo) {
+        super(orden, valor, magnitud);
+        String stm = "INSERT INTO medidas_curvas VALUES (" + curva + ", " + valor + ", " + 
+                     "'" + magnitud + "', " + orden + ", " + TipoValorCurva.BD(tipo) + ")";
         BD bd = BD.getInstance();
         
         try {
             bd.insert(stm);
             this.orden = orden;
-            idCurva = curva.getId();
+            idCurva = curva;
             this.tipo = tipo;
         }
         catch (Error err) {
             throw new Error("Medida duplicada");
         }
     }
+    
+    protected MedidaCurva(double valor, String magnitud, int orden, CurvaIV curva, TipoValorCurva tipo) {
+       this(valor,magnitud,orden,curva.getId(),tipo);
+    }
 
     @Override
     public void setMagnitud(String magnitud) {
         String update = "UPDATE medidas_curvas SET magnitud = '" + magnitud + "' WHERE " +
                         "orden = " + orden + " AND curva_iv = " + idCurva + " AND " +
-                        "tipo = " + NombreValorCurva.BD(tipo);
+                        "tipo = " + TipoValorCurva.BD(tipo);
         
         if (!magnitud.equals(this.magnitud)) {
             BD.getInstance().update(update);
@@ -71,7 +75,7 @@ public abstract class MedidaCurva extends Medida implements Comparable {
     public void setValor(double valor) {
         String update = "UPDATE medidas_curvas SET valor = " + valor + " WHERE " +
                         "orden = " + orden + " AND curva_iv = " + idCurva + " AND " +
-                        "tipo = " + NombreValorCurva.BD(tipo);
+                        "tipo = " + TipoValorCurva.BD(tipo);
         
         if (valor != this.valor) {
             BD.getInstance().update(update);
@@ -89,16 +93,6 @@ public abstract class MedidaCurva extends Medida implements Comparable {
                (((MedidaCurva) obj).orden == orden) &&
                (((MedidaCurva) obj).idCurva == idCurva) &&
                (((MedidaCurva) obj).tipo.equals(tipo));
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        int i = -1;
-        
-        if (o instanceof MedidaCurva)
-            i = ((MedidaCurva) o).orden - orden;
-        
-        return i;
     }
     
 }

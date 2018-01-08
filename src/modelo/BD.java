@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BD {
+class BD {
 
     // Configuración de la base de datos.
     private static final String BD_FILE_NAME = "datos.db";
@@ -94,6 +94,9 @@ public class BD {
                 }
             
         }
+        
+        execute("CREATE TRIGGER remove_curvas_iv AFTER DELETE ON curvas_medidas FOR EACH ROW BEGIN " + 
+                " DELETE FROM curvas_iv WHERE id = OLD.id; END");
     }
 
     /**
