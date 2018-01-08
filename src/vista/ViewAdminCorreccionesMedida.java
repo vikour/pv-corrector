@@ -30,6 +30,8 @@ public interface ViewAdminCorreccionesMedida {
     public CurvaCorregida getCurvaSeleccionada();
 
     public File mostrarSelectorFicheroNuevo();
+
+    public void mostrarMensajeSuccess(String mensaje);
     
     public static enum Cmd {
         EXPORTAR,

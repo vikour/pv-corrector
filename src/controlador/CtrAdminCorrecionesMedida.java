@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modelo.CurvaCorregida;
 import modelo.CurvaMedida;
+import modelo.ExportadorMedidas;
 import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
 import vista.ViewAdminCorreccionesMedida;
@@ -49,6 +50,8 @@ public class CtrAdminCorrecionesMedida implements ActionListener, ListSelectionL
         
         if (e.getActionCommand().equals(ViewAdminCorreccionesMedida.Cmd.MEDIDAS.toString()))
             mostrarMedidas();
+        else if (e.getActionCommand().equals(ViewAdminCorreccionesMedida.Cmd.EXPORTAR.toString()))
+            exportarMedida();
         
     }
 
@@ -62,6 +65,18 @@ public class CtrAdminCorrecionesMedida implements ActionListener, ListSelectionL
 
     private void mostrarMedidas() {
         view.vistaAnterior();
+    }
+
+    private void exportarMedida() {
+      File f = view.mostrarSelectorFicheroNuevo();
+      FormatoFicheroFactory fff = new FormatoFicheroFactory();
+      ExportadorMedidas exp = null;
+      
+      if (f != null) {
+         exp = new ExportadorMedidas(fff.create(FormatoFicheroFactory.FORMATO_CAMPAÑA), f);
+         exp.exportar(view.getCurvaSeleccionada());
+         view.mostrarMensajeSuccess("Medida exportada satisfactoriamente.");
+      }
     }
     
 }

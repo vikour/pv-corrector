@@ -7,9 +7,15 @@ package vista.curvas_corregidas;
 
 import controlador.CtrAdminCorrecionesMedida;
 import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import vista.medidas.*;
 import javax.swing.JScrollPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.CurvaCorregida;
+import modelo.FormatoFichero;
+import modelo.FormatoFicheroFactory;
+import modelo.Importador;
 import vista.JFramePrincipal;
 import vista.ViewAdminCorreccionesMedida;
 
@@ -22,6 +28,7 @@ import vista.correccion.JDialogConfiguracionCorreccion;
 public class JPanelCurvasCorregidas extends javax.swing.JPanel implements ViewAdminCorreccionesMedida {
     private JFramePrincipal prin;
     private JDialogConfiguracionCorreccion jDialogConfiguracionCorreccion;
+    private JFileChooser fc;
 
     /**
      * Creates new form JPanelCurvas
@@ -30,6 +37,14 @@ public class JPanelCurvasCorregidas extends javax.swing.JPanel implements ViewAd
         //jTable1.setRowSelectionAllowed(true);
         initComponents();
         prin=p;
+        String ffCmp = Importador.EXTENSION_COMPRIMIDO;
+        fc = new JFileChooser();
+        fc.setDialogTitle("Selecciona el fichero con el módulo");
+        FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_CAMPAÑA);
+        String filterName = "Módulos (." + ffCmp +", " + ff.getExtension() + ")";
+        fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp, ff.getExtension()));
+        fc.setMultiSelectionEnabled(false);
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
     }
 
     /**
@@ -161,12 +176,25 @@ public class JPanelCurvasCorregidas extends javax.swing.JPanel implements ViewAd
 
     @Override
     public CurvaCorregida getCurvaSeleccionada() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TableModelMedidasCorregidas tm = (TableModelMedidasCorregidas) jTable1.getModel();
+        
+        return tm.getMedida(jTable1.getSelectedRow());
     }
 
     @Override
     public File mostrarSelectorFicheroNuevo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int returnVal = fc.showSaveDialog(prin);
+        File f = null;
+        
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+            f = fc.getSelectedFile();
+        
+        return f;
+    }
+
+    @Override
+    public void mostrarMensajeSuccess(String mensaje) {
+        JOptionPane.showMessageDialog(prin, mensaje);
     }
     
     
