@@ -24,7 +24,7 @@ public class IECMetodo1 implements MetodoCorreccion {
       
       double alpha = modulo.getAlpha() * 10E3;
       double beta = modulo.getBeta() * 10E3;
-      double rs = modulo.getRs();
+      double rs = modulo.getRs() * 10E3;
       double kappa = modulo.getKappa() * 10E3;
       
       // Caso de error.
