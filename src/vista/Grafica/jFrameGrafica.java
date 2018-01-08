@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista.curvamedida;
+package vista.Grafica;
 
 import controlador.CtrAdminGrafica;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,9 +15,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import modelo.CurvaIV;
+import modelo.CurvaMedida;
 import modelo.Medida;
 import modelo.MedidaCurva;
 import modelo.MedidaIntensidad;
+import modelo.MedidaOrdenada;
 import modelo.MedidaTension;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -30,18 +35,20 @@ import vista.ViewAdminGrafica;
  *
  * @author Elias
  */
-public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminGrafica {
+public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafica {
 
     /**
      * Creates new form jFrameCurvas
      */
-    private XYSeries curva; //para representar varias curvas solo habria que hacer un array o una lista
+    private XYSeries curva; //se usa como auxiliar
+    
     private XYSeries corregida;
     private XYSeriesCollection dataset;
     private static final String IV= "CURVA I-V";
     private static final String PV= "CURVA P-V";
     private List<MedidaCurva> tensiones;
     private List<MedidaCurva> intensidades;
+    private List<MedidaOrdenada> potencias;
     private Object[] datos;
     private List<MedidaTension> mt =new ArrayList<>();
     private List<MedidaIntensidad> mi=new ArrayList<>();
@@ -49,7 +56,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminGrafica
     
     
     
-    public jFrameCurvas() {
+    public jFrameGrafica(){
         initComponents();
        
     }
@@ -63,8 +70,8 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminGrafica
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelToggleButtonsIV_PV1 = new vista.curvamedida.JPanelToggleButtonsIV_PV();
-        jPanelInfoCurvaMedida1 = new vista.curvamedida.JPanelInfoCurvaMedida();
+        jPanelToggleButtonsIV_PV1 = new vista.Grafica.JPanelToggleButtonsIV_PV();
+        jPanelInfoCurvaMedida1 = new vista.Grafica.JPanelInfoCurvaMedida();
         jPanel1 = createChartPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -116,7 +123,7 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminGrafica
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -171,20 +178,21 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminGrafica
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(jFrameCurvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(jFrameGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(jFrameCurvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(jFrameGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(jFrameCurvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(jFrameGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(jFrameCurvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(jFrameGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new jFrameCurvas().setVisible(true);
+                new jFrameGrafica().setVisible(true);
             }
         });
     }
@@ -192,15 +200,15 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminGrafica
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private vista.curvamedida.JPanelInfoCurvaMedida jPanelInfoCurvaMedida1;
-    private vista.curvamedida.JPanelToggleButtonsIV_PV jPanelToggleButtonsIV_PV1;
+    private vista.Grafica.JPanelInfoCurvaMedida jPanelInfoCurvaMedida1;
+    private vista.Grafica.JPanelToggleButtonsIV_PV jPanelToggleButtonsIV_PV1;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
     @Override
-    public void setControlador(CtrAdminGrafica ctr) {
-        
+    public void setControlador(ActionListener ctr) {
+        jPanelToggleButtonsIV_PV1.setController(ctr, IV, PV);
     }
     
     public void cargaDatos(Object[] datos){
@@ -209,32 +217,31 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminGrafica
 
     @Override
     public void visualizaGrafica(List<MedidaCurva> tensiones, List<MedidaCurva> intensidades, Object[] datos) {
-        this.datos=datos;
-        this.tensiones=tensiones;
-        this.intensidades=intensidades;
+        
         tm=new TableModelGrafica(intensidades, tensiones);
         jTable1.setModel(tm);
         cargaDatos(datos);
         generaGrafica(tensiones, intensidades);
         jTable1.updateUI();
+        
     }
 
     private JPanel createChartPanel() {
         String chartTitle = "Curva I-V";
         String xAxisLabel = "V";
-        String yAxisLabel = "I";
+        String yAxisLabel = "I(A)";
  
     XYDataset dataset = createDataset();
  
     JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
             xAxisLabel, yAxisLabel, dataset);
-    
+ 
     return new ChartPanel(chart);
     }
 
     private XYDataset createDataset() {
         XYSeriesCollection dataset = new XYSeriesCollection();
-        XYSeries curva1 = new XYSeries("Curva 1");
+        XYSeries curva1 = new XYSeries("CurvaIV");
         
         curva=curva1;
         this.dataset=dataset;
@@ -244,32 +251,119 @@ public class jFrameCurvas extends javax.swing.JFrame implements ViewAdminGrafica
     }
    
     private void generaGrafica(List<MedidaCurva> lt, List<MedidaCurva> li){
-        
+        curva=null;
+        curva=new XYSeries("CurvaIV");
+        dataset.removeAllSeries();
+        dataset.addSeries(curva);
         int i=0;
         while(i<lt.size()){
             curva.addOrUpdate(lt.get(i).getValor(),li.get(i).getValor());
             i++;
         }
-        
+        jPanel1.updateUI();
         
     }
 
-    private void crearChart(String IV, String v, String i) {
-        JFreeChart chart=ChartFactory.createXYLineChart(IV, v, i, dataset);
+    private void crearChart(String titulo, String v, String i) {
+        JFreeChart chart=ChartFactory.createXYLineChart(titulo, v, i, dataset);
         
         jPanel1=new ChartPanel(chart);
         jPanel1.updateUI();
     }
 
+
+    @Override
+    public void showCurva(CurvaIV c) {
+        
+        Medida isc,voc,pmax,vmax,imax;
+        String fecha,hora;
+        double ff=c.getFF();
+        int id=c.getId();
+        tensiones=c.getTensiones();
+        intensidades=c.getIntensidades();
+        potencias=c.getPotencias();
+        fecha=c.getFecha();
+        hora=c.getHora();
+        isc=c.getIsc();
+        voc=c.getVoc();
+        pmax=c.getPmax();
+        vmax=c.getVmax();
+        imax=c.getImax();
+        datos =new Object[] {isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
+        visualizaGrafica(tensiones,intensidades,datos);
+
+    }
+    
+    private void generaGraficaPV(List<MedidaOrdenada> potencias, List<MedidaCurva> intensidades){
+//        JFreeChart chart = ChartFactory.createXYLineChart("Curva P-V",
+//            "P(W)", "I(A)", dataset);
+//        jPanel1=new ChartPanel(chart);
+//       
+        
+        dataset.removeAllSeries();
+        
+        
+        curva=new XYSeries("CurvaPV");
+        dataset.addSeries(curva);
+        int i=0;
+        while(i<potencias.size()){
+            curva.addOrUpdate(potencias.get(i).getValor(),intensidades.get(i).getValor());
+            i++;
+        }
+        
+        jPanel1.updateUI();
+        
+    }
+    
     
     @Override
-    public void muestrate() {
-        jFrameCurvas jf=new jFrameCurvas();
-        jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        jf.visualizaGrafica(tensiones, intensidades, datos);
-        jf.setVisible(true);
+    public void graficaPV(){
+        System.out.println(potencias);
+        generaGraficaPV(potencias, intensidades);
+        
+    }
+    
+    @Override
+    public void graficaIV(){
+        System.out.println(tensiones);
+        generaGrafica(tensiones, intensidades);
     }
 
     
 
+    public void setCurva(XYSeries curva) {
+        this.curva = curva;
+    }
+
+    public void setCorregida(XYSeries corregida) {
+        this.corregida = corregida;
+    }
+
+    public void setDataset(XYSeriesCollection dataset) {
+        this.dataset = dataset;
+    }
+
+    public void setTensiones(List<MedidaCurva> tensiones) {
+        this.tensiones = tensiones;
+    }
+
+    public void setIntensidades(List<MedidaCurva> intensidades) {
+        this.intensidades = intensidades;
+    }
+
+    public void setPotencias(List<MedidaOrdenada> potencias) {
+        this.potencias = potencias;
+    }
+
+    public void setDatos(Object[] datos) {
+        this.datos = datos;
+    }
+
+    public void setTm(TableModelGrafica tm) {
+        this.tm = tm;
+    }
+
+    
+
+    
 }

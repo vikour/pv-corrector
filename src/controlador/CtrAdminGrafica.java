@@ -5,6 +5,8 @@
  */
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +15,14 @@ import modelo.Medida;
 import modelo.MedidaCurva;
 import modelo.MedidaIntensidad;
 import modelo.MedidaTension;
-import vista.curvamedida.jFrameCurvas;
+import vista.Grafica.jFrameGrafica;
 import vista.ViewAdminGrafica;
 
 /**
  *
  * @author Elias
  */
-public class CtrAdminGrafica {
+public class CtrAdminGrafica implements ActionListener{
     
     private ViewAdminGrafica vcm;
     private CtrAdminMedidas cam;
@@ -37,25 +39,24 @@ public class CtrAdminGrafica {
     
     
     void showCurva(CurvaMedida c) {
-        //System.out.println("HOLAAA A A A A ");
-        
-        Medida isc,voc,pmax,vmax,imax;
-        String fecha,hora;
-        double ff=c.getFF();
-        int id=c.getId();
-        List<MedidaCurva> tensiones=c.getTensiones();
-        List<MedidaCurva> intensidades=c.getIntensidades();
-        
-        fecha=c.getFecha();
-        hora=c.getHora();
-        isc=c.getIsc();
-        voc=c.getVoc();
-        pmax=c.getPmax();
-        vmax=c.getVmax();
-        imax=c.getImax();
-        Object[] datos={isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
-        vcm.visualizaGrafica(tensiones,intensidades,datos);
-        vcm.muestrate();
-    
+        vcm.showCurva(c);
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+       switch(e.getActionCommand()){
+           case "CURVA I-V":
+               vcm.graficaIV();
+               System.out.println("Estoy mostrando la grafica iv");
+               break;
+           case "CURVA P-V":
+               vcm.graficaPV();
+               System.out.println("Estoy mostrando la grafica pv");
+               break;
+       }
+           
+           
+           
+    }
+    
 }

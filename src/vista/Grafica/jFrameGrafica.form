@@ -62,9 +62,9 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="vista.curvamedida.JPanelToggleButtonsIV_PV" name="jPanelToggleButtonsIV_PV1">
+    <Component class="vista.Grafica.JPanelToggleButtonsIV_PV" name="jPanelToggleButtonsIV_PV1">
     </Component>
-    <Component class="vista.curvamedida.JPanelInfoCurvaMedida" name="jPanelInfoCurvaMedida1">
+    <Component class="vista.Grafica.JPanelInfoCurvaMedida" name="jPanelInfoCurvaMedida1">
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
       <AuxValues>

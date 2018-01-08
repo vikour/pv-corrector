@@ -17,7 +17,7 @@ import modelo.ConfiguracionCorreccion;
 import modelo.CurvaMedida;
 import modelo.MetodoCorreccion;
 import vista.ViewAdminMedidas;
-import vista.curvamedida.jFrameCurvas;
+import vista.Grafica.jFrameGrafica;
 
 /**
  *
@@ -27,13 +27,12 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     
     private ViewAdminMedidas vm;
     private CtrAdminCampanyas ctra;
-    private CtrAdminGrafica ctrcm;
+    
     private CurvaMedida cm;
     public CtrAdminMedidas(ViewAdminMedidas vm) {
         this.vm = vm;
         vm.setControlador(this);
         ctra=null;
-        ctrcm=null;
        
     }
 
@@ -41,9 +40,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
         this.ctra = ctra;
     }
     
-    public void setCtrSiguiente(CtrAdminGrafica c){
-        ctrcm=c;
-    }
+    
     
 
     @Override
@@ -127,7 +124,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
     
     public void verGrafica(CurvaMedida c){
         
-        ctrcm.showCurva(c);
+        vm.showCurva(c);
         
         
     }

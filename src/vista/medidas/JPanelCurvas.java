@@ -5,8 +5,10 @@
  */
 package vista.medidas;
 
+import controlador.CtrAdminGrafica;
 import controlador.CtrAdminMedidas;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
@@ -15,6 +17,7 @@ import modelo.ConfiguracionCorreccion;
 import javax.swing.table.TableModel;
 import modelo.CurvaMedida;
 import modelo.MetodoCorreccion;
+import vista.Grafica.jFrameGrafica;
 import vista.JFramePrincipal;
 
 import vista.ViewAdminMedidas;
@@ -220,6 +223,16 @@ public class JPanelCurvas extends javax.swing.JPanel implements ViewAdminMedidas
    public void error(String messageString) {
       JOptionPane.showMessageDialog(prin, messageString);
    }
+
+    @Override
+    public void showCurva(CurvaMedida c) {
+        jFrameGrafica jf=new jFrameGrafica();
+        CtrAdminGrafica ctr=new CtrAdminGrafica(jf);
+        jf.setControlador(ctr);
+        jf.showCurva(c);
+        jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        jf.setVisible(true);
+    }
     
 
 }

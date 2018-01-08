@@ -47,5 +47,7 @@ public interface ViewAdminMedidas {
     MetodoCorreccion getMetodoCorreccion();
 
    public void error(String messageString);
+
+    public void showCurva(CurvaMedida c);
     
 }

@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import vista.campanya.JPanelCampaña;
-import vista.curvamedida.jFrameCurvas;
+import vista.Grafica.jFrameGrafica;
 import vista.medidas.JPanelCurvas;
 import vista.modulo.JPanelModulo;
 
@@ -54,20 +54,17 @@ public class JFramePrincipal extends javax.swing.JFrame {
         JPanelCampaña p1= new JPanelCampaña(this);
         JPanelCurvas p2=new JPanelCurvas(this);
         
-        jFrameCurvas p3=new jFrameCurvas();
         
         CtrAdminModulos ctrm=new CtrAdminModulos(p);
         CtrAdminCampanyas ctrAdminCampanyas = new CtrAdminCampanyas(p1);
         CtrAdminMedidas ctrAdminMedidas = new CtrAdminMedidas(p2);
         
-        CtrAdminGrafica ctrAdminCurvaMedida=new CtrAdminGrafica(p3);
+        
         
         ctrm.setCtrSiguiente(ctrAdminCampanyas);
         ctrAdminCampanyas.setCtrAnterior(ctrm);
         ctrAdminCampanyas.setCtrSiguiente(ctrAdminMedidas);
         ctrAdminMedidas.setCtrAnterior(ctrAdminCampanyas);
-        ctrAdminMedidas.setCtrSiguiente(ctrAdminCurvaMedida);
-        ctrAdminCurvaMedida.setControladorAnterior(ctrAdminMedidas);
         
         
         paneles[0]=p;

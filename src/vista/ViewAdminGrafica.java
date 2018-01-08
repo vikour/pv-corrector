@@ -6,7 +6,10 @@
 package vista;
 
 import controlador.CtrAdminGrafica;
+import java.awt.event.ActionListener;
 import java.util.List;
+import modelo.CurvaIV;
+import modelo.CurvaMedida;
 import modelo.MedidaCurva;
 import modelo.MedidaIntensidad;
 import modelo.MedidaTension;
@@ -18,10 +21,16 @@ import modelo.MedidaTension;
 public interface ViewAdminGrafica {
 
     
-    void setControlador(CtrAdminGrafica ctr);
+    void setControlador(ActionListener ctr);
     
     void visualizaGrafica(List<MedidaCurva> tensiones, List<MedidaCurva> intensidades, Object[] datos);
     
-    void muestrate();
+
+
+    public void showCurva(CurvaIV c);
+
+    public void graficaIV();
+
+    public void graficaPV();
     
 }
