@@ -96,7 +96,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
             AlmacenCurvasCorregidas.getInstance().nueva(metodo, config, seleccionada);
          }
          catch (RuntimeException ex) {
-            vm.error("El modulo de la curva no tiene los parámetros necesarios para la corrección");
+            vm.error(ex.getMessage());
          }
       }
    }

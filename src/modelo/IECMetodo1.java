@@ -29,7 +29,7 @@ public class IECMetodo1 implements MetodoCorreccion {
       
       // Caso de error.
       if (alpha == 0 || beta == 0 || rs == 0 || kappa == 0)
-         throw new RuntimeException();
+         throw new RuntimeException("El modulo de la curva no tiene los parámetros necesarios para la corrección");
       
       ConfiguracionCorreccion config = configuracion.get(0);
       double isc = original.getIsc().getValor();
