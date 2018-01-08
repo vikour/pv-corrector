@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.CtrAdminCorrecionesMedida;
+import java.io.File;
 import modelo.CurvaCorregida;
 
 /**
@@ -25,6 +26,10 @@ public interface ViewAdminCorreccionesMedida {
     public void setControlador(CtrAdminCorrecionesMedida ctr);
 
     public void vistaAnterior();
+
+    public CurvaCorregida getCurvaSeleccionada();
+
+    public File mostrarSelectorFicheroNuevo();
     
     public static enum Cmd {
         EXPORTAR,

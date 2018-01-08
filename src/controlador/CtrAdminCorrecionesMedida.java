@@ -7,10 +7,13 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modelo.CurvaCorregida;
 import modelo.CurvaMedida;
+import modelo.FormatoFichero;
+import modelo.FormatoFicheroFactory;
 import vista.ViewAdminCorreccionesMedida;
 
 
@@ -22,6 +25,7 @@ public class CtrAdminCorrecionesMedida implements ActionListener, ListSelectionL
     public CtrAdminCorrecionesMedida(ViewAdminCorreccionesMedida view) {
         this.ctrAnterior = null;
         this.view = view;
+        view.setControlador(this);
     }
 
     public void setCtrAnterior(CtrAdminMedidas ctrAnterior) {
@@ -46,8 +50,6 @@ public class CtrAdminCorrecionesMedida implements ActionListener, ListSelectionL
         if (e.getActionCommand().equals(ViewAdminCorreccionesMedida.Cmd.MEDIDAS.toString()))
             mostrarMedidas();
         
-        System.out.println("ajdpa");
-        
     }
 
     @Override
@@ -61,7 +63,5 @@ public class CtrAdminCorrecionesMedida implements ActionListener, ListSelectionL
     private void mostrarMedidas() {
         view.vistaAnterior();
     }
-    
-    
     
 }
