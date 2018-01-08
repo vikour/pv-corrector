@@ -124,6 +124,7 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
         ctrs.mostrarCorrecciones(vm.getMedidaSeleccionada());
         vm.vistaSiguiente();
     }
+    
    private void exportarCurva() {
       File f = vm.mostrarSelectorFicheroNuevo();
       FormatoFicheroFactory fff = new FormatoFicheroFactory();

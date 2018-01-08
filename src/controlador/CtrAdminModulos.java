@@ -6,6 +6,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -14,7 +16,7 @@ import modelo.Modulo;
 import vista.ViewAdminModulos;
 
 
-public class CtrAdminModulos implements ActionListener,ListSelectionListener {
+public class CtrAdminModulos implements ActionListener,ListSelectionListener, MouseListener {
   private ViewAdminModulos vm;
   private CtrAdminCampanyas ctrs;
 
@@ -84,6 +86,33 @@ public class CtrAdminModulos implements ActionListener,ListSelectionListener {
        if (!e.getValueIsAdjusting()){
            moduloSeleccionado();
        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(e.getClickCount()==2){
+            consultarCampanyas();
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+       
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        
     }
     
     

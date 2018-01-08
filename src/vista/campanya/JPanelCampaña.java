@@ -163,6 +163,8 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         
         jListC.addListSelectionListener(controlador);
         
+        jListC.addMouseListener(controlador);
+        
        // ctr.consultarCampanyas();
     }
 

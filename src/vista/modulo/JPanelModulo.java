@@ -161,6 +161,7 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         jButtonModificar.setActionCommand(ViewAdminModulos.MODIFICAR);
         
         jList1.addListSelectionListener(controlador);
+        jList1.addMouseListener(controlador);
         
         controlador.consultarModulos();
     }
