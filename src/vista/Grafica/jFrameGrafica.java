@@ -315,18 +315,18 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
         dataset.removeAllSeries();
         
         
-        generaSeriePV(potencias, intensidades,"CurvaPV");
+        generaSeriePV(potencias, tensiones,"CurvaPV");
         
         jPanel1.updateUI();
         
     }
 
-    private void generaSeriePV(List<MedidaOrdenada> potencias1, List<MedidaCurva> intensidades1,String nombre) {
+    private void generaSeriePV(List<MedidaOrdenada> potencias1, List<MedidaCurva> tensiones1,String nombre) {
         curva=new XYSeries(nombre);
         dataset.addSeries(curva);
         int i=0;
         while (i < potencias1.size()) {
-            curva.addOrUpdate(potencias1.get(i).getValor(), intensidades1.get(i).getValor());
+            curva.addOrUpdate(tensiones1.get(i).getValor(), potencias1.get(i).getValor());
             i++;
         }
     }
@@ -339,7 +339,7 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
             System.out.println("Esto es una curva corregida");
             generaPVCorregida();
         }else{
-            generaGraficaPV(potencias, intensidades);
+            generaGraficaPV(potencias, tensiones);
         }
     }
     
@@ -429,8 +429,8 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
         
         CurvaCorregida aux=(CurvaCorregida) grafica;
         
-        generaSeriePV(aux.getPotencias(), aux.getIntensidades(), "CurvaCorregida");
-        generaSeriePV(aux.getOriginal().getPotencias(), aux.getOriginal().getIntensidades(), "CurvaOriginal");
+        generaSeriePV(aux.getPotencias(), aux.getTensiones(), "CurvaCorregida");
+        generaSeriePV(aux.getOriginal().getPotencias(), aux.getOriginal().getTensiones(), "CurvaOriginal");
         
         jPanel1.updateUI();
     }

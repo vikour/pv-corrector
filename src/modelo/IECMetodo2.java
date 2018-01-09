@@ -25,10 +25,10 @@ public class IECMetodo2 implements MetodoCorreccion {
       // Obtención de medidas.
       Modulo modulo = original.getModulo();
       
-      double alpha = modulo.getAlpha() * 10E3;
-      double beta = modulo.getBeta() * 10E3;
-      double rs = modulo.getRs() * 10E3;
-      double kappa = modulo.getKappa() * 10E3;
+      double alpha = modulo.getAlpha() / 10E3;
+      double beta = modulo.getBeta() / 10E3;
+      double rs = modulo.getRs() / 10E3;
+      double kappa = modulo.getKappa() / 10E3;
       double a = modulo.getA();
       
       // Caso de error.

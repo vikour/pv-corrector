@@ -22,10 +22,10 @@ public class IECMetodo1 implements MetodoCorreccion {
       // Obtención de medidas.
       Modulo modulo = original.getModulo();
       
-      double alpha = modulo.getAlpha() * 10E3;
-      double beta = modulo.getBeta() * 10E3;
-      double rs = modulo.getRs() * 10E3;
-      double kappa = modulo.getKappa() * 10E3;
+      double alpha = modulo.getAlpha() / 10E3;
+      double beta = modulo.getBeta() / 10E3;
+      double rs = modulo.getRs() / 10E3;
+      double kappa = modulo.getKappa() / 10E3;
       
       // Caso de error.
       if (alpha == 0 || beta == 0 || rs == 0 || kappa == 0)
