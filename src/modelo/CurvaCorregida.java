@@ -67,6 +67,11 @@ public class CurvaCorregida extends CurvaIV
       
       BD.getInstance().insert("INSERT INTO curvas_corregidas VALUES (" + getId() + ", '" + metodo.toString() + "', " + original.getId() + ")");
       
+      super.setImax(super.calcularIMAX());
+      super.setPmax(super.calcularPMAX());
+      super.setVmax(super.calcularVMAX());
+      super.setFf(super.calculateFF());
+      
    }
    
    private CurvaCorregida() {}

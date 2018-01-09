@@ -6,12 +6,16 @@
 package modelo;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 public class FormatoCampaña extends FormatoFichero{
 
@@ -77,8 +81,94 @@ public class FormatoCampaña extends FormatoFichero{
     }
 
     @Override
-    public void escribir(File file) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void escribir(File file, Object objeto) {
+       BufferedWriter bw = null;
+       
+       try {
+           
+           if (objeto instanceof CurvaMedida)
+               bw = escribirCurva(bw, file, (CurvaMedida) objeto);
+           else
+               bw = escribirCurva(bw, file, (CurvaCorregida) objeto);
+
+       } catch (IOException ex) {
+          System.out.println("da");
+       }
+       finally {
+          
+          if (bw != null)
+             try {
+                bw.close();
+             }
+             catch (IOException ex) {
+                System.out.println("Error");
+             }
+          
+       }
+       
+    }
+
+    private BufferedWriter escribirCurva(BufferedWriter bw, File file, CurvaCorregida medida) throws IOException, UnsupportedEncodingException, FileNotFoundException {
+        bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "ISO-8859-15"));
+        bw.write("Módulo:\t"+medida.getOriginal().getModulo().getNombre()+"\n");
+        bw.write("Campaña:\t"+medida.getOriginal().getCampaña().getNombre()+"\n");
+        bw.write("Fecha:\t"+medida.getFecha() +"\n");
+        bw.write("Hora:\t"+medida.getHora()+"\n\n");
+        bw.write("Corrección:\tninguna\n"); // Duda, si tiene ¿qué pongo aqui?.
+        bw.write("Isc:\t"+String.format("%.4f",medida.getIsc().getValor())+"\t"+medida.getIsc().getMagnitud()+"\n");
+        bw.write("Voc:\t"+String.format("%.4f", medida.getVoc().getValor())+"\t"+medida.getVoc().getMagnitud()+"\n");
+        bw.write("Pmax:\t"+String.format("%.4f",medida.getPmax().getValor())+"\t"+medida.getPmax().getMagnitud()+"\n");
+        bw.write("IPmax:\t"+String.format("%.4f", medida.getImax().getValor())+"\t"+medida.getImax().getMagnitud()+"\n");
+        bw.write("VPmax:\t"+String.format("%.4f",medida.getVmax().getValor())+"\t"+medida.getVmax().getMagnitud()+"\n");
+        bw.write("FF:\t"+String.format("%.4f", medida.getFF())+"\t%\n");
+        
+        for (MedidaCanal medidaCanal : medida.getOriginal().getMedidasCanal())
+            bw.write(medidaCanal.getCanal().getNombre()+":\t"+
+                    String.format("%.4f", medidaCanal.getValor())+"\t"+medidaCanal.getMagnitud()+"\n");
+        bw.write("\n");
+        
+        List<MedidaCurva> tensiones = medida.getTensiones();
+        List<MedidaCurva> intensidades = medida.getIntensidades();
+        List<MedidaOrdenada> potencia = medida.getPotencias();
+        
+        bw.write("Número de puntos curva IV:\t"+tensiones.size()+"\n");
+        bw.write("N\ttensión(V)\tcorriente(A)\tpotencia(W)\n");
+        for (int i = 0 ; i < tensiones.size() ; i++)
+            bw.write(tensiones.get(i).getOrden() + "\t" +
+                    String.format("%.4f", tensiones.get(i).getValor()) + "\t" +
+                    String.format("%.4f",intensidades.get(i).getValor()) + "\t" +
+                    String.format("%.4f",potencia.get(i).getValor()) + "\n");
+        return bw;
+    }
+
+    private BufferedWriter escribirCurva(BufferedWriter bw, File file, CurvaMedida medida) throws IOException, UnsupportedEncodingException, FileNotFoundException {
+        bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "ISO-8859-15"));
+        bw.write("Módulo:\t"+medida.getModulo().getNombre()+"\n");
+        bw.write("Campaña:\t"+medida.getCampaña().getNombre()+"\n");
+        bw.write("Fecha:\t"+medida.getFecha() +"\n");
+        bw.write("Hora:\t"+medida.getHora()+"\n\n");
+        bw.write("Corrección:\tninguna\n"); // Duda, si tiene ¿qué pongo aqui?.
+        bw.write("Isc:\t"+String.format("%.4f",medida.getIsc().getValor())+"\t"+medida.getIsc().getMagnitud()+"\n");
+        bw.write("Voc:\t"+String.format("%.4f", medida.getVoc().getValor())+"\t"+medida.getVoc().getMagnitud()+"\n");
+        bw.write("Pmax:\t"+String.format("%.4f",medida.getPmax().getValor())+"\t"+medida.getPmax().getMagnitud()+"\n");
+        bw.write("IPmax:\t"+String.format("%.4f", medida.getImax().getValor())+"\t"+medida.getImax().getMagnitud()+"\n");
+        bw.write("VPmax:\t"+String.format("%.4f",medida.getVmax().getValor())+"\t"+medida.getVmax().getMagnitud()+"\n");
+        bw.write("FF:\t"+String.format("%.4f", medida.getFF())+"\t%\n");
+        for (MedidaCanal medidaCanal : medida.getMedidasCanal())
+            bw.write(medidaCanal.getCanal().getNombre()+":\t"+
+                    String.format("%.4f", medidaCanal.getValor())+"\t"+medidaCanal.getMagnitud()+"\n");
+        bw.write("\n");
+        List<MedidaCurva> tensiones = medida.getTensiones();
+        List<MedidaCurva> intensidades = medida.getIntensidades();
+        List<MedidaOrdenada> potencia = medida.getPotencias();
+        bw.write("Número de puntos curva IV:\t"+tensiones.size()+"\n");
+        bw.write("N\ttensión(V)\tcorriente(A)\tpotencia(W)\n");
+        for (int i = 0 ; i < tensiones.size() ; i++)
+            bw.write(tensiones.get(i).getOrden() + "\t" +
+                    String.format("%.4f", tensiones.get(i).getValor()) + "\t" +
+                    String.format("%.4f",intensidades.get(i).getValor()) + "\t" +
+                    String.format("%.4f",potencia.get(i).getValor()) + "\n");
+        return bw;
     }
 
     @Override

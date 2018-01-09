@@ -46,6 +46,7 @@ public class Modulo
    private double minPmax;
    private double minVoc;
    private double minFF;
+   private double a;
    
    
    static void Borrar(String nombre){
@@ -155,6 +156,7 @@ public class Modulo
            modulo.minPmax=Double.parseDouble(aux[34]);
            modulo.minVoc=Double.parseDouble(aux[35]);
            modulo.minFF=Double.parseDouble(aux[36]);
+           modulo.a = Double.parseDouble(aux[37]);
        }
          
        return modulo;
@@ -422,6 +424,13 @@ public class Modulo
         this.np = np;
     }
 
+    public void setA(double a) {
+        BD bd=BD.getInstance();
+        
+        bd.update("UPDATE modulos SET a="+a+" WHERE nombre='"+this.nombre+"';");
+        this.a = a;
+    }
+    
     public List<Campaña> getCampañas() {
         return AlmacenCampañas.getInstance().buscar(this);
     }
@@ -574,7 +583,9 @@ public class Modulo
         return minFF;
     }
 
-
+    public double getA() {
+        return a;
+    }
     
     
        @Override

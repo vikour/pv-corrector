@@ -113,5 +113,11 @@ public class CurvaMedida extends CurvaIV {
    Modulo getModulo() {
       return campaña.getModulo();
    }
+   
+   public boolean estaCorregida() {
+       String qq ="SELECT id FROM curvas_corregidas WHERE original = " + getId();
+       
+       return !BD.getInstance().select(qq).isEmpty();
+   }
 
 }
