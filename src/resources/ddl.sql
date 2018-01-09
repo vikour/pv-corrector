@@ -38,6 +38,7 @@ CREATE TABLE modulos (
    minPmax NUMERIC DEFAULT 0,
    minVoc NUMERIC DEFAULT 0,
    minFF NUMERIC DEFAULT 0,
+   a NUMERIC DEFAULT 0,
    PRIMARY KEY(nombre)
 );
 

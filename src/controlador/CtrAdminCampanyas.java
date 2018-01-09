@@ -7,6 +7,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,6 +16,7 @@ import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modelo.Campaña;
+import modelo.ExportadorMedidas;
 import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
 import modelo.IFormatoFicheroNotificable;
@@ -25,7 +28,7 @@ import vista.ViewAdminCampanya;
  *
  * @author EzequielRodriguez*/
  
-public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
+public class CtrAdminCampanyas implements ActionListener,ListSelectionListener,MouseListener {
     
     private ViewAdminCampanya vc;
     private CtrAdminModulos ctrant;
@@ -80,6 +83,10 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
             case ViewAdminCampanya.IMPORTAR:
                 importar();
                 break;
+                
+            case ViewAdminCampanya.EXPORTAR:
+               exportar();
+               break;
                        
         }
     }
@@ -109,5 +116,47 @@ public class CtrAdminCampanyas implements ActionListener,ListSelectionListener {
            vc.mostrarVistaImportacion(FormatoFicheroFactory.FORMATO_CAMPAÑA, f);
            
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(e.getClickCount()==2){
+            verMedidas();
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        
+    }
+   private void exportar() {
+      File f = vc.mostrarSelectorFicherosNuevo();
+      ExportadorMedidas exp;
+      FormatoFicheroFactory fff = new FormatoFicheroFactory();
+      
+      if (f != null) 
+         try {
+            exp = new ExportadorMedidas(fff.create(FormatoFicheroFactory.FORMATO_CAMPAÑA), f);
+            exp.exportar(vc.getCampañaSeleccionada());
+            vc.mostrarMensajeSuccess("Exportación finalizada con éxito.");
+         }
+         catch (IOException ex) {
+            vc.mostrarMensajeError("Hubo algún problema al exportar.");
+         }
+   }
 
 }

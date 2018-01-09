@@ -163,6 +163,8 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         
         jListC.addListSelectionListener(controlador);
         
+        jListC.addMouseListener(controlador);
+        
        // ctr.consultarCampanyas();
     }
 
@@ -228,5 +230,26 @@ public class JPanelCampaña extends javax.swing.JPanel implements ViewAdminCampa
         dImport.setVisible(true, format, f);
         jListC.updateUI();
     }
+
+   @Override
+   public File mostrarSelectorFicherosNuevo() {
+      int returnVal = fc.showSaveDialog(prin);
+      File f = null;
+      
+      if (returnVal == JFileChooser.APPROVE_OPTION)
+         f = fc.getSelectedFile();
+      
+      return f;
+   }
+
+   @Override
+   public void mostrarMensajeSuccess(String message) {
+      JOptionPane.showMessageDialog(prin, message);
+   }
+
+   @Override
+   public void mostrarMensajeError(String message) {
+      JOptionPane.showMessageDialog(prin, message,"Error al exportar", JOptionPane.ERROR_MESSAGE);
+   }
 
 }

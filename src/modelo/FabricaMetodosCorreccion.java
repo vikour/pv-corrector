@@ -24,6 +24,11 @@ public class FabricaMetodosCorreccion {
          
          case METODO_1_IEC:
             result = IECMetodo1.getInstance();
+            break;
+            
+         case METODO_2_IEC:
+             result = IECMetodo2.getInstance();
+             break;
          
       }
       

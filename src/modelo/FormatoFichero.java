@@ -12,7 +12,7 @@ public abstract class FormatoFichero {
     }
     
     public abstract Object leer(File file);
-    public abstract void escribir(File file);
+    public abstract void escribir(File file, Object object);
     public abstract String getExtension();
     
 }

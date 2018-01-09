@@ -7,14 +7,22 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modelo.AlmacenCurvasCorregidas;
 import javax.swing.table.AbstractTableModel;
 import modelo.Campaña;
 import modelo.ConfiguracionCorreccion;
+import modelo.CurvaCorregida;
 import modelo.CurvaMedida;
+import modelo.ExportadorMedidas;
+import modelo.FormatoFichero;
+import modelo.FormatoFicheroFactory;
 import modelo.MetodoCorreccion;
 import vista.ViewAdminMedidas;
 import vista.Grafica.jFrameGrafica;
@@ -23,12 +31,14 @@ import vista.Grafica.jFrameGrafica;
  *
  * @author EzequielRodriguez
  */
-public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
+public class CtrAdminMedidas implements ActionListener, ListSelectionListener, MouseListener {
     
     private ViewAdminMedidas vm;
     private CtrAdminCampanyas ctra;
     
     private CurvaMedida cm;
+    private CtrAdminCorrecionesMedida ctrs;
+   
     public CtrAdminMedidas(ViewAdminMedidas vm) {
         this.vm = vm;
         vm.setControlador(this);
@@ -38,6 +48,10 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
 
     public void setCtrAnterior(CtrAdminCampanyas ctra) {
         this.ctra = ctra;
+    }
+    
+    public void setCtrSiguiente(CtrAdminCorrecionesMedida ctrs) {
+        this.ctrs = ctrs;
     }
     
     
@@ -60,19 +74,31 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
                 break;
             
             case ViewAdminMedidas.GRAFICA:
-                if(cm==null){
-                    cm=vm.getMedidaSeleccionada();
-                    System.out.println("La curva era null");
-                }
-                System.out.println(cm);
-                verGrafica(cm);
+                mostrarGraficaSeleccionada();
                 break;
                 
             case ViewAdminMedidas.CORREGIR:
                corregirCurva();
                break;
+               
+            case ViewAdminMedidas.EXPORTAR:
+               exportarCurva();
+               break;
+               
+            case ViewAdminMedidas.CORRECCIONES:
+                mostrarCorrecciones();
+                break;
             
         }
+    }
+
+    private void mostrarGraficaSeleccionada() {
+        if(cm==null){
+            cm=vm.getMedidaSeleccionada();
+            System.out.println("La curva era null");
+        }
+        System.out.println(cm);
+        vm.showCurva(cm);
     }
 
     public void setMedidas(Campaña c) {
@@ -99,12 +125,14 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
         vm.habilitarExportar(true);
         vm.habilitarGrafica(true);
         vm.habilitarCorregir(true);
+        vm.habilitarCorrecciones(true);
     }
 
    private void corregirCurva() {
       CurvaMedida seleccionada = vm.getMedidaSeleccionada();
       List<ConfiguracionCorreccion> config;
       MetodoCorreccion metodo;
+      CurvaCorregida correccion;
       
       vm.mostrarVistaCorreccion(seleccionada);
       config = vm.getConfiguracionCorreccion();
@@ -113,20 +141,60 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener{
       if (config != null && metodo != null) {
          
          try {
-            AlmacenCurvasCorregidas.getInstance().nueva(metodo, config, seleccionada);
+            correccion = AlmacenCurvasCorregidas.getInstance().nueva(metodo, config, seleccionada);
+            vm.actualizarTabla();
+            vm.showCurvaCorregida(correccion);
+            
          }
          catch (RuntimeException ex) {
-            vm.error("El modulo de la curva no tiene los parámetros necesarios para la corrección");
+            vm.error(ex.getMessage());
          }
       }
    }
-   
+
+    private void mostrarCorrecciones() {
+        ctrs.mostrarCorrecciones(vm.getMedidaSeleccionada());
+        vm.vistaSiguiente();
+    }
     
-    public void verGrafica(CurvaMedida c){
+   private void exportarCurva() {
+      File f = vm.mostrarSelectorFicheroNuevo();
+      FormatoFicheroFactory fff = new FormatoFicheroFactory();
+      ExportadorMedidas exp = null;
+      
+      if (f != null) {
+         exp = new ExportadorMedidas(fff.create(FormatoFicheroFactory.FORMATO_CAMPAÑA), f);
+         exp.exportar(vm.getMedidaSeleccionada());
+         vm.mostrarMensajeSuccess("Medida exportada satisfactoriamente.");
+      }
+   }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
         
-        vm.showCurva(c);
+        if (e.getClickCount() == 2)
+            mostrarGraficaSeleccionada();
         
-        
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // Do nothing
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // Do nothing
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // Do nothing
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // Do nothing
     }
     
     

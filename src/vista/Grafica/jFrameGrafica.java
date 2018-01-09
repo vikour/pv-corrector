@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import modelo.CurvaCorregida;
 import modelo.CurvaIV;
 import modelo.CurvaMedida;
 import modelo.Medida;
@@ -53,7 +54,7 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
     private List<MedidaTension> mt =new ArrayList<>();
     private List<MedidaIntensidad> mi=new ArrayList<>();
     private TableModelGrafica tm;
-    
+    private CurvaIV grafica;
     
     
     public jFrameGrafica(){
@@ -231,9 +232,9 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
     }
 
     private JPanel createChartPanel() {
-        String chartTitle = "Curva I-V";
-        String xAxisLabel = "V";
-        String yAxisLabel = "I(A)";
+        String chartTitle = "Curva";
+        String xAxisLabel = "";
+        String yAxisLabel = "";
  
     XYDataset dataset = createDataset();
  
@@ -255,17 +256,23 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
     }
    
     private void generaGrafica(List<MedidaCurva> lt, List<MedidaCurva> li){
-        curva=null;
-        curva=new XYSeries("CurvaIV");
         dataset.removeAllSeries();
+        
+        generaSerieIV(lt, li,"CurvaIV");
+        
+        jPanel1.updateUI();
+        
+    }
+
+    private void generaSerieIV(List<MedidaCurva> lt, List<MedidaCurva> li,String nombre) {
+        curva=new XYSeries(nombre);
+        
         dataset.addSeries(curva);
         int i=0;
         while(i<lt.size()){
             curva.addOrUpdate(lt.get(i).getValor(),li.get(i).getValor());
             i++;
         }
-        jPanel1.updateUI();
-        
     }
 
     private void crearChart(String titulo, String v, String i) {
@@ -294,6 +301,7 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
         vmax=c.getVmax();
         imax=c.getImax();
         datos =new Object[] {isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
+        grafica=c;
         visualizaGrafica(tensiones,intensidades,datos);
 
     }
@@ -307,30 +315,44 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
         dataset.removeAllSeries();
         
         
-        curva=new XYSeries("CurvaPV");
-        dataset.addSeries(curva);
-        int i=0;
-        while(i<potencias.size()){
-            curva.addOrUpdate(potencias.get(i).getValor(),intensidades.get(i).getValor());
-            i++;
-        }
+        generaSeriePV(potencias, intensidades,"CurvaPV");
         
         jPanel1.updateUI();
         
+    }
+
+    private void generaSeriePV(List<MedidaOrdenada> potencias1, List<MedidaCurva> intensidades1,String nombre) {
+        curva=new XYSeries(nombre);
+        dataset.addSeries(curva);
+        int i=0;
+        while (i < potencias1.size()) {
+            curva.addOrUpdate(potencias1.get(i).getValor(), intensidades1.get(i).getValor());
+            i++;
+        }
     }
     
     
     @Override
     public void graficaPV(){
-        System.out.println(potencias);
-        generaGraficaPV(potencias, intensidades);
         
+        if(grafica instanceof CurvaCorregida){
+            System.out.println("Esto es una curva corregida");
+            generaPVCorregida();
+        }else{
+            generaGraficaPV(potencias, intensidades);
+        }
     }
     
     @Override
     public void graficaIV(){
-        System.out.println(tensiones);
-        generaGrafica(tensiones, intensidades);
+        if(grafica instanceof CurvaCorregida){
+            System.out.println("Esto es una curva corregida");
+            generaIVCorregida();
+        }
+        else{    
+             generaGrafica(tensiones, intensidades);  
+        }
+            
     }
 
     
@@ -367,7 +389,51 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
         this.tm = tm;
     }
 
+    public void muestraGraficaCorregida(CurvaCorregida c){
+        Medida isc,voc,pmax,vmax,imax;
+        String fecha,hora;
+        double ff=c.getFF();
+        int id=c.getId();
+        tensiones=c.getTensiones();
+        intensidades=c.getIntensidades();
+        potencias=c.getPotencias();
+        fecha=c.getFecha();
+        hora=c.getHora();
+        isc=c.getIsc();
+        voc=c.getVoc();
+        pmax=c.getPmax();
+        vmax=c.getVmax();
+        imax=c.getImax();
+        datos =new Object[] {isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
+        grafica=c;
+        tm=new TableModelGrafica(intensidades, tensiones);
+        jTable1.setModel(tm);
+        cargaDatos(datos);
+        graficaIV();
+        jPanel1.updateUI();
+    }
     
+    private void generaIVCorregida(){
+        dataset.removeAllSeries();
+        
+        CurvaCorregida aux=(CurvaCorregida) grafica;
+        
+        generaSerieIV(aux.getTensiones(), aux.getIntensidades(), "CurvaCorregida");
+        generaSerieIV(aux.getOriginal().getTensiones(), aux.getOriginal().getIntensidades(), "CurvaOriginal");
+        
+        jPanel1.updateUI();
+    }
+    
+    private void generaPVCorregida(){
+        dataset.removeAllSeries();
+        
+        CurvaCorregida aux=(CurvaCorregida) grafica;
+        
+        generaSeriePV(aux.getPotencias(), aux.getIntensidades(), "CurvaCorregida");
+        generaSeriePV(aux.getOriginal().getPotencias(), aux.getOriginal().getIntensidades(), "CurvaOriginal");
+        
+        jPanel1.updateUI();
+    }
 
     
 }
