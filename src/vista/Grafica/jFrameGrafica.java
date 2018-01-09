@@ -15,9 +15,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import modelo.*;
-
+import modelo.CurvaIV;
+import modelo.CurvaMedida;
+import modelo.Medida;
+import modelo.MedidaCurva;
+import modelo.MedidaIntensidad;
+import modelo.MedidaOrdenada;
+import modelo.MedidaTension;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -49,12 +53,12 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
     private List<MedidaTension> mt =new ArrayList<>();
     private List<MedidaIntensidad> mi=new ArrayList<>();
     private TableModelGrafica tm;
-    private CurvaIV grafica;
     
     
     
     public jFrameGrafica(){
         initComponents();
+       
     }
 
     /**
@@ -164,7 +168,6 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -188,10 +191,7 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
         }
         //</editor-fold>
         //</editor-fold>
-        
-        
-        
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -294,13 +294,16 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
         vmax=c.getVmax();
         imax=c.getImax();
         datos =new Object[] {isc,voc,pmax,vmax,imax,fecha,hora,ff,id};
-        grafica=c;
-        graficaIV();
+        visualizaGrafica(tensiones,intensidades,datos);
 
     }
     
     private void generaGraficaPV(List<MedidaOrdenada> potencias, List<MedidaCurva> intensidades){
-  
+//        JFreeChart chart = ChartFactory.createXYLineChart("Curva P-V",
+//            "P(W)", "I(A)", dataset);
+//        jPanel1=new ChartPanel(chart);
+//       
+        
         dataset.removeAllSeries();
         
         
@@ -319,21 +322,15 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
     
     @Override
     public void graficaPV(){
-        if(grafica instanceof CurvaCorregida){
-            generaCurvaPVCorregida();
-        }
-        else{
-            generaGraficaPV(potencias, intensidades);
-        }
+        System.out.println(potencias);
+        generaGraficaPV(potencias, intensidades);
+        
     }
     
     @Override
     public void graficaIV(){
-        if(grafica instanceof CurvaCorregida){
-            generaCurvaIVCorregida();
-        }else{
-            generaGrafica(tensiones, intensidades);
-        }
+        System.out.println(tensiones);
+        generaGrafica(tensiones, intensidades);
     }
 
     
@@ -369,70 +366,6 @@ public class jFrameGrafica extends javax.swing.JFrame implements ViewAdminGrafic
     public void setTm(TableModelGrafica tm) {
         this.tm = tm;
     }
-
-    @Override
-    public void muestraGraficaCorregida(CurvaCorregida c) {
-        grafica=c;
-        generaCurvaIVCorregida();
-    }
-
-    private void generaCurvaIVCorregida() {
-        CurvaCorregida aux=(CurvaCorregida) grafica;
-        curva=new XYSeries("Curva Original");
-        corregida=new XYSeries("Curva Corregida");
-        
-        dataset.removeAllSeries();
-        dataset.addSeries(corregida);
-        int i=0;
-        List<MedidaCurva> tensionesC=aux.getTensiones();
-        List<MedidaCurva> intensidadesC=aux.getIntensidades();
-        while(i<tensionesC.size()){
-            corregida.addOrUpdate(tensionesC.get(i).getValor(),intensidadesC.get(i).getValor());
-            i++;
-        }
-        
-        CurvaMedida original=aux.getOriginal();
-        
-        dataset.addSeries(curva);
-        i=0;
-        tensionesC=original.getTensiones();
-        intensidadesC=original.getIntensidades();
-        while(i<tensionesC.size()){
-            curva.addOrUpdate(tensionesC.get(i).getValor(),intensidadesC.get(i).getValor());
-            i++;
-        }
-        jPanel1.updateUI();
-    }
-
-    private void generaCurvaPVCorregida() {
-        CurvaCorregida aux=(CurvaCorregida) grafica;
-        curva=new XYSeries("Curva Original");
-        corregida=new XYSeries("Curva Corregida");
-        
-        dataset.removeAllSeries();
-        dataset.addSeries(corregida);
-        int i=0;
-        List<MedidaOrdenada> potencias=aux.getPotencias();
-        List<MedidaCurva> intensidadesC=aux.getIntensidades();
-        while(i<potencias.size()){
-            corregida.addOrUpdate(potencias.get(i).getValor(),intensidadesC.get(i).getValor());
-            i++;
-        }
-        
-        CurvaMedida original=aux.getOriginal();
-        
-        dataset.addSeries(curva);
-        i=0;
-        potencias=original.getPotencias();
-        intensidadesC=original.getIntensidades();
-        while(i<potencias.size()){
-            curva.addOrUpdate(potencias.get(i).getValor(),intensidadesC.get(i).getValor());
-            i++;
-        }
-        jPanel1.updateUI();
-    }
-    
-    
 
     
 

@@ -47,11 +47,11 @@ public class CtrAdminGrafica implements ActionListener{
        switch(e.getActionCommand()){
            case "CURVA I-V":
                vcm.graficaIV();
-               
+               System.out.println("Estoy mostrando la grafica iv");
                break;
            case "CURVA P-V":
                vcm.graficaPV();
-              
+               System.out.println("Estoy mostrando la grafica pv");
                break;
        }
            
