@@ -6,16 +6,20 @@
 package vista.curvas_corregidas;
 
 import controlador.CtrAdminCorrecionesMedida;
+import controlador.CtrAdminGrafica;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import vista.medidas.*;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.CurvaCorregida;
+import modelo.CurvaMedida;
 import modelo.FormatoFichero;
 import modelo.FormatoFicheroFactory;
 import modelo.Importador;
+import vista.Grafica.jFrameGrafica;
 import vista.JFramePrincipal;
 import vista.ViewAdminCorreccionesMedida;
 
@@ -167,6 +171,7 @@ public class JPanelCurvasCorregidas extends javax.swing.JPanel implements ViewAd
         Grafica.addActionListener(ctr);
         Medidas.addActionListener(ctr);
         jTable1.getSelectionModel().addListSelectionListener(ctr);
+        jTable1.addMouseListener(ctr);
     }
 
     @Override
@@ -196,6 +201,18 @@ public class JPanelCurvasCorregidas extends javax.swing.JPanel implements ViewAd
     public void mostrarMensajeSuccess(String mensaje) {
         JOptionPane.showMessageDialog(prin, mensaje);
     }
+
+    @Override
+    public void showCurva(CurvaCorregida c) {
+       
+        jFrameGrafica jf=new jFrameGrafica();
+        CtrAdminGrafica ctr=new CtrAdminGrafica(jf);
+        jf.setControlador(ctr);
+        jf.muestraGraficaCorregida(c);
+        jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        jf.setVisible(true);
+    }
+    
     
     
 

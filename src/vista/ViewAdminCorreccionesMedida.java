@@ -40,4 +40,8 @@ public interface ViewAdminCorreccionesMedida {
         MEDIDAS
     };
     
+    public void showCurva (CurvaCorregida c);
+    
+   
+    
 }

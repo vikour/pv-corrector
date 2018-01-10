@@ -105,6 +105,7 @@ public class TableModelMedidasCorregidas extends AbstractTableModel{
     }
     
     public CurvaCorregida getMedida(int selectedRow){
-        return curvas[selectedRow];
+        if(selectedRow == -1) return null;
+        else return curvas[selectedRow];
     }
 }
