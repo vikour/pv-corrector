@@ -7,6 +7,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -18,7 +20,7 @@ import modelo.FormatoFicheroFactory;
 import vista.ViewAdminCorreccionesMedida;
 
 
-public class CtrAdminCorrecionesMedida implements ActionListener, ListSelectionListener {
+public class CtrAdminCorrecionesMedida implements ActionListener, ListSelectionListener,MouseListener {
     
     private CtrAdminMedidas ctrAnterior;
     private ViewAdminCorreccionesMedida view;
@@ -52,6 +54,8 @@ public class CtrAdminCorrecionesMedida implements ActionListener, ListSelectionL
             mostrarMedidas();
         else if (e.getActionCommand().equals(ViewAdminCorreccionesMedida.Cmd.EXPORTAR.toString()))
             exportarMedida();
+        else if(e.getActionCommand().equals(ViewAdminCorreccionesMedida.Cmd.GRAFICA.toString()))
+            mostrarGraficaSeleccionada();
         
     }
 
@@ -77,6 +81,41 @@ public class CtrAdminCorrecionesMedida implements ActionListener, ListSelectionL
          exp.exportar(view.getCurvaSeleccionada());
          view.mostrarMensajeSuccess("Medida exportada satisfactoriamente.");
       }
+    }
+
+    private void mostrarGraficaSeleccionada() {
+        CurvaCorregida cc= view.getCurvaSeleccionada();
+        if(cc == null) throw new RuntimeException ("No hay curva seleccionada");
+        else view.showCurva(cc);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(e.getClickCount()==2) {
+            mostrarGraficaSeleccionada();
+        }
+            
+            
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //Do nothing
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        //Do nothing
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //Do nothing
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        //Do nothing
     }
     
 }
