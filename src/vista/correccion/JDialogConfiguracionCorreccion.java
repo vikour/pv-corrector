@@ -35,13 +35,15 @@ public class JDialogConfiguracionCorreccion extends javax.swing.JDialog implemen
       this.curva = curva;
       configuracionIntroducida = true;
       
-      JPanelConfigCorreccion panelComun = new JPanelCorreccionComun();
+      JPanelCorreccionMetodo1 panelMetodo1 = new JPanelCorreccionMetodo1();
+      JPanelCorreccionMetodo2 panelMetodo2 = new JPanelCorreccionMetodo2();
       
-      panelComun.setCurva(curva);
+      panelMetodo2.setCurva(curva);
+      panelMetodo1.setCurva(curva);
       
       panelCorreccion = new HashMap<>();
-      panelCorreccion.put(NombreMetodoCorreccion.METODO_1_IEC, panelComun);
-      panelCorreccion.put(NombreMetodoCorreccion.METODO_2_IEC, panelComun);
+      panelCorreccion.put(NombreMetodoCorreccion.METODO_1_IEC, panelMetodo1);
+      panelCorreccion.put(NombreMetodoCorreccion.METODO_2_IEC, panelMetodo2);
       
       jPanelConfigCorreccion.setLayout(new BorderLayout());
       
@@ -108,7 +110,7 @@ public class JDialogConfiguracionCorreccion extends javax.swing.JDialog implemen
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,11 +126,11 @@ public class JDialogConfiguracionCorreccion extends javax.swing.JDialog implemen
         jPanelConfigCorreccion.setLayout(jPanelConfigCorreccionLayout);
         jPanelConfigCorreccionLayout.setHorizontalGroup(
             jPanelConfigCorreccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         jPanelConfigCorreccionLayout.setVerticalGroup(
             jPanelConfigCorreccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
+            .addGap(0, 468, Short.MAX_VALUE)
         );
 
         jButton1.setText("Corregir");
@@ -145,11 +147,12 @@ public class JDialogConfiguracionCorreccion extends javax.swing.JDialog implemen
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanelConfigCorreccion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanelConfigCorreccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -158,10 +161,10 @@ public class JDialogConfiguracionCorreccion extends javax.swing.JDialog implemen
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelConfigCorreccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelConfigCorreccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         pack();

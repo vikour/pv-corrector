@@ -42,28 +42,25 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener, M
     public CtrAdminMedidas(ViewAdminMedidas vm) {
         this.vm = vm;
         vm.setControlador(this);
-        ctra=null;
-       
+        ctra = null;
+
     }
 
     public void setCtrAnterior(CtrAdminCampanyas ctra) {
         this.ctra = ctra;
     }
-    
+
     public void setCtrSiguiente(CtrAdminCorrecionesMedida ctrs) {
         this.ctrs = ctrs;
     }
-    
-    
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()){
+        switch (e.getActionCommand()) {
             case ViewAdminMedidas.CAMPAÑA:
                 vistaAnterior();
                 break;
-            
+
             case ViewAdminMedidas.SELECC_MEDIDA: //ESTO ESTA MAL
                 //System.out.println("HE CC_MEDIDA: //ESTO ESTA MAL
                 //System.out.println("SELECCIONADO UNA CURVA");
@@ -72,23 +69,23 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener, M
                 //cm=vm.getCurva();
                 //System.out.println(cm);
                 break;
-            
+
             case ViewAdminMedidas.GRAFICA:
                 mostrarGraficaSeleccionada();
                 break;
-                
+
             case ViewAdminMedidas.CORREGIR:
-               corregirCurva();
-               break;
-               
+                corregirCurva();
+                break;
+
             case ViewAdminMedidas.EXPORTAR:
-               exportarCurva();
-               break;
-               
+                exportarCurva();
+                break;
+
             case ViewAdminMedidas.CORRECCIONES:
                 mostrarCorrecciones();
                 break;
-            
+
         }
     }
 
@@ -101,26 +98,35 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener, M
         vm.showCurva(cm);
     }
 
+    private void mostrarGraficaCurvaSeleccionada() {
+        if (cm == null) {
+            cm = vm.getMedidaSeleccionada();
+            System.out.println("La curva era null");
+        }
+        System.out.println(cm);
+        vm.showCurva(cm);
+    }
+
     public void setMedidas(Campaña c) {
-        CurvaMedida [] model=c.getCurvas();
-        
+        CurvaMedida[] model = c.getCurvas();
+
         vm.mostrarCurvas(model);
     }
-    
-    public void vistaAnterior(){
+
+    public void vistaAnterior() {
         vm.vistaAnterior();
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if(!e.getValueIsAdjusting()){
+        if (!e.getValueIsAdjusting()) {
             medidaSeleccionada();
-            cm=vm.getMedidaSeleccionada();
+            cm = vm.getMedidaSeleccionada();
         }
     }
-    
-    public void medidaSeleccionada(){
-        
+
+    public void medidaSeleccionada() {
+
         vm.habilitarBorrar(true);
         vm.habilitarExportar(true);
         vm.habilitarGrafica(true);
@@ -196,7 +202,5 @@ public class CtrAdminMedidas implements ActionListener, ListSelectionListener, M
     public void mouseExited(MouseEvent e) {
         // Do nothing
     }
-    
-    
-    
+
 }
