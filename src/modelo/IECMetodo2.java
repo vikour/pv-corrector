@@ -23,19 +23,18 @@ public class IECMetodo2 implements MetodoCorreccion {
       CurvaCorregida correccion = null;
       
       // Obtención de medidas.
-      Modulo modulo = original.getModulo();
+      ConfiguracionCorreccion config = configuracion.get(0);
       
-      double alpha = modulo.getAlpha() * 10E3;
-      double beta = modulo.getBeta() * 10E3;
-      double rs = modulo.getRs() * 10E3;
-      double kappa = modulo.getKappa() * 10E3;
-      double a = modulo.getA();
+      double alpha = config.getAlpha() / 10E3;
+      double beta = config.getBeta() / 10E3;
+      double rs = config.getRs() / 10E3;
+      double kappa = config.getKappa() / 10E3;
+      double a = config.getA();
       
       // Caso de error.
       if (alpha == 0 || beta == 0 || rs == 0 || kappa == 0 || a == 0)
          throw new RuntimeException("El modulo de la curva no tiene los parámetros necesarios para la corrección");
       
-      ConfiguracionCorreccion config = configuracion.get(0);
       double isc = original.getIsc().getValor();
       double voc = original.getVoc().getValor();
       double g1 = config.getIrradiancia().getValor();

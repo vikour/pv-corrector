@@ -108,7 +108,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
         jLabelTitulo.setText("TITULO");
 
         jLabelIdioma.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelIdioma.setText("Iidioma:");
+        jLabelIdioma.setText("Idioma:");
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Español" }));

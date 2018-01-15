@@ -110,7 +110,7 @@ public class CurvaMedida extends CurvaIV {
         return "ID: "+this.getId()+"\nCampaña: "+campaña.getNombre();
     }
 
-   Modulo getModulo() {
+   public Modulo getModulo() {
       return campaña.getModulo();
    }
    
