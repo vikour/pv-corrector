@@ -142,7 +142,12 @@ public class FormatoModulo extends FormatoFichero {
             mod.setMinPmax(Double.parseDouble(readNotEmptyLine(br)));
             mod.setMinFF(Double.parseDouble(readNotEmptyLine(br)));
             mod.setMt1(Double.parseDouble(readNotEmptyLine(br)));
-            
+            String x=readNotEmptyLine(br);
+            if(x!=null){
+                mod.setA(Double.parseDouble(x));
+            }else{
+                mod.setA(0);
+            }
         
     }
     
@@ -216,7 +221,7 @@ public class FormatoModulo extends FormatoFichero {
         bw.write(m.getMinPmax()+"\n");
         bw.write(m.getMinFF()+"\n");
         bw.write(m.getMt1()+"\n");
-        
+        bw.write(m.getA()+"\n");
         return bw;
     }
     
