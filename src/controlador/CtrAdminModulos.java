@@ -9,11 +9,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modelo.FormatoFicheroFactory;
 import modelo.Modulo;
 import vista.ViewAdminModulos;
+import vista.modificar_modulo.JFrameModificarModulo;
 
 
 public class CtrAdminModulos implements ActionListener,ListSelectionListener, MouseListener {
@@ -73,9 +75,11 @@ public class CtrAdminModulos implements ActionListener,ListSelectionListener, Mo
             case ViewAdminModulos.SELECC_MODULO:
                 moduloSeleccionado();
                 break;
-            
             case ViewAdminModulos.CAMPANYAS:
                 consultarCampanyas();
+                break;
+            case ViewAdminModulos.MODIFICAR:
+                modificarModulo(vm.getModulosSeleccionados());
                 break;
         }
         
@@ -113,6 +117,19 @@ public class CtrAdminModulos implements ActionListener,ListSelectionListener, Mo
     @Override
     public void mouseExited(MouseEvent e) {
         
+    }
+
+    private void modificarModulo(Modulo modulosSeleccionados) {
+        JFrameModificarModulo jf=new JFrameModificarModulo();
+        
+        jf.cargaDatos(modulosSeleccionados);
+        
+        jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        jf.setVisible(true);
+        
+        
+                
     }
     
     

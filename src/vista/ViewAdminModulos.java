@@ -42,4 +42,5 @@ public interface ViewAdminModulos
    
    public void siguienteVista();
    
+   
 }
