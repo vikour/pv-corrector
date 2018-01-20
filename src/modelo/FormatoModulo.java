@@ -6,11 +6,15 @@
 package modelo;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -144,14 +148,76 @@ public class FormatoModulo extends FormatoFichero {
     
     
  
+   
     @Override
-    public void escribir(File file, Object objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void escribir(File file, Object objeto){
+       BufferedWriter bw = null;
+       
+        
+        try {
+            bw=escribirModulo(bw,file,(Modulo) objeto);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(FormatoModulo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FormatoModulo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       
+       if (bw != null)
+           try {
+               bw.close();
+           }
+           catch (IOException ex) {
+               System.out.println("ERROR AL CERRAR EL FICHERO");
+           }
     }
 
     @Override
     public String getExtension() {
         return "dat"; 
+    }
+
+    private BufferedWriter escribirModulo(BufferedWriter bw, File file, Modulo m) throws FileNotFoundException, UnsupportedEncodingException, IOException {
+        bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "ISO-8859-15"));
+        bw.write(m.getNombre()+"\n");
+        bw.write(m.getTecnologia()+"\n\n");
+        bw.write(m.getTinicial()+"\n");
+        bw.write(m.getTintermedia()+"\n");
+        bw.write(m.getTfinal()+"\n");
+        bw.write(m.getCmaxp()+"\n");
+        bw.write(m.getCmaxN()+"\n");
+        bw.write(m.getPtramo()+"\n");
+        bw.write(m.getStramo()+"\n");
+        bw.write(m.getPdv()+"\n");
+        bw.write(m.getPdc()+"\n");
+        bw.write(m.getPdp()+"\n");
+        bw.write(m.getAlpha()+"\n");
+        bw.write(m.getBeta()+"\n");
+        bw.write(m.getGamma()+"\n");
+        bw.write(m.getKappa()+"\n");
+        bw.write(m.getNoct()+"\n");
+        bw.write(m.getIsc()+"\n");
+        bw.write(m.getVoc()+"\n");
+        bw.write(m.getPmax()+"\n");
+        bw.write(m.getIpmax()+"\n");
+        bw.write(m.getVpmax()+"\n");
+        bw.write(m.getIscn()+"\n");
+        bw.write(m.getVocn()+"\n");
+        bw.write(m.getPmaxn()+"\n");
+        bw.write(m.getIpmaxn()+"\n");
+        bw.write(m.getVpmaxn()+"\n");
+        bw.write(m.getEta()+"\n");
+        bw.write(m.getM()+"\n");
+        bw.write(m.getNs()+"\n");
+        bw.write(m.getNp()+"\n");
+        bw.write(m.getRs()+"\n");
+        bw.write(m.getMinIsc()+"\n");
+        bw.write(m.getMinVoc()+"\n");
+        bw.write(m.getMinPmax()+"\n");
+        bw.write(m.getMinFF()+"\n");
+        bw.write(m.getMt1()+"\n");
+        
+        return bw;
     }
     
 }

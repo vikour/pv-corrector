@@ -41,6 +41,9 @@ public interface ViewAdminModulos
    public void mostrarVistaImportacion(String format, File f);
    
    public void siguienteVista();
+
+    public void mostrarMensajeExito(String exportacion_realizada_con_exito);
+   
    
    
 }

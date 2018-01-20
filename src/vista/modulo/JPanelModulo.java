@@ -30,21 +30,20 @@ import vista.ViewAdminModulos;
  */
 public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos {
 
-    
-    
     private JFileChooser fc;
     private JFramePrincipal prin;
+
     /**
      * Creates new form JPanelModulo
      */
     public JPanelModulo(JFramePrincipal vent) {
         initComponents();
-        prin=vent;
+        prin = vent;
         fc = new JFileChooser();
         fc.setDialogTitle("Selecciona el fichero con el módulo");
         String ffCmp = Importador.EXTENSION_COMPRIMIDO;
         FormatoFichero ff = (new FormatoFicheroFactory()).create(FormatoFicheroFactory.FORMATO_MODULO);
-        String filterName = "Módulos (." + ffCmp +", " + ff.getExtension() + ")";
+        String filterName = "Módulos (." + ffCmp + ", " + ff.getExtension() + ")";
         fc.setFileFilter(new FileNameExtensionFilter(filterName, ffCmp, ff.getExtension()));
         fc.setMultiSelectionEnabled(false);
         fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -135,38 +134,35 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
 
     @Override
     public void mostrar(List<Modulo> modulos) {
-        ListModelModulo model=(ListModelModulo) jList1.getModel();
-        
+        ListModelModulo model = (ListModelModulo) jList1.getModel();
+
         model.setList(modulos);
         jList1.updateUI();
     }
 
     @Override
     public void setControlador(CtrAdminModulos controlador) {
-        
-        
+
         jButtonBorrar.addActionListener(controlador);
         jButtonBorrar.setActionCommand(ViewAdminModulos.BORRAR);
-        
+
         jButtonCampanyas.addActionListener(controlador);
         jButtonCampanyas.setActionCommand(ViewAdminModulos.CAMPANYAS);
-        
+
         jButtonExportar.addActionListener(controlador);
         jButtonExportar.setActionCommand(ViewAdminModulos.EXPORTAR);
-        
+
         jButtonImportar.addActionListener(controlador);
         jButtonImportar.setActionCommand(ViewAdminModulos.IMPORTAR);
-        
+
         jButtonModificar.addActionListener(controlador);
         jButtonModificar.setActionCommand(ViewAdminModulos.MODIFICAR);
-        
+
         jList1.addListSelectionListener(controlador);
         jList1.addMouseListener(controlador);
-        
+
         controlador.consultarModulos();
     }
-    
-   
 
     @Override
     public void habilitarModificacion(boolean habilitar) {
@@ -190,8 +186,8 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
 
     @Override
     public void mostrarModuloNuevo(Modulo m) {
-        ListModelModulo model=(ListModelModulo) jList1.getModel();
-        
+        ListModelModulo model = (ListModelModulo) jList1.getModel();
+
         model.add(m);
         jList1.updateUI();
     }
@@ -200,25 +196,25 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
     public File mostrarSelectorFicheros() {
         int returnVal = fc.showOpenDialog(this);
         File f = null;
-        
-        if (returnVal == JFileChooser.APPROVE_OPTION)
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             f = fc.getSelectedFile();
-        
+        }
+
         return f;
     }
 
     @Override
-    public Modulo getModulosSeleccionados(){
-        ListModelModulo model= (ListModelModulo) jList1.getModel();
-        
-        
+    public Modulo getModulosSeleccionados() {
+        ListModelModulo model = (ListModelModulo) jList1.getModel();
+
         return model.getModuloAt(jList1.getSelectedIndex());
-        
+
     }
 
     @Override
     public void siguienteVista() {
-        
+
         prin.siguientePanel();
     }
 
@@ -228,7 +224,10 @@ public class JPanelModulo extends javax.swing.JPanel implements ViewAdminModulos
         CtrImportacion ctrImportacion = new CtrImportacion(dImport);
         dImport.setVisible(true, format, f);
     }
-   
-   
     
+    @Override
+    public void mostrarMensajeExito(String message) {
+        JOptionPane.showMessageDialog(prin, message);
+    }
+
 }
